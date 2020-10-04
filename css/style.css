@@ -5,10 +5,15 @@ html,body{
     height:100%;
 }
 section{
-    margin-top: 5%;
+    margin-top: 3%;
 }
+
+.top-nav{
+    padding-top: 2%;
+}
+
 section.product{
-    margin-top:3%;
+    margin-top:2%;
 }
 .footer{
     height: 10em;

@@ -6,13 +6,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ESHOP</title>
   <!-- Boostrap css file-->
-  <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 
   <!-- font awesome icon-->
-  <link rel="stylesheet" type="text/css" href="./css/all.min.css">
+  <link rel="stylesheet" type="text/css" href="css/all.min.css">
 
   <!-- main css -->
-  <link rel="stylesheet" type="text/css" href="css/main.css">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
 
 
 </head>
@@ -20,8 +20,8 @@
 <body>
 
   <header>
-    <div class="container navigation">
-      <ul class="nav justify-content-end">
+    <div class="container">
+      <ul class="nav justify-content-end  top-nav">
         <li class="nav-item">
           <a class="nav-link active" href="#">Home</a>
         </li>
