@@ -12,13 +12,15 @@
     <link rel="stylesheet" type="text/css" href="css/all.min.css">
 
     <!-- main css -->
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/mainstyle.css">
 
 
 </head>
 
 <body>
-
+    <?php
+    include("auth.php");
+    ?>
 
     <header class="header_area">
         <!-- code source from https://getbootstrap.com/docs/4.5/components/navbar/ -->
@@ -26,14 +28,10 @@
             <nav class="navbar navbar-expand-lg navbar-light">
                 <h1>ESHOP</h1>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
+                    <span class="navbar-toggler-icon"></span>
+                </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <div class="mr-auto"></div>
-                    <form class="form-inline my-2 my-lg-0">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Search">
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                    </form>
                     <ul class="navbar-nav">
                         <li class="nav-item active">
                             <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
@@ -48,7 +46,7 @@
                             <a class="nav-link" href="#">Contact</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Account</a>
+                            <a class="nav-link" href="dashboard.php">Account: <?php echo $_SESSION['username']; ?></a>
                         </li>
                     </ul>
                 </div>
@@ -94,7 +92,10 @@
                     <h1 class="text-uppercase title-h1">New Products</h1>
                     <h1 class="text-uppercase title-h1">Best Sales</h1>
                 </div>
-
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
                 <div class="button-group">
                     <button type="button" class="active" id="btn1" data-filter="*">All</button>
                     <button type="button" data-filter=".computer">Computers</button>
