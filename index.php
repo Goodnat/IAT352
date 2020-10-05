@@ -20,7 +20,7 @@
 <body>
 
 
-    <header class="header-area">
+    <header class="header_area">
         <!-- code source from https://getbootstrap.com/docs/4.5/components/navbar/ -->
         <div class="main-menu">
             <nav class="navbar navbar-expand-lg navbar-light">
@@ -246,7 +246,6 @@
             <div class="container">
                 <div class="">
                     <div class="social text-center">
-                        <h5 class="text-uppercase">ESHOP</h5>
                         <a href="#"><i class="fab fa-facebook"></i></a>
                         <a href="#"><i class="fab fa-instagram"></i></a>
                         <a href="#"><i class="fab fa-youtube"></i></a>
