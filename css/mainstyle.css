@@ -214,4 +214,8 @@ footer .social a:hover>i {
     .product-area .button-group button+button {
         padding-left: 1em;
     }
+    footer .social a>i {
+        font-size: 18px;
+        padding: 1em;
+    }
 }
