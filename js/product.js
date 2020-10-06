@@ -1,10 +1,10 @@
-$(document).ready(function () {
+$(document).ready(function() {
 
 
     let $btns = $('.product-area .button-group button');
 
 
-    $btns.click(function (e) {
+    $btns.click(function(e) {
 
         $('.product-area .button-group button').removeClass('active');
         e.target.classList.add('active');

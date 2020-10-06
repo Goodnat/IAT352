@@ -93,7 +93,7 @@
                     <h1 class="text-uppercase title-h1">Best Sales</h1>
                 </div>
                 <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search">
+                    <input class="form-control mr-sm-2" type="Search" placeholder="Search">
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                 </form>
                 <div class="button-group">
