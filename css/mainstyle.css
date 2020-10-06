@@ -201,3 +201,17 @@ footer .social a:hover>i {
 
 
 /* End Footer */
+
+
+/* if the viewport is equal to 340px or less than that */
+
+@media only screen and (max-width:540px) {
+    .header_area .main-menu .navbar,
+    .header_area .main-menu .navbar .navbar-brand {
+        padding: 2%;
+        margin: 0%;
+    }
+    .product-area .button-group button+button {
+        padding-left: 1em;
+    }
+}
