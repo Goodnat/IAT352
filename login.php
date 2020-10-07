@@ -70,7 +70,7 @@
 					//Header("Location: register.php");
 					echo "
 					<div class='form register container text-center'>
-					<p>SUCESSFUL LOGIN<p>
+					<p>SUCESSFUL LOGIN: $line[0]<p>
 					<a href='index.php'>HOME</a>
 					</div>
 					";
