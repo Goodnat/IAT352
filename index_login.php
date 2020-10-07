@@ -18,6 +18,10 @@
 </head>
 
 <body>
+    <?php
+    include("auth.php");
+    ?>
+
     <header class="header_area">
         <!-- code source from https://getbootstrap.com/docs/4.5/components/navbar/ -->
         <div class="main-menu">
@@ -42,7 +46,7 @@
                             <a class="nav-link" href="#">Contact</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="index_login.php">Account</a>
+                            <a class="nav-link" href="dashboard.php">Account: <?php echo $_SESSION['username']; ?></a>
                         </li>
                     </ul>
                 </div>
