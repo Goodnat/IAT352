@@ -42,7 +42,7 @@
                             <a class="nav-link" href="#">Contact</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="index_login.php">Account</a>
+                            <a class="nav-link" href="login.php">Account</a>
                         </li>
                     </ul>
                 </div>

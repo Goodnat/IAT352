@@ -27,6 +27,10 @@ section.product {
     margin-top: 2%;
 }
 
+a:hover {
+    text-decoration: none;
+}
+
 .footer {
     height: 10em;
 }
@@ -228,7 +232,7 @@ footer .social a:hover>i {
 
 /* if the viewport is equal to 340px or less than that */
 
-@media only screen and (max-width:540px) {
+@media only screen and (max-width:860px) {
     .header_area .main-menu .navbar,
     .header_area .main-menu .navbar .navbar-brand {
         padding: 2%;
