@@ -59,8 +59,11 @@
 			fwrite($handle, $data);
 			fclose($handle);
 
-			echo "<p>Successfull registration</p>";
-			echo "<p>Go to <a href='login.php'>Logo in</a> page</p>";
+			echo "
+			<div class='container text-center'></div>
+			<p>Successfull registration</p>
+			<p>Go to <a href='login.php'>Logo in</a> page</p>
+			";
 		}
 	} else {
 	?>

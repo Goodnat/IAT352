@@ -39,7 +39,7 @@
 							<a class="nav-link" href="#">Contact</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="index.php">Account</a>
+							<a class="nav-link" href="login.php">Account</a>
 						</li>
 					</ul>
 				</div>
@@ -82,7 +82,10 @@
 	}
 
 	if ($fail == true) {
-		echo "<p>Login fail try again</p>";
+		echo "
+		<div class='container text-center'>
+			<p class='text-danger'>Failed to log in. Please try again!<p>
+		</div>";
 	}
 
 	?>
