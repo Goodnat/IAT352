@@ -201,6 +201,7 @@
                     <?php
 
                     $file = 'productsList.txt';
+
                     if ($handle = fopen($file, 'r')) {
                         while (!feof($handle)) {
                             $aLine = explode(",", trim(fgets($handle)));
@@ -268,20 +269,21 @@
                                     $imgName = 'LG Smart TV.PNG';
                                 }
                             }
+                            $trans=$aLine[0] . '@' . $aLine[1] . '@' . $aLine[2] . '@' . $aLine[3] ;
 
                             echo '
 
-
+                                
                                 <div class="our-product">
                                     <div class="img">
-                                        <a class="test-popup-link" href="">
+                                        <a class="test-popup-link" href="detail.php?id="$trans">
                                              <img src="imgs/' . $imgName . '" class="img-fluid">
                                         </a>
                                     </div>
                                     <div class="title py-4">
                                         <h4 class="text-uppercase">' . $aLine[1] . ' $' . $aLine[3] . '</h4>
                                         <span class="text-secondary">' . $aLine[0] . ', ' . $aLine[2] . '</span>
-                                        <div class="text-secondary"><a href="">Detail info</a></div>
+                                        <div class="text-secondary"><a href="detail.php?id="$trans">Detail info</a></div>
                                     </div>
                                 </div>
                             
