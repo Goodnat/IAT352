@@ -22,7 +22,7 @@
         <!-- code source from https://getbootstrap.com/docs/4.5/components/navbar/ -->
         <div class="main-menu">
             <nav class="navbar navbar-expand-lg navbar-light">
-                <h1>ESHOP</h1>
+                <h1><a class="logo" href="index.php">ESHOP</a></h1>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -76,7 +76,7 @@
                                         <p class="para">
                                             Sony,a7 III Full-Frame Mirrorless Camera with 28-70mm OSS Lens Kit,2799,Black
                                         </p>
-                                        <a class="btn btn-outline-secondary" href="#">learned more</a>
+                                        <a href="#">Learned More</a>
                                     </div>
                                 </div>
                             </div>
@@ -96,7 +96,7 @@
                                         <p class="para">
                                             Samsung,65" 4K UHD HDR LED Tizen Smart TV (UN65TU8500FXZC),1199,Black
                                         </p>
-                                        <a class="btn btn-outline-secondary" href="#">learned more</a>
+                                        <a href="#">Learned More</a>
                                     </div>
                                 </div>
                             </div>
@@ -116,7 +116,7 @@
                                         <p class="para">
                                             Beats,by Dr. Dre Solo3 Icon On-Ear Sound Isolating Bluetooth Headphones,249,Rose Gold
                                         </p>
-                                        <a class="btn btn-outline-secondary" href="#">learned more</a>
+                                        <a href="#">Learned More</a>
                                     </div>
                                 </div>
                             </div>
