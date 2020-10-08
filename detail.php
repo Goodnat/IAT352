@@ -153,8 +153,8 @@
 echo'
                             
     <div class="container">
-                <div class="row justify-content-center align-items-center" style="border:2px red solid">
-                    <div class="col-6 "style="border:2px red solid">
+                <div class="row justify-content-center align-items-center" >
+                    <div class="col-6 ">
                          <div class="img">
                            
                                         <a class="test-popup-link" href="">
@@ -163,12 +163,16 @@ echo'
                                     </div>
                     </div>
                     <div class="col-4">
-                    <div class="title py-5 " style="border:2px red solid">
+                    <div class="title py-5 " >
                                         <h5 class="text-uppercase text-center" style="color:gray"> '.$info[0]. '</h5>
                                         <h2 class="text-uppercase text-center">'.$info[1].'</h2>
                                         <h4 class="text-secondary text-center"> $' . $info[3] . '</h4>
 
                                         <br><h5 class=" text-center" style="color:gray">"'.$info[2].'"</h5>
+                                        <br>
+                                        <div class="row justify-content-center align-items-center">
+                                        <br><button class="btn btn-info btn-lg">BUY</button>
+                                        </div>
                                         
                                     </div>
                     </div>
