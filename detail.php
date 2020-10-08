@@ -166,7 +166,7 @@ echo'
                     <div class="title py-5 " >
                                         <h5 class="text-uppercase text-center" style="color:gray"> '.$info[0]. '</h5>
                                         <h2 class="text-uppercase text-center">'.$info[1].'</h2>
-                                        <h4 class="text-secondary text-center"> $' . $info[3] . '</h4>
+                                        <h4 class="text-secondary text-center"> $'. $info[3].'</h4>
 
                                         <br><h5 class=" text-center" style="color:gray">"'.$info[2].'"</h5>
                                         <br>
