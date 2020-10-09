@@ -22,14 +22,14 @@
         <!-- code source from https://getbootstrap.com/docs/4.5/components/navbar/ -->
         <div class="main-menu">
             <nav class="navbar navbar-expand-lg navbar-light">
-                <h1><a class="logo" href="index.php">ESHOP</a></h1>
+                <h1><a class="logo" href="index.php">ESHOP</a></h1><!--logo -->
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <div class="mr-auto"></div>
                     <ul class="navbar-nav">
-                        <li class="nav-item active">
+                        <li class="nav-item active"><!-- navigation button-->
                             <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item">
@@ -53,15 +53,16 @@
 
     <?php
 
-    $file = 'productsList.txt';
+   
     $currentProduction = $_GET['id'];
+   //get the value from the url
 
-    $info = explode('@', $currentProduction);
-    if ($info[0] == 'audio') {
-        if ($info[1] == 'Beats') {
+    $info = explode('@', $currentProduction);//explode the array to the alone string
+    if ($info[0] == 'audio') {// check the string is equal to the condition
+        if ($info[1] == 'Beats') {//double check the string is equal to the condition
             $type = 'audio';
             $brand = 'Beats';
-            $imgName = 'Beats Headphones.PNG';
+            $imgName = 'Beats Headphones.PNG';// depends on what production you click on the index page.
         }
     }
     if ($info[0] == 'audio') {
@@ -149,10 +150,13 @@
         }
     }
 
-
+//
+    //
+    //set a container to store the product pic and detail information
     echo '
                             
-    <div class="container detail" >
+    <div class="container detail" > 
+
                 <div class="row justify-content-center align-items-center" >
                     <div class="col-md-6 col-sm-12" >
                         <div class="img">
@@ -172,9 +176,10 @@
                 </div>
                 <hr>
                 </div>
-                <div class="container p-2 mt-5">
+                <div class="container p-2 mt-5">  // set a container to store the other production pic and information
                 <div class="row justify-content-center align-items-center">
-                    <h4 class=" text-uppercase text-center">You Might Also Like</h4>
+                    <h4 class=" text-uppercase text-center">You Might Also Like</h4> // the title
+
                 </div>
                 <div class="row justify-content-center align-items-center our-product " >
                 <div class="col-md-4 col-sm-12"> 
