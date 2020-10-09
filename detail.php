@@ -49,240 +49,224 @@
             </nav>
         </div>
     </header>
-  
 
-<?php
 
-                    $file = 'productsList.txt';
-                    $currentProduction= $_GET['id'];
+    <?php
 
-                    $info = explode('@', $currentProduction);
-                       if($info[0] == 'audio'){
-                          if($info[1]=='Beats'){
-                          $type='audio';
-                          $brand='Beats';
-                          $imgName = 'Beats Headphones.PNG';
-                         }
-                        }
-                        if($info[0] == 'audio'){
-                          if($info[1]=='Sony'){
-                          $type='audio';
-                          $brand='Sony';
-                          $imgName = 'Sony Headphones.PNG';
-                         }
-                        }
-                        if($info[0] == 'audio'){
-                          if($info[1]=='Beats'){
-                          $type='audio';
-                          $brand='Beats';
-                          $imgName = 'Beats Headphones.PNG';
-                         }
-                        }
-                        if($info[0] == 'audio'){
-                          if($info[1]=='Bose'){
-                          $type='audio';
-                          $brand='Bose';
-                          $imgName = 'Bose Headphones.PNG';
-                         }
-                        }
-                        if($info[0] == 'camera'){
-                          if($info[1]=='Fujifilm'){
-                          $type='camera';
-                          $brand='Fujifilm';
-                          $imgName = 'Fujifilm Camera.PNG';
-                         }
-                        }
-                        if($info[0] == 'camera'){
-                          if($info[1]=='Sony'){
-                          $type='camera';
-                          $brand='Sony';
-                          $imgName = 'Sony Camera.PNG';
-                         }
-                        }
-                        if($info[0] == 'camera'){
-                          if($info[1]=='Nikon'){
-                          $type='camera';
-                          $brand='Nikon';
-                          $imgName = 'Nikon Camera.PNG';
-                         }
-                        }
-                         if($info[0] == 'computer'){
-                          if($info[1]=='Dell'){
-                          $type='computer';
-                          $brand='Dell';
-                          $imgName = 'Dell G5 Gaming PC.PNG';
-                         }
-                        }
-                         if($info[0] == 'computer'){
-                          if($info[1]=='ASUS'){
-                          $type='computer';
-                          $brand='ASUS';
-                          $imgName = 'ASUS VivoBook.PNG';
-                         }
-                        }
-                         if($info[0] == 'computer'){
-                          if($info[1]=='HP'){
-                          $type='computer';
-                          $brand='HP';
-                          $imgName = 'HP Gaming Laptop.PNG';
-                         }
-                        }
-                         if($info[0] == 'TV'){
-                          if($info[1]=='Samsung'){
-                          $type='TV';
-                          $brand='Samsung';
-                          $imgName = 'Samsung Smart TV.PNG';
-                         }
-                        }
-                        if($info[0] == 'TV'){
-                          if($info[1]=='Sony'){
-                          $type='TV';
-                          $brand='Sony';
-                          $imgName = 'Sony Smart TV.PNG';
-                         }
-                        }
-                        if($info[0] == 'TV'){
-                          if($info[1]=='LG'){
-                          $type='TV';
-                          $brand='LG';
-                          $imgName = 'LG Smart TV.PNG';
-                         }
-                        }
+    $file = 'productsList.txt';
+    $currentProduction = $_GET['id'];
 
-                
-echo'
+    $info = explode('@', $currentProduction);
+    if ($info[0] == 'audio') {
+        if ($info[1] == 'Beats') {
+            $type = 'audio';
+            $brand = 'Beats';
+            $imgName = 'Beats Headphones.PNG';
+        }
+    }
+    if ($info[0] == 'audio') {
+        if ($info[1] == 'Sony') {
+            $type = 'audio';
+            $brand = 'Sony';
+            $imgName = 'Sony Headphones.PNG';
+        }
+    }
+    if ($info[0] == 'audio') {
+        if ($info[1] == 'Beats') {
+            $type = 'audio';
+            $brand = 'Beats';
+            $imgName = 'Beats Headphones.PNG';
+        }
+    }
+    if ($info[0] == 'audio') {
+        if ($info[1] == 'Bose') {
+            $type = 'audio';
+            $brand = 'Bose';
+            $imgName = 'Bose Headphones.PNG';
+        }
+    }
+    if ($info[0] == 'camera') {
+        if ($info[1] == 'Fujifilm') {
+            $type = 'camera';
+            $brand = 'Fujifilm';
+            $imgName = 'Fujifilm Camera.PNG';
+        }
+    }
+    if ($info[0] == 'camera') {
+        if ($info[1] == 'Sony') {
+            $type = 'camera';
+            $brand = 'Sony';
+            $imgName = 'Sony Camera.PNG';
+        }
+    }
+    if ($info[0] == 'camera') {
+        if ($info[1] == 'Nikon') {
+            $type = 'camera';
+            $brand = 'Nikon';
+            $imgName = 'Nikon Camera.PNG';
+        }
+    }
+    if ($info[0] == 'computer') {
+        if ($info[1] == 'Dell') {
+            $type = 'computer';
+            $brand = 'Dell';
+            $imgName = 'Dell G5 Gaming PC.PNG';
+        }
+    }
+    if ($info[0] == 'computer') {
+        if ($info[1] == 'ASUS') {
+            $type = 'computer';
+            $brand = 'ASUS';
+            $imgName = 'ASUS VivoBook.PNG';
+        }
+    }
+    if ($info[0] == 'computer') {
+        if ($info[1] == 'HP') {
+            $type = 'computer';
+            $brand = 'HP';
+            $imgName = 'HP Gaming Laptop.PNG';
+        }
+    }
+    if ($info[0] == 'TV') {
+        if ($info[1] == 'Samsung') {
+            $type = 'TV';
+            $brand = 'Samsung';
+            $imgName = 'Samsung Smart TV.PNG';
+        }
+    }
+    if ($info[0] == 'TV') {
+        if ($info[1] == 'Sony') {
+            $type = 'TV';
+            $brand = 'Sony';
+            $imgName = 'Sony Smart TV.PNG';
+        }
+    }
+    if ($info[0] == 'TV') {
+        if ($info[1] == 'LG') {
+            $type = 'TV';
+            $brand = 'LG';
+            $imgName = 'LG Smart TV.PNG';
+        }
+    }
+
+
+    echo '
                             
-    <div class="container" style=" panding:10px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+    <div class="container detail" >
                 <div class="row justify-content-center align-items-center" >
-                    <div class="col-6 " >
-                         <div class="img">
-                           
-                                        <a class="test-popup-link" href="">
-                                             <img src="imgs/' . $imgName . '" class="img-fluid">
-                                        </a>
-                                    </div>
+                    <div class="col-md-6 col-sm-12" >
+                        <div class="img">
+                            <a class="test-popup-link" href="">
+                                    <img src="imgs/' . $imgName . '" class="img-fluid">
+                            </a>
+                        </div>
                     </div>
-                    <div class="col-4">
-                    <div class="title py-5 " >
-                                        <h5 class="text-uppercase text-center" style="color:gray"> '.$info[0]. '</h5>
-                                        <h2 class="text-uppercase text-center">'.$info[1].'</h2>
-                                        <h4 class="text-secondary text-center"> $'. $info[3].'</h4>
-
-                                        <br><h5 class=" text-center" style="color:gray">"'.$info[2].'"</h5>
-                                        <br>
-                                        <div class="row justify-content-center align-items-center">
-                                        <br><button class="btn btn-info btn-lg">BUY</button>
-                                        </div>
-                                        
-                                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <div class="title py-5" >
+                            <h1 class="text-uppercase"> ' . $info[0] . '</h1>
+                            <h3 class="text-uppercase">' . $info[1] . ' $' . $info[3] . '</h3>
+                            <p class="">"' . $info[2] . '"</p>
+                            <button type="button" class="btn btn-dark btn-lg">BUY</button>                                                           
+                         </div>
                     </div>
                 </div>
+                <hr>
                 </div>
-                <div class="container" style="margin-top:5rem ;padding:2rem;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);" >
+                <div class="container p-2 mt-5">
                 <div class="row justify-content-center align-items-center">
-                <h4 class=" text-uppercase text-center">You Might Also Like</h4>
+                    <h4 class=" text-uppercase text-center">You Might Also Like</h4>
                 </div>
                 <div class="row justify-content-center align-items-center our-product " >
-
-                <div class="col-4 "> <div class="img">
-                                  
-                                        
-                          <img src="imgs/Dell G5 Gaming PC.PNG" class="img-fluid">
+                <div class="col-md-4 col-sm-12"> 
+                    <div class="img">
+                        <img src="imgs/Dell G5 Gaming PC.PNG" class="img-fluid">             
+                    </div>
+                    <div class="title py-4">
+                        <h4 class="text-uppercase"> computer   $1699  </h4>
+                        <span class="text-secondary">  Dell    G5 Gaming PC - Abyss Grey (Intel Core i7 9700/512GB SSD/16GB RAM/GeForce RTX 2060)  </span>
+                    </div>
+                </div> 
+                <div class="col-md-4 col-sm-12">
+                    <div class="img">
+                        <img src="imgs/Nikon Camera.PNG" class="img-fluid">
                                        
-                            </div>
-                              <div class="title py-4">
-                                        <h4 class="text-uppercase"> computer   $1699  </h4>
-                                        <span class="text-secondary">  Dell    G5 Gaming PC - Abyss Grey (Intel Core i7 9700/512GB SSD/16GB RAM/GeForce RTX 2060)  </span>
+                    </div>
+                    <div class="title py-4">
+                        <h4 class="text-uppercase"> camera   $3399  </h4>
+                        <span class="text-secondary"> Nikon Z6 Mirrorless Camera with NIKKOR Z 24-70mm Lens Kit </span>
                                        
-                               </div>
-                             </div> 
-                <div class="col-4 "><div class="img">
-                                  
-                                        
-                           <img src="imgs/Nikon Camera.PNG                                                     " class="img-fluid">
-                                       
-                                    </div>
-                                    <div class="title py-4">
-                                        <h4 class="text-uppercase"> camera   $3399  </h4>
-                                        <span class="text-secondary"> Nikon Z6 Mirrorless Camera with NIKKOR Z 24-70mm Lens Kit </span>
-                                       
-                                    </div>
-                                </div>
-                 <div class="col-4 "><div class="img">
-                                  
-                                        
-                                             <img src="imgs/LG Smart TV.PNG" class="img-fluid">
-                                       
-                                    </div>
-                                    <div class="title py-4">
-                                        <h4 class="text-uppercase"> TV   $649  </h4>
-                                        <span class="text-secondary"> LG 55” 4K UHD HDR LCD webOS Smart TV (55UN7000) - 2020 </span>
-                                       
-                                    </div>
-                                </div></div>
-
-
-                
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-12">
+                    <div class="img">                  
+                        <img src="imgs/LG Smart TV.PNG" class="img-fluid">                                      
+                    </div>
+                    <div class="title py-4">
+                        <h4 class="text-uppercase"> TV   $649  </h4>
+                        <span class="text-secondary"> LG 55” 4K UHD HDR LCD webOS Smart TV (55UN7000) - 2020 </span>
+                    </div>
+                </div>
+                </div> 
             </div>
-            </div>';
-            ?>
-            <footer>
-            <div class="container">
-                <div class="row">
-                    <div class="col-6">
-                        <div class="row ">
-                            <div class="col-6">
+     </div>';
+    ?>
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-6">
+                    <div class="row ">
+                        <div class="col-6">
 
-                                <div class="text">
-                                    <h5>Categories</h5>
-                                    <ul class="list-unstyled text-small">
-                                        <li><a class="text-muted" href="">Audio</a></li>
-                                        <li><a class="text-muted" href="">Camera</a></li>
-                                        <li><a class="text-muted" href="">Computer</a></li>
-                                        <li><a class="text-muted" href="">TV</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="text">
-                                    <h5>Services</h5>
-                                    <ul class="list-unstyled text-small">
-                                        <li><a class="text-muted" href="login.php">Login</a></li>
-                                        <li><a class="text-muted" href="login.php">Register</a></li>
-                                        <li><a class="text-muted" href="login.php">My Cart</a></li>
-                                        <li><a class="text-muted" href="login.php">Checkout</a></li>
-                                    </ul>
-                                </div>
+                            <div class="text">
+                                <h5>Categories</h5>
+                                <ul class="list-unstyled text-small">
+                                    <li><a class="text-muted" href="">Audio</a></li>
+                                    <li><a class="text-muted" href="">Camera</a></li>
+                                    <li><a class="text-muted" href="">Computer</a></li>
+                                    <li><a class="text-muted" href="">TV</a></li>
+                                </ul>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-6 text-center">
-                        <div class="row ">
-                            <div class="col-6">
-                            </div>
-                            <div class="col-6">
-                                <div class="social text">
-                                    <h5>Contact</h5>
-                                    <p>xxx-xxx-xxxx</p>
-                                    <p>8888 University St</p>
-                                    <a href="#"><i class="fab fa-facebook"></i></a>
-                                    <a href="#"><i class="fab fa-instagram"></i></a>
-                                    <a href="#"><i class="fab fa-youtube"></i></a>
-                                    <a href="#"><i class="fab fa-twitter"></i></a>
-                                </div>
+                        <div class="col-6">
+                            <div class="text">
+                                <h5>Services</h5>
+                                <ul class="list-unstyled text-small">
+                                    <li><a class="text-muted" href="login.php">Login</a></li>
+                                    <li><a class="text-muted" href="login.php">Register</a></li>
+                                    <li><a class="text-muted" href="login.php">My Cart</a></li>
+                                    <li><a class="text-muted" href="login.php">Checkout</a></li>
+                                </ul>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <div class="copyrights text-center">
-                    <p class="para">
-                        <p>Copyright © 2018 ESHOP. All Rights Reserved. </p>
-                    </p>
+                <div class="col-6 text-center">
+                    <div class="row ">
+                        <div class="col-6">
+                        </div>
+                        <div class="col-6">
+                            <div class="social text">
+                                <h5>Contact</h5>
+                                <p>xxx-xxx-xxxx</p>
+                                <p>8888 University St</p>
+                                <a href="#"><i class="fab fa-facebook"></i></a>
+                                <a href="#"><i class="fab fa-instagram"></i></a>
+                                <a href="#"><i class="fab fa-youtube"></i></a>
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-        </footer>
+            <div class="copyrights text-center">
+                <p class="para">
+                    <p>Copyright © 2018 ESHOP. All Rights Reserved. </p>
+                </p>
+            </div>
+        </div>
+
+    </footer>
 
     </main>
 
@@ -293,4 +277,5 @@ echo'
     <!-- Boostrap js file-->
     <script src="js/bootstrap.min.js"></script>
 </body>
+
 </html>

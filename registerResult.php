@@ -46,87 +46,20 @@
 			</nav>
 		</div>
 	</header>
-
+	
 	<?php
 
-	// if (isset($_POST['username']) && isset($_POST['email']) && isset($_POST['password'])) {
-	// 	$data = $_POST['username'] . "," . $_POST['email'] . "," . $_POST['password'] . "\n";
-
-
-	// 	if ($handle = fopen('./filetest.txt', 'a+')) {
-	// 		fwrite($handle, $data);
-	// 		fclose($handle);
-
-	// 		echo "<p>Successfull registration</p>";
-	// 		echo "<p>Go to <a href='login.php'>Logo in</a> page</p>";
-	// 	}
-
-	// } 
-	if (isset($_POST['submit'])) {
-		$username = $_POST['username'];
-		$email = $_POST['email'];
-		$password = $_POST['password'];
-		if (empty($username)) {
-			echo "Please enter a username<br>";
-		} else $username = $username;
-
-		if (empty($email)) {
-			echo "Please enter a email address<br>";
-		} else $email = $email;
-
-		if (empty($password)) {
-			echo "Please enter a password<br>";
-		} else $password = $password;
-
-		$data = $username . "," . $email . "," . $password . "\n";
-		$handle = fopen('./filetest.txt', 'a+');
-		$file = './filetest.txt';
-
-		if (file_exists($file)) {
-			$content = file_get_contents($file);
-			$content = explode("\n", $content);
-
-			$users = array();
-			foreach ($content as $value) {
-				$user = explode(',', $value);
-				if (count($user) > 1) {
-					$users[$user[0]] = $user[1];
-				}
-			}
-
-			if (isset($users[$_POST['username']])) {
-				echo "
-				 <div class='container text-center'>
-				 <p>The user already exists, please enter a different user name.</p>
-				 <p>Go back to <a href='register.php'>Register</a></p>
-				 </div>";
-			}
-		} else {
-			echo "NO";
-		}
-
-		if (!empty($username) && !empty($email) && !empty($password) && fwrite($handle, $data) && !isset($users[$_POST['username']])) {
-			echo "
-			 <div class='container text-center'>
-			 <p>Successfull registration</p>
-			 <p>Go to <a href='login.php'>Logo in</a> page</p>
-			 </div>";
-		}
-		fclose($handle);
-		$file = './filetest.txt';
-	} else {
+	echo ("ddddd")
 	?>
-		<div class="form">
-			<h1>Registration</h1>
-			<form name="registration" action="register.php" method="post">
-				<input type="text" name="username" placeholder="Username" required />
-				<input type="email" name="email" placeholder="Email" required />
-				<input type="password" name="password" placeholder="Password" required />
-				<input type="submit" name="submit" value="Register" />
-			</form>
-		</div>
-
-	<?php } ?>
+	<div class="form">
+		<h1>Registration</h1>
+		<form name="registration" action="registerResult.php" method="post">
+			<input type="text" name="username" placeholder="Username" required />
+			<input type="email" name="email" placeholder="Email" required />
+			<input type="password" name="password" placeholder="Password" required />
+			<input type="submit" name="submit" value="Register" />
+		</form>
+	</div>
 
 	<footer>
 		<div class="container">

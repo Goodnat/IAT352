@@ -74,9 +74,10 @@
                                     <div class="about-title mx-auto my-5">
                                         <h1 class="text-uppercase title-h1">Sony</h1>
                                         <p class="para">
-                                            Sony,a7 III Full-Frame Mirrorless Camera with 28-70mm OSS Lens Kit,2799,Black
+                                            a7 III Full-Frame Mirrorless Camera with 28-70mm OSS Lens Kit
                                         </p>
-                                        <a href="#">Learned More</a>
+                                        <!--move to product area-->
+                                        <a href="#product">Learned More</a>
                                     </div>
                                 </div>
                             </div>
@@ -94,9 +95,10 @@
                                     <div class="about-title mx-auto my-5">
                                         <h1 class="text-uppercase title-h1">Samsung</h1>
                                         <p class="para">
-                                            Samsung,65" 4K UHD HDR LED Tizen Smart TV (UN65TU8500FXZC),1199,Black
+                                            65" 4K UHD HDR LED Tizen Smart TV (UN65TU8500FXZC)
                                         </p>
-                                        <a href="#">Learned More</a>
+                                        <!--move to product area-->
+                                        <a href="#product">Learned More</a>
                                     </div>
                                 </div>
                             </div>
@@ -114,9 +116,10 @@
                                     <div class="about-title mx-auto my-5">
                                         <h1 class="text-uppercase title-h1">Beats</h1>
                                         <p class="para">
-                                            Beats,by Dr. Dre Solo3 Icon On-Ear Sound Isolating Bluetooth Headphones,249,Rose Gold
+                                            by Dr. Dre Solo3 Icon On-Ear Sound Isolating Bluetooth Headphones
                                         </p>
-                                        <a href="#">Learned More</a>
+                                        <!--move to product area-->
+                                        <a href="#product">Learned More</a>
                                     </div>
                                 </div>
                             </div>
@@ -136,7 +139,7 @@
         </section>
 
         <!-- shop area start -->
-        <section class="product-area">
+        <section class="product-area" id="product">
             <div class="container">
                 <div class="project-title pb-5">
                     <h1 class="text-uppercase title-h1">New Products</h1>
@@ -144,7 +147,9 @@
                 </div>
                 <div>
                     <form action="index.php" method="get">
+                        <!-- the filter to show the product -->
                         <?php
+                        
                         if (isset($_GET['product'])) {
                             if ($_GET['product'] == "all") {
                                 $product = array("audio", "camera", "computer", "TV");
@@ -154,35 +159,36 @@
                         } else {
                             $product = array("audio", "camera", "computer", "TV");
                         }
-                        if (count($product) > 1) {
+                        
+                        if (count($product) > 1) {//if select all
                             echo " 
                             <input type='radio' name='product' value='all' selected> All 
                             <input type='radio' name='product' value='audio'> Audio   
                             <input type='radio' name='product' value='camera'> Camera           
                             <input type='radio' name='product' value='computer'> Computer  
                             <input type='radio' name='product' value='TV'>TV";
-                        } else if ($product[0] == 'audio') {
+                        } else if ($product[0] == 'audio') {//if select audio
                             echo " 
                             <input type='radio' name='product' value='all'> All 
                             <input type='radio' name='product' value='audio' selected> Audio   
                             <input type='radio' name='product' value='camera'> Camera           
                             <input type='radio' name='product' value='computer'> Computer  
                             <input type='radio' name='product' value='TV'> TV";
-                        } else if ($product[0] == 'camera') {
+                        } else if ($product[0] == 'camera') {//if select camera
                             echo " 
                             <input type='radio' name='product' value='all'> All 
                             <input type='radio' name='product' value='audio'> Audio   
                             <input type='radio' name='product' value='camera' selected> Camera           
                             <input type='radio' name='product' value='computer'> Computer  
                             <input type='radio' name='product' value='TV'> TV";
-                        } else if ($product[0] == 'computer') {
+                        } else if ($product[0] == 'computer') {//if select computer
                             echo " 
                             <input type='radio' name='product' value='all'> All 
                             <input type='radio' name='product' value='audio'> Audio   
                             <input type='radio' name='product' value='camera'> Camera           
                             <input type='radio' name='product' value='computer' selected> Computer  
                             <input type='radio' name='product' value='TV'> TV";
-                        } else if ($product[0] == 'TV') {
+                        } else if ($product[0] == 'TV') {//if select TV
                             echo " 
                             <input type='radio' name='product' value='all'> All 
                             <input type='radio' name='product' value='audio'> Audio   
@@ -192,14 +198,14 @@
                         }
 
                         ?>
-                        <input type="submit" value="  Search  " />
+                        <input type="submit" value="  Search  " /><!-- do the search -->
                     </form>
                 </div>
 
                 <div class="grid">
 
                     <?php
-
+                    //open file
                     $file = 'productsList.txt';
 
                     if ($handle = fopen($file, 'r')) {
@@ -208,7 +214,7 @@
                             if (!in_array($aLine[0], $product)) {
                                 continue;
                             }
-
+                            //show the img if the information in the .txt file correct
                             if ($aLine[0] == 'audio') {
                                 if ($aLine[1] == 'Beats') {
                                     $imgName = 'Beats Headphones.PNG';
@@ -269,21 +275,21 @@
                                     $imgName = 'LG Smart TV.PNG';
                                 }
                             }
-                            $trans=$aLine[0] . '@' . $aLine[1] . '@' . $aLine[2] . '@' . $aLine[3] ;
+                            $show=$aLine[0] . '@' . $aLine[1] . '@' . $aLine[2] . '@' . $aLine[3] ;
 
+                            //show the correct product information
                             echo '
 
-                                
                                 <div class="our-product">
                                     <div class="img">
-                                        <a class="test-popup-link" href="detail.php?id='.$trans.'">
+                                        <a class="test-popup-link" href="detail.php?id='.$show.'">
                                              <img src="imgs/' . $imgName . '" class="img-fluid">
                                         </a>
                                     </div>
                                     <div class="title py-4">
                                         <h4 class="text-uppercase">' . $aLine[1] . ' $' . $aLine[3] . '</h4>
                                         <span class="text-secondary">' . $aLine[0] . ', ' . $aLine[2] . '</span>
-                                        <div class="text-secondary"><a href="detail.php?id='.$trans.'">Detail info</a></div>
+                                        <div class="text-secondary"><a href="detail.php?id='.$show.'">Detail info</a></div>
                                     </div>
                                 </div>
                             
