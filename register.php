@@ -62,10 +62,14 @@
 	// 	}
 
 	// } 
+	
+	//when user click the button
 	if (isset($_POST['submit'])) {
 		$username = $_POST['username'];
 		$email = $_POST['email'];
 		$password = $_POST['password'];
+		
+		//test whether the username/password/email is empty
 		if (empty($username)) {
 			echo "Please enter a username<br>";
 		} else $username = $username;
@@ -77,8 +81,11 @@
 		if (empty($password)) {
 			echo "Please enter a password<br>";
 		} else $password = $password;
-
+		
+		//data
 		$data = $username . "," . $email . "," . $password . "\n";
+		
+		//create the file
 		$handle = fopen('./filetest.txt', 'a+');
 		$file = './filetest.txt';
 
@@ -94,6 +101,7 @@
 				}
 			}
 
+			//if the username already exist
 			if (isset($users[$_POST['username']])) {
 				echo "
 				 <div class='container text-center'>
@@ -105,6 +113,7 @@
 			echo "NO";
 		}
 
+		//when the user fill all information and no same username
 		if (!empty($username) && !empty($email) && !empty($password) && fwrite($handle, $data) && !isset($users[$_POST['username']])) {
 			echo "
 			 <div class='container text-center'>
@@ -112,6 +121,8 @@
 			 <p>Go to <a href='login.php'>Logo in</a> page</p>
 			 </div>";
 		}
+		
+		//close the file
 		fclose($handle);
 		$file = './filetest.txt';
 	} else {
