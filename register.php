@@ -1,3 +1,7 @@
+<!--This page is designed for user registeration-->
+<!--First, we need to determine whether user enter empty text, if so, remember-->
+<!--Then, we need to see whether user enter an already exist user name, if so, let them change to a new one-->
+<!--After successfully register, the page turns to log in page-->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -49,19 +53,6 @@
 
 	<?php
 
-	// if (isset($_POST['username']) && isset($_POST['email']) && isset($_POST['password'])) {
-	// 	$data = $_POST['username'] . "," . $_POST['email'] . "," . $_POST['password'] . "\n";
-
-
-	// 	if ($handle = fopen('./filetest.txt', 'a+')) {
-	// 		fwrite($handle, $data);
-	// 		fclose($handle);
-
-	// 		echo "<p>Successfull registration</p>";
-	// 		echo "<p>Go to <a href='login.php'>Logo in</a> page</p>";
-	// 	}
-
-	// } 
 	
 	//when user click the button
 	if (isset($_POST['submit'])) {
