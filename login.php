@@ -1,3 +1,7 @@
+<!--This page is designed as log in page-->
+<!--After user sucessfully register, the website wil turn to this page-->
+<!--If the user enter the right user name and password, show successfully log in-->
+<!--If the user enter the wrong information, show fail to log in-->
 <!DOCTYPE html>
 <html lang="en">
 
