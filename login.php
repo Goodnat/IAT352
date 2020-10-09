@@ -48,24 +48,22 @@
 	</header>
 
 	<?php
-	// if(isset($_POST['textdata'])){
-	// 	$data=$_POST['textdata'];
-	// 	$fp=fopen('data.txt','a');
-	// 	fwrite($fp,$data);
-	// 	fclose($fp);
-	// }
-
-	// echo "<html><head></head><body>";
-	// $username=(!empty($_GET['username'])?$_GET['username']:"");
-	//
+	
+	//success for now
 	$fail = false;
 
+	//create the file
 	if (isset($_POST['username']) && isset($_POST['password'])) {
 		$file = "filetest.txt";
 
+		//open the file
 		if ($handle = fopen("$file", "r")) {
 			while (!feof($handle)) {
+				
+				//use','to explode the file
 				$line = explode(",", trim(fgets($handle)));
+				
+				//log in 
 				if ($line[0] == $_POST['username'] && $line[2] == $_POST['password']) {
 					//Header("Location: register.php");
 					echo "
@@ -81,6 +79,7 @@
 		}
 	}
 
+	//if fail to log in, show some texts
 	if ($fail == true) {
 		echo "
 		<div class='container text-center'>
