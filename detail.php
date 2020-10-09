@@ -152,9 +152,9 @@
                 
 echo'
                             
-    <div class="container">
+    <div class="container" style=" panding:10px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
                 <div class="row justify-content-center align-items-center" >
-                    <div class="col-6 ">
+                    <div class="col-6 " >
                          <div class="img">
                            
                                         <a class="test-popup-link" href="">
@@ -177,6 +177,53 @@ echo'
                                     </div>
                     </div>
                 </div>
+                </div>
+                <div class="container" style="margin-top:5rem ;padding:2rem;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);" >
+                <div class="row justify-content-center align-items-center">
+                <h4 class=" text-uppercase text-center">You Might Also Like</h4>
+                </div>
+                <div class="row justify-content-center align-items-center our-product " >
+
+                <div class="col-4 "> <div class="img">
+                                  
+                                        
+                          <img src="imgs/Dell G5 Gaming PC.PNG" class="img-fluid">
+                                       
+                            </div>
+                              <div class="title py-4">
+                                        <h4 class="text-uppercase"> computer   $1699  </h4>
+                                        <span class="text-secondary">  Dell    G5 Gaming PC - Abyss Grey (Intel Core i7 9700/512GB SSD/16GB RAM/GeForce RTX 2060)  </span>
+                                       
+                               </div>
+                             </div> 
+                <div class="col-4 "><div class="img">
+                                  
+                                        
+                           <img src="imgs/Nikon Camera.PNG                                                     " class="img-fluid">
+                                       
+                                    </div>
+                                    <div class="title py-4">
+                                        <h4 class="text-uppercase"> camera   $3399  </h4>
+                                        <span class="text-secondary"> Nikon Z6 Mirrorless Camera with NIKKOR Z 24-70mm Lens Kit </span>
+                                       
+                                    </div>
+                                </div>
+                 <div class="col-4 "><div class="img">
+                                  
+                                        
+                                             <img src="imgs/LG Smart TV.PNG" class="img-fluid">
+                                       
+                                    </div>
+                                    <div class="title py-4">
+                                        <h4 class="text-uppercase"> TV   $649  </h4>
+                                        <span class="text-secondary"> LG 55” 4K UHD HDR LCD webOS Smart TV (55UN7000) - 2020 </span>
+                                       
+                                    </div>
+                                </div></div>
+
+
+                
+            </div>
             </div>';
             ?>
             <footer>
