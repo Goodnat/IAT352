@@ -51,47 +51,36 @@
 		</div>
 	</header>
 
-	<?php
-	
-	//success for now
-	$fail = false;
 
-	//create the file
-	if (isset($_POST['username']) && isset($_POST['password'])) {
-		$file = "filetest.txt";
+		<?php
+	require('db.php');
+	session_start();
+	if (isset($_POST['username'])){
+	$username = stripslashes($_REQUEST['username']);
+	$username = mysqli_real_escape_string($conn,$username);
+	$password = stripslashes($_REQUEST['password']);
+	$password = mysqli_real_escape_string($conn,$password);
 
-		//open the file
-		if ($handle = fopen("$file", "r")) {
-			while (!feof($handle)) {
-				
-				//use','to explode the file
-				$line = explode(",", trim(fgets($handle)));
-				
-				//log in 
-				if ($line[0] == $_POST['username'] && $line[2] == $_POST['password']) {
-					//Header("Location: register.php");
-					echo "
-					<div class='form register container text-center'>
-					<p>SUCESSFUL LOGIN: $line[0]<p>
-					<a href='index.php'>HOME</a>
-					</div>
-					";
-					exit;
-				}
-			}
-			$fail = true;
-		}
-	}
+	//check if the username in the database
+	//check if the user enters the right password
+	$sql = "SELECT * FROM `users` WHERE username='$username'
+	and password='".md5($password)."'";
+	$result = $conn->query($sql) or die($conn->connect_error);
+	$rows = mysqli_num_rows($result);
 
-	//if fail to log in, show some texts
-	if ($fail == true) {
-		echo "
-		<div class='container text-center'>
-			<p class='text-danger'>Failed to log in. Please try again!<p>
-		</div>";
-	}
+	//if row equal 1 means user does exist
+	if($rows==1){
+	$_SESSION['username'] = $username;
+	header("Location: index.php");
+}else{
 
-	?>
+	//else means user enters the wrong username or password
+echo "<div class='form'>
+	<h3>Username/password is incorrect.</h3>
+	<br/>Click here to <a href='login.php'>Login</a></div>";
+}
+}
+?>
 
 
 	<div class="form register container mx-auto my-5">

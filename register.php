@@ -52,72 +52,70 @@
 	</header>
 
 	<?php
+	require('db.php');
 
-	
-	//when user click the button
-	if (isset($_POST['submit'])) {
-		$username = $_POST['username'];
-		$email = $_POST['email'];
-		$password = $_POST['password'];
-		
-		//test whether the username/password/email is empty
-		if (empty($username)) {
+	//if the user press the submit button
+	if (isset($_POST['submit'])){
+		$username=$_POST['username'];
+		$email=$_POST['email'];
+		$password=$_POST['password'];
+
+		//if user enter the empty info
+		if (empty($username))
+		{
 			echo "Please enter a username<br>";
 		} else $username = $username;
 
-		if (empty($email)) {
+		if (empty($email))
+		{
 			echo "Please enter a email address<br>";
 		} else $email = $email;
 
-		if (empty($password)) {
+		if (empty($password))
+		{
 			echo "Please enter a password<br>";
 		} else $password = $password;
-		
-		//data
-		$data = $username . "," . $email . "," . $password . "\n";
-		
-		//create the file
-		$handle = fopen('./filetest.txt', 'a+');
-		$file = './filetest.txt';
 
-		if (file_exists($file)) {
-			$content = file_get_contents($file);
-			$content = explode("\n", $content);
+		if (isset($_REQUEST['username'])){
+			$username = stripslashes($_REQUEST['username']);
+			$username = mysqli_real_escape_string($conn,$username); 
+			$email = stripslashes($_REQUEST['email']);
+			$email = mysqli_real_escape_string($conn,$email);
+			$password = stripslashes($_REQUEST['password']);
+			$password = mysqli_real_escape_string($conn,$password);
+			$trn_date = date("Y-m-d H:i:s");
 
-			$users = array();
-			foreach ($content as $value) {
-				$user = explode(',', $value);
-				if (count($user) > 1) {
-					$users[$user[0]] = $user[1];
-				}
-			}
+		//check if the username already exist
+			$sql_search="SELECT username FROM users WHERE username='$username'";
+			$result_search=$conn->query($sql_search);
 
-			//if the username already exist
-			if (isset($users[$_POST['username']])) {
+	     //if number of row is not equal 0, it means the username already exist
+			if ($result_search->num_rows!=0){
+				while ($row = $result_search->fetch_assoc()) {
 				echo "
-				 <div class='container text-center'>
+				<div class='container text-center'>
 				 <p>The user already exists, please enter a different user name.</p>
 				 <p>Go back to <a href='register.php'>Register</a></p>
 				 </div>";
 			}
-		} else {
-			echo "NO";
-		}
+		}else{
 
-		//when the user fill all information and no same username
-		if (!empty($username) && !empty($email) && !empty($password) && fwrite($handle, $data) && !isset($users[$_POST['username']])) {
-			echo "
-			 <div class='container text-center'>
+				//if the username doesn't exist
+				$sql = "INSERT into `users` (username, password, email, trn_date)
+				VALUES ('$username', '".md5($password)."', '$email', '$trn_date')";
+				$result = $conn->query($sql);
+				if($result){
+					echo "
+					<div class='container text-center'>
 			 <p>Successfull registration</p>
 			 <p>Go to <a href='login.php'>Logo in</a> page</p>
 			 </div>";
+				}
+			}
 		}
-		
-		//close the file
-		fclose($handle);
-		$file = './filetest.txt';
-	} else {
-	?>
+	}else{
+			?>
+
 		<div class="form">
 			<h1>Registration</h1>
 			<form name="registration" action="register.php" method="post">
