@@ -277,9 +277,9 @@
                             }
                             $show=$aLine[0] . '@' . $aLine[1] . '@' . $aLine[2] . '@' . $aLine[3] ;
 
-                            //show the correct product information
+                           
                             echo '
-
+                            <!--show the correct product information-->
                                 <div class="our-product">
                                     <div class="img">
                                         <a class="test-popup-link" href="detail.php?id='.$show.'">
