@@ -24,87 +24,81 @@
 		<div class="main-menu">
 			<nav class="navbar navbar-expand-lg navbar-light">
 				<h1><a class="logo" href="index.php">ESHOP</a></h1>
+				<!--logo -->
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>
 				<div class="collapse navbar-collapse" id="navbarNav">
 					<div class="mr-auto"></div>
 					<ul class="navbar-nav">
-						<li class="nav-item active">
-							<a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
-						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="#">About</a>
+							<a class="nav-link" href="index.php">Home<span class="sr-only">(current)</span></a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="#">Shop</a>
 						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="#">Contact</a>
+						<li class="nav-item active">
+							<a class="nav-link" href="login.php">Account</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="index_login.php">Account</a>
+							<a class="nav-link" href="cart.php">Cart</a>
 						</li>
 					</ul>
 				</div>
 			</nav>
 		</div>
 	</header>
-
 	<?php
 	require('db.php');
 
 	//if the user press the submit button
-	if (isset($_POST['submit'])){
-		$username=$_POST['username'];
-		$email=$_POST['email'];
-		$password=$_POST['password'];
+	if (isset($_POST['submit'])) {
+		$username = $_POST['username'];
+		$email = $_POST['email'];
+		$password = $_POST['password'];
 
 		//if user enter the empty info
-		if (empty($username))
-		{
+		if (empty($username)) {
 			echo "Please enter a username<br>";
 		} else $username = $username;
 
-		if (empty($email))
-		{
+		if (empty($email)) {
 			echo "Please enter a email address<br>";
 		} else $email = $email;
 
-		if (empty($password))
-		{
+		if (empty($password)) {
 			echo "Please enter a password<br>";
 		} else $password = $password;
 
-		if (isset($_REQUEST['username'])){
+		if (isset($_REQUEST['username'])) {
 			$username = stripslashes($_REQUEST['username']);
-			$username = mysqli_real_escape_string($conn,$username); 
+			$username = mysqli_real_escape_string($conn, $username);
 			$email = stripslashes($_REQUEST['email']);
-			$email = mysqli_real_escape_string($conn,$email);
+			$email = mysqli_real_escape_string($conn, $email);
 			$password = stripslashes($_REQUEST['password']);
-			$password = mysqli_real_escape_string($conn,$password);
+			$password = mysqli_real_escape_string($conn, $password);
 			$trn_date = date("Y-m-d H:i:s");
 
-		//check if the username already exist
-			$sql_search="SELECT username FROM users WHERE username='$username'";
-			$result_search=$conn->query($sql_search);
+			//check if the username already exist
+			$sql_search = "SELECT username FROM users WHERE username='$username'";
+			$result_search = $conn->query($sql_search);
 
-	     //if number of row is not equal 0, it means the username already exist
-			if ($result_search->num_rows!=0){
+			//if number of row is not equal 0, it means the username already exist
+			if ($result_search->num_rows != 0) {
 				while ($row = $result_search->fetch_assoc()) {
-				echo "
+					echo "
 				<div class='container text-center'>
 				 <p>The user already exists, please enter a different user name.</p>
 				 <p>Go back to <a href='register.php'>Register</a></p>
 				 </div>";
-			}
-		}else{
+				}
+			} else {
 
 				//if the username doesn't exist
 				$sql = "INSERT into `users` (username, password, email, trn_date)
-				VALUES ('$username', '".md5($password)."', '$email', '$trn_date')";
+				VALUES ('$username', '" . md5($password) . "', '$email', '$trn_date')";
 				$result = $conn->query($sql);
-				if($result){
+				if ($result) {
 					echo "
 					<div class='container text-center'>
 			 <p>Successfull registration</p>
@@ -113,8 +107,8 @@
 				}
 			}
 		}
-	}else{
-			?>
+	} else {
+	?>
 
 		<div class="form">
 			<h1>Registration</h1>
@@ -136,13 +130,13 @@
 						<div class="col-6">
 
 							<div class="text">
-								<h5>Categories</h5>
-								<ul class="list-unstyled text-small">
-									<li><a class="text-muted" href="">Audio</a></li>
-									<li><a class="text-muted" href="">Camera</a></li>
-									<li><a class="text-muted" href="">Computer</a></li>
-									<li><a class="text-muted" href="">TV</a></li>
-								</ul>
+								<h5>ERSHOP</h5>
+                                <ul class="list-unstyled text-small">
+                                    <li><a class="text-muted" href="index.php">Home</a></li>
+                                    <li><a class="text-muted" href="index.php">Shop</a></li>
+                                    <li><a class="text-muted" href="login.php">Account</a></li>
+                                    <li><a class="text-muted" href="cart.php">Cart</a></li>
+                                </ul>
 							</div>
 						</div>
 						<div class="col-6">
@@ -165,7 +159,7 @@
 						<div class="col-6">
 							<div class="social text">
 								<h5>Contact</h5>
-								<p>xxx-xxx-xxxx</p>
+								<p>604-666-8488</p>
 								<p>8888 University St</p>
 								<a href="#"><i class="fab fa-facebook"></i></a>
 								<a href="#"><i class="fab fa-instagram"></i></a>
@@ -185,7 +179,6 @@
 		</div>
 
 	</footer>
-
 	</main>
 
 

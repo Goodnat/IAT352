@@ -20,33 +20,31 @@
 		<div class="main-menu">
 			<nav class="navbar navbar-expand-lg navbar-light">
 				<h1><a class="logo" href="index.php">ESHOP</a></h1>
+				<!--logo -->
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>
 				<div class="collapse navbar-collapse" id="navbarNav">
 					<div class="mr-auto"></div>
 					<ul class="navbar-nav">
-						<li class="nav-item active">
-							<a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
-						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="#">About</a>
+							<a class="nav-link" href="index.php">Home<span class="sr-only">(current)</span></a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="#">Shop</a>
 						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="#">Contact</a>
+						<li class="nav-item active">
+							<a class="nav-link" href="login.php">Account</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="index_login.php">Account</a>
+							<a class="nav-link" href="cart.php">Cart</a>
 						</li>
 					</ul>
 				</div>
 			</nav>
 		</div>
 	</header>
-	
+
 	<?php
 
 	echo ("ddddd")
@@ -69,13 +67,13 @@
 						<div class="col-6">
 
 							<div class="text">
-								<h5>Categories</h5>
-								<ul class="list-unstyled text-small">
-									<li><a class="text-muted" href="">Audio</a></li>
-									<li><a class="text-muted" href="">Camera</a></li>
-									<li><a class="text-muted" href="">Computer</a></li>
-									<li><a class="text-muted" href="">TV</a></li>
-								</ul>
+								<h5>ERSHOP</h5>
+                                <ul class="list-unstyled text-small">
+                                    <li><a class="text-muted" href="index.php">Home</a></li>
+                                    <li><a class="text-muted" href="index.php">Shop</a></li>
+                                    <li><a class="text-muted" href="login.php">Account</a></li>
+                                    <li><a class="text-muted" href="cart.php">Cart</a></li>
+                                </ul>
 							</div>
 						</div>
 						<div class="col-6">
@@ -98,7 +96,7 @@
 						<div class="col-6">
 							<div class="social text">
 								<h5>Contact</h5>
-								<p>xxx-xxx-xxxx</p>
+								<p>604-666-8488</p>
 								<p>8888 University St</p>
 								<a href="#"><i class="fab fa-facebook"></i></a>
 								<a href="#"><i class="fab fa-instagram"></i></a>

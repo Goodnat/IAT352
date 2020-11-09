@@ -24,26 +24,24 @@
 		<div class="main-menu">
 			<nav class="navbar navbar-expand-lg navbar-light">
 				<h1><a class="logo" href="index.php">ESHOP</a></h1>
+				<!--logo -->
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
 				</button>
 				<div class="collapse navbar-collapse" id="navbarNav">
 					<div class="mr-auto"></div>
 					<ul class="navbar-nav">
-						<li class="nav-item active">
-							<a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
-						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="#">About</a>
+							<a class="nav-link" href="index.php">Home<span class="sr-only">(current)</span></a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="#">Shop</a>
 						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="#">Contact</a>
+						<li class="nav-item active">
+							<a class="nav-link" href="login.php">Account</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="login.php">Account</a>
+							<a class="nav-link" href="cart.php">Cart</a>
 						</li>
 					</ul>
 				</div>
@@ -52,35 +50,36 @@
 	</header>
 
 
-		<?php
+
+	<?php
 	require('db.php');
 	session_start();
-	if (isset($_POST['username'])){
-	$username = stripslashes($_REQUEST['username']);
-	$username = mysqli_real_escape_string($conn,$username);
-	$password = stripslashes($_REQUEST['password']);
-	$password = mysqli_real_escape_string($conn,$password);
+	if (isset($_POST['username'])) {
+		$username = stripslashes($_REQUEST['username']);
+		$username = mysqli_real_escape_string($conn, $username);
+		$password = stripslashes($_REQUEST['password']);
+		$password = mysqli_real_escape_string($conn, $password);
 
-	//check if the username in the database
-	//check if the user enters the right password
-	$sql = "SELECT * FROM `users` WHERE username='$username'
-	and password='".md5($password)."'";
-	$result = $conn->query($sql) or die($conn->connect_error);
-	$rows = mysqli_num_rows($result);
+		//check if the username in the database
+		//check if the user enters the right password
+		$sql = "SELECT * FROM `users` WHERE username='$username'
+	and password='" . md5($password) . "'";
+		$result = $conn->query($sql) or die($conn->connect_error);
+		$rows = mysqli_num_rows($result);
 
-	//if row equal 1 means user does exist
-	if($rows==1){
-	$_SESSION['username'] = $username;
-	header("Location: index.php");
-}else{
+		//if row equal 1 means user does exist
+		if ($rows == 1) {
+			$_SESSION['username'] = $username;
+			header("Location: index.php");
+		} else {
 
-	//else means user enters the wrong username or password
-echo "<div class='form'>
+			//else means user enters the wrong username or password
+			echo "<div class='form'>
 	<h3>Username/password is incorrect.</h3>
 	<br/>Click here to <a href='login.php'>Login</a></div>";
-}
-}
-?>
+		}
+	}
+	?>
 
 
 	<div class="form register container mx-auto my-5">
@@ -101,13 +100,13 @@ echo "<div class='form'>
 						<div class="col-6">
 
 							<div class="text">
-								<h5>Categories</h5>
-								<ul class="list-unstyled text-small">
-									<li><a class="text-muted" href="">Audio</a></li>
-									<li><a class="text-muted" href="">Camera</a></li>
-									<li><a class="text-muted" href="">Computer</a></li>
-									<li><a class="text-muted" href="">TV</a></li>
-								</ul>
+								<h5>ERSHOP</h5>
+                                <ul class="list-unstyled text-small">
+                                    <li><a class="text-muted" href="index.php">Home</a></li>
+                                    <li><a class="text-muted" href="index.php">Shop</a></li>
+                                    <li><a class="text-muted" href="login.php">Account</a></li>
+                                    <li><a class="text-muted" href="cart.php">Cart</a></li>
+                                </ul>
 							</div>
 						</div>
 						<div class="col-6">
@@ -130,7 +129,7 @@ echo "<div class='form'>
 						<div class="col-6">
 							<div class="social text">
 								<h5>Contact</h5>
-								<p>xxx-xxx-xxxx</p>
+								<p>604-666-8488</p>
 								<p>8888 University St</p>
 								<a href="#"><i class="fab fa-facebook"></i></a>
 								<a href="#"><i class="fab fa-instagram"></i></a>

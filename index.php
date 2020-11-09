@@ -23,6 +23,7 @@
         <div class="main-menu">
             <nav class="navbar navbar-expand-lg navbar-light">
                 <h1><a class="logo" href="index.php">ESHOP</a></h1>
+                <!--logo -->
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -30,19 +31,16 @@
                     <div class="mr-auto"></div>
                     <ul class="navbar-nav">
                         <li class="nav-item active">
-                            <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">About</a>
+                            <a class="nav-link" href="index.php">Home<span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Shop</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Contact</a>
+                            <a class="nav-link" href="login.php">Account</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="login.php">Account</a>
+                            <a class="nav-link" href="cart.php">Cart</a>
                         </li>
                     </ul>
                 </div>
@@ -149,7 +147,7 @@
                     <form action="index.php" method="get">
                         <!-- the filter to show the product -->
                         <?php
-                        
+
                         if (isset($_GET['product'])) {
                             if ($_GET['product'] == "all") {
                                 $product = array("audio", "camera", "computer", "TV");
@@ -159,36 +157,36 @@
                         } else {
                             $product = array("audio", "camera", "computer", "TV");
                         }
-                        
-                        if (count($product) > 1) {//if select all
+
+                        if (count($product) > 1) { //if select all
                             echo " 
                             <input type='radio' name='product' value='all' selected> All 
                             <input type='radio' name='product' value='audio'> Audio   
                             <input type='radio' name='product' value='camera'> Camera           
                             <input type='radio' name='product' value='computer'> Computer  
                             <input type='radio' name='product' value='TV'>TV";
-                        } else if ($product[0] == 'audio') {//if select audio
+                        } else if ($product[0] == 'audio') { //if select audio
                             echo " 
                             <input type='radio' name='product' value='all'> All 
                             <input type='radio' name='product' value='audio' selected> Audio   
                             <input type='radio' name='product' value='camera'> Camera           
                             <input type='radio' name='product' value='computer'> Computer  
                             <input type='radio' name='product' value='TV'> TV";
-                        } else if ($product[0] == 'camera') {//if select camera
+                        } else if ($product[0] == 'camera') { //if select camera
                             echo " 
                             <input type='radio' name='product' value='all'> All 
                             <input type='radio' name='product' value='audio'> Audio   
                             <input type='radio' name='product' value='camera' selected> Camera           
                             <input type='radio' name='product' value='computer'> Computer  
                             <input type='radio' name='product' value='TV'> TV";
-                        } else if ($product[0] == 'computer') {//if select computer
+                        } else if ($product[0] == 'computer') { //if select computer
                             echo " 
                             <input type='radio' name='product' value='all'> All 
                             <input type='radio' name='product' value='audio'> Audio   
                             <input type='radio' name='product' value='camera'> Camera           
                             <input type='radio' name='product' value='computer' selected> Computer  
                             <input type='radio' name='product' value='TV'> TV";
-                        } else if ($product[0] == 'TV') {//if select TV
+                        } else if ($product[0] == 'TV') { //if select TV
                             echo " 
                             <input type='radio' name='product' value='all'> All 
                             <input type='radio' name='product' value='audio'> Audio   
@@ -275,21 +273,21 @@
                                     $imgName = 'LG Smart TV.PNG';
                                 }
                             }
-                            $show=$aLine[0] . '@' . $aLine[1] . '@' . $aLine[2] . '@' . $aLine[3] ;
+                            $show = $aLine[0] . '@' . $aLine[1] . '@' . $aLine[2] . '@' . $aLine[3];
 
                             //show the correct product information
                             echo '
 
                                 <div class="our-product">
                                     <div class="img">
-                                        <a class="test-popup-link" href="detail.php?id='.$show.'">
+                                        <a class="test-popup-link" href="detail.php?id=' . $show . '">
                                              <img src="imgs/' . $imgName . '" class="img-fluid">
                                         </a>
                                     </div>
                                     <div class="title py-4">
                                         <h4 class="text-uppercase">' . $aLine[1] . ' $' . $aLine[3] . '</h4>
                                         <span class="text-secondary">' . $aLine[0] . ', ' . $aLine[2] . '</span>
-                                        <div class="text-secondary"><a href="detail.php?id='.$show.'">Detail info</a></div>
+                                        <div class="text-secondary"><a href="detail.php?id=' . $show . '">Detail info</a></div>
                                     </div>
                                 </div>
                             
@@ -309,12 +307,12 @@
                             <div class="col-6">
 
                                 <div class="text">
-                                    <h5>Categories</h5>
+                                    <h5>ERSHOP</h5>
                                     <ul class="list-unstyled text-small">
-                                        <li><a class="text-muted" href="">Audio</a></li>
-                                        <li><a class="text-muted" href="">Camera</a></li>
-                                        <li><a class="text-muted" href="">Computer</a></li>
-                                        <li><a class="text-muted" href="">TV</a></li>
+                                        <li><a class="text-muted" href="index.php">Home</a></li>
+                                        <li><a class="text-muted" href="index.php">Shop</a></li>
+                                        <li><a class="text-muted" href="login.php">Account</a></li>
+                                        <li><a class="text-muted" href="cart.php">Cart</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -338,7 +336,7 @@
                             <div class="col-6">
                                 <div class="social text">
                                     <h5>Contact</h5>
-                                    <p>xxx-xxx-xxxx</p>
+                                    <p>604-666-8488</p>
                                     <p>8888 University St</p>
                                     <a href="#"><i class="fab fa-facebook"></i></a>
                                     <a href="#"><i class="fab fa-instagram"></i></a>

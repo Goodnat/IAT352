@@ -30,21 +30,17 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <div class="mr-auto"></div>
                     <ul class="navbar-nav">
-                        <li class="nav-item active">
-                            <!-- navigation button-->
-                            <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
-                        </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">About</a>
+                            <a class="nav-link" href="index.php">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Shop</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Contact</a>
+                            <a class="nav-link" href="login.php">Account</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="login.php">Account</a>
+                            <a class="nav-link" href="cart.php">Cart</a>
                         </li>
                     </ul>
                 </div>
@@ -224,12 +220,12 @@
                         <div class="col-6">
 
                             <div class="text">
-                                <h5>Categories</h5>
+                                <h5>ERSHOP</h5>
                                 <ul class="list-unstyled text-small">
-                                    <li><a class="text-muted" href="">Audio</a></li>
-                                    <li><a class="text-muted" href="">Camera</a></li>
-                                    <li><a class="text-muted" href="">Computer</a></li>
-                                    <li><a class="text-muted" href="">TV</a></li>
+                                    <li><a class="text-muted" href="index.php">Home</a></li>
+                                    <li><a class="text-muted" href="index.php">Shop</a></li>
+                                    <li><a class="text-muted" href="login.php">Account</a></li>
+                                    <li><a class="text-muted" href="cart.php">Cart</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -253,7 +249,7 @@
                         <div class="col-6">
                             <div class="social text">
                                 <h5>Contact</h5>
-                                <p>xxx-xxx-xxxx</p>
+                                <p>604-666-8488</p>
                                 <p>8888 University St</p>
                                 <a href="#"><i class="fab fa-facebook"></i></a>
                                 <a href="#"><i class="fab fa-instagram"></i></a>
