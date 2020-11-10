@@ -30,13 +30,10 @@
 					<div class="mr-auto"></div>
 					<ul class="navbar-nav">
 						<li class="nav-item">
-							<a class="nav-link" href="index.php">Home<span class="sr-only">(current)</span></a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="#">Shop</a>
+							<a class="nav-link" href="index.php">Shop</a>
 						</li>
 						<li class="nav-item active">
-							<a class="nav-link" href="login.php">Account</a>
+							<a class="nav-link" href="login.php">Account<span class="sr-only">(current)</span></a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="cart.php">Cart</a>
@@ -49,26 +46,29 @@
 
 
 
+
 	<?php
-require 'db.php'; //connection to db code
-include "auth_sessionNotActiveCheck.php";
-?>
+	require 'db.php'; //connection to db code
+	include "auth_sessionNotActiveCheck.php";
+	?>
 
 	<!DOCTYPE html>
-  <html>
-    <head>
-      <meta charset="utf-8">
-      <title> Members Only</title>
-    </head>
+	<html>
 
-    <body>
-        <div class="form">
-          <p>Welcome <?php echo $_SESSION['username']; ?>!</p>
-          <p>You password is alreay reset.</p>
-          <a href="index.php">Goto home page</a>
-</div>
-    </body>
-  </html>
+	<head>
+		<meta charset="utf-8">
+		<title> Members Only</title>
+	</head>
+
+	<body>
+		<div class="form">
+			<p>Welcome <?php echo $_SESSION['username']; ?>!</p>
+			<p>You password is alreay reset.</p>
+			<a href="index.php">Goto home page</a>
+		</div>
+	</body>
+
+	</html>
 
 
 	<!-- <div class="form register container mx-auto my-5">
@@ -90,12 +90,12 @@ include "auth_sessionNotActiveCheck.php";
 
 							<div class="text">
 								<h5>ERSHOP</h5>
-                                <ul class="list-unstyled text-small">
-                                    <li><a class="text-muted" href="index.php">Home</a></li>
-                                    <li><a class="text-muted" href="index.php">Shop</a></li>
-                                    <li><a class="text-muted" href="login.php">Account</a></li>
-                                    <li><a class="text-muted" href="cart.php">Cart</a></li>
-                                </ul>
+								<ul class="list-unstyled text-small">
+									<li><a class="text-muted" href="index.php">Home</a></li>
+									<li><a class="text-muted" href="index.php">Shop</a></li>
+									<li><a class="text-muted" href="login.php">Account</a></li>
+									<li><a class="text-muted" href="cart.php">Cart</a></li>
+								</ul>
 							</div>
 						</div>
 						<div class="col-6">

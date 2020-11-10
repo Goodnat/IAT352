@@ -31,10 +31,7 @@
                     <div class="mr-auto"></div>
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="index.php">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Shop</a>
+                            <a class="nav-link" href="index.php">Shop</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="login.php">Account</a>

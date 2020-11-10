@@ -32,10 +32,7 @@
 					<div class="mr-auto"></div>
 					<ul class="navbar-nav">
 						<li class="nav-item">
-							<a class="nav-link" href="index.php">Home<span class="sr-only">(current)</span></a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="#">Shop</a>
+							<a class="nav-link" href="index.php">Shop</a>
 						</li>
 						<li class="nav-item active">
 							<a class="nav-link" href="login.php">Account</a>
@@ -52,26 +49,54 @@
 
 
 	<?php
-	require('db.php');//connection to db code
-  	include("auth_sessionNotActiveCheck.php");
-  	?>
+	require('db.php'); //connection to db code
+	include("auth_sessionNotActiveCheck.php");
+	?>
 
 	<!DOCTYPE html>
-  <html>
-    <head>
-      <meta charset="utf-8">
-      <title> Members Only</title>
-    </head>
+	<html>
 
-    <body>
-        <div class="form">
-          <p>Welcome <?php echo $_SESSION['username']; ?>!</p>
-          <p>You're successfully login to our members' page.</p>
-          <br><a href="logout.php">Logout</a>
-          <br><a href="new_pass.php">Reset Password</a>
-</div>
-    </body>
-  </html>
+	<head>
+		<meta charset="utf-8">
+		<title> Members Only</title>
+	</head>
+
+	<body>
+		<div class="jumbotron">
+			<div class="container">
+				<h1 class="display-3">Welcome, <?php echo $_SESSION['username']; ?>!</h1>
+				<p>You're successfully be our members!</p>
+				<p>You can check you last order, change the order payment, change the order delivery</p>
+				<p><a class="btn btn-secondary" href="logout.php" role="button">Log out&raquo;</a></p>
+				<p><a class="btn btn-secondary" href="new_pass.php" role="button">Reset Password&raquo;</a></p>
+			</div>
+		</div>
+
+		<div class="container">
+			<!-- Example row of columns -->
+			<div class="row">
+				<div class="col-md-4">
+					<h2>Heading</h2>
+					<p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+					<p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+				</div>
+				<div class="col-md-4">
+					<h2>Heading</h2>
+					<p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+					<p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+				</div>
+				<div class="col-md-4">
+					<h2>Heading</h2>
+					<p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+					<p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+				</div>
+			</div>
+
+			<hr>
+
+	</body>
+
+	</html>
 
 
 	<!-- <div class="form register container mx-auto my-5">
@@ -94,12 +119,12 @@
 
 							<div class="text">
 								<h5>ERSHOP</h5>
-                                <ul class="list-unstyled text-small">
-                                    <li><a class="text-muted" href="index.php">Home</a></li>
-                                    <li><a class="text-muted" href="index.php">Shop</a></li>
-                                    <li><a class="text-muted" href="login.php">Account</a></li>
-                                    <li><a class="text-muted" href="cart.php">Cart</a></li>
-                                </ul>
+								<ul class="list-unstyled text-small">
+									<li><a class="text-muted" href="index.php">Home</a></li>
+									<li><a class="text-muted" href="index.php">Shop</a></li>
+									<li><a class="text-muted" href="login.php">Account</a></li>
+									<li><a class="text-muted" href="cart.php">Cart</a></li>
+								</ul>
 							</div>
 						</div>
 						<div class="col-6">

@@ -33,13 +33,10 @@
 					<div class="mr-auto"></div>
 					<ul class="navbar-nav">
 						<li class="nav-item">
-							<a class="nav-link" href="index.php">Home<span class="sr-only">(current)</span></a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="#">Shop</a>
+							<a class="nav-link" href="index.php">Shop</a>
 						</li>
 						<li class="nav-item active">
-							<a class="nav-link" href="login.php">Account</a>
+							<a class="nav-link" href="login.php">Account<span class="sr-only">(current)</span></a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="cart.php">Cart</a>
@@ -52,40 +49,41 @@
 
 
 
+
 	<?php
-require 'db.php'; //connection to db code
-include "auth_sessionNotActiveCheck.php";
+	require 'db.php'; //connection to db code
+	include "auth_sessionNotActiveCheck.php";
 
-$errors = [];
+	$errors = [];
 
-//when user press the submit button
-if (isset($_POST['new_password'])) {
-	$new_pass = mysqli_real_escape_string($conn, $_POST['new_pass']);
-	$new_pass_c = mysqli_real_escape_string($conn, $_POST['new_pass_c']);
+	//when user press the submit button
+	if (isset($_POST['new_password'])) {
+		$new_pass = mysqli_real_escape_string($conn, $_POST['new_pass']);
+		$new_pass_c = mysqli_real_escape_string($conn, $_POST['new_pass_c']);
 
-	//when user enter an empty psw, show warnings
-	if (empty($new_pass) || empty($new_pass_c)) {
-		array_push($errors, "Password is required");
+		//when user enter an empty psw, show warnings
+		if (empty($new_pass) || empty($new_pass_c)) {
+			array_push($errors, "Password is required");
+		}
+
+		//when the new psw doesn't match each other, show warnings
+		if ($new_pass !== $new_pass_c) {
+			array_push($errors, "Password do not match");
+		}
+
+		//if there is no error
+		if (count($errors) == 0) {
+
+			$new_pass = md5($new_pass);
+			//update the password
+			$sql = "UPDATE users SET `password`='$new_pass' where username='" . $_SESSION['username'] . "'";
+			echo $sql;
+			$results = mysqli_query($conn, $sql);
+			//when psw successfully changed, turn inton resetpswsuccessful page
+			header('location: resetpswsuccessful.php');
+		}
 	}
-
-	//when the new psw doesn't match each other, show warnings
-	if ($new_pass !== $new_pass_c) {
-		array_push($errors, "Password do not match");
-	}
-
-	//if there is no error
-	if (count($errors) == 0) {
-		
-		$new_pass = md5($new_pass);
-		//update the password
-		$sql = "UPDATE users SET `password`='$new_pass' where username='" . $_SESSION['username'] . "'";
-		echo $sql;
-		$results = mysqli_query($conn, $sql);
-		//when psw successfully changed, turn inton resetpswsuccessful page
-		header('location: resetpswsuccessful.php');
-	}
-}
-?>
+	?>
 
 
 	<div class="form register container mx-auto my-5">
@@ -107,12 +105,12 @@ if (isset($_POST['new_password'])) {
 
 							<div class="text">
 								<h5>ERSHOP</h5>
-                                <ul class="list-unstyled text-small">
-                                    <li><a class="text-muted" href="index.php">Home</a></li>
-                                    <li><a class="text-muted" href="index.php">Shop</a></li>
-                                    <li><a class="text-muted" href="login.php">Account</a></li>
-                                    <li><a class="text-muted" href="cart.php">Cart</a></li>
-                                </ul>
+								<ul class="list-unstyled text-small">
+									<li><a class="text-muted" href="index.php">Home</a></li>
+									<li><a class="text-muted" href="index.php">Shop</a></li>
+									<li><a class="text-muted" href="login.php">Account</a></li>
+									<li><a class="text-muted" href="cart.php">Cart</a></li>
+								</ul>
 							</div>
 						</div>
 						<div class="col-6">
