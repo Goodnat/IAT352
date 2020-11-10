@@ -52,34 +52,37 @@
 
 
 	<?php
-	require('db.php');
-	session_start();
-	if (isset($_POST['username'])) {
-		$username = stripslashes($_REQUEST['username']);
-		$username = mysqli_real_escape_string($conn, $username);
-		$password = stripslashes($_REQUEST['password']);
-		$password = mysqli_real_escape_string($conn, $password);
+	require('db.php');//connection to db code
+  	include("auth_sessionActiveCheck.php");
 
-		//check if the username in the database
-		//check if the user enters the right password
-		$sql = "SELECT * FROM `users` WHERE username='$username'
-	and password='" . md5($password) . "'";
-		$result = $conn->query($sql) or die($conn->connect_error);
-		$rows = mysqli_num_rows($result);
+	// session_start();
+	if (isset($_POST['username'])){
+	$username = stripslashes($_REQUEST['username']);// removes backslashes
+	$username = mysqli_real_escape_string($conn,$username);
+	$password = stripslashes($_REQUEST['password']);
+	$password = mysqli_real_escape_string($conn,$password);
 
-		//if row equal 1 means user does exist
-		if ($rows == 1) {
-			$_SESSION['username'] = $username;
-			header("Location: index.php");
-		} else {
+	//check if the username in the database
+	//check if the user enters the right password
+	$sql = "SELECT * FROM `users` WHERE username='$username'
+	and password='".md5($password)."'";
+	$result = $conn->query($sql) or die($conn->connect_error);
+	$rows = mysqli_num_rows($result);
 
-			//else means user enters the wrong username or password
-			echo "<div class='form'>
-	<h3>Username/password is incorrect.</h3>
-	<br/>Click here to <a href='login.php'>Login</a></div>";
-		}
-	}
-	?>
+	//if row equal 1 means user does exist
+	if($rows==1){
+	$_SESSION['username'] = $username;
+	header("Location: membersLogin.php");
+}else{
+
+	//else means user enters the wrong username or password
+echo "<div class='form'>
+	<h3>Username/password is incorrect.</h3>";
+	
+	// echo "<p>Not registered yet? <a href='register.php'>Register Here</a></p>";
+}
+}
+?>
 
 
 	<div class="form register container mx-auto my-5">
