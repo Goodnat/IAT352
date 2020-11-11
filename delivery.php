@@ -44,95 +44,88 @@
             </nav>
         </div>
     </header>
+    <main>
+        <div class="container">
+            <form class="needs-validation" method="post" action="">
+                <h4 class="mb-3">Shipping address</h4>
+                <div class="mb-3">
+                    <label for="name">Recipient Name</label>
+                    <input type="text" class="form-control" name="recipient_name" placeholder="Nick_Peter" value="" required>
+                </div>
 
-    <div class="container">
-        <div class="row">
+                <div class="mb-3">
+                    <label for="phone">Phone</label>
+                    <input type="text" class="form-control" name="recipient_phone" placeholder="xxxxxxxxxx" required>
+                </div>
 
-            <div class="col-md-5 order-md-2 mb-4">
-                <h4 class="d-flex justify-content-between align-items-center mb-3">
-                    <span class="text-muted">Your cart</span>
-                    <span class="badge badge-secondary badge-pill">3</span>
-                </h4>
-                <ul class="list-group mb-3">
-                    <li class="list-group-item d-flex justify-content-between">
-                        <span>Total (USD)</span>
-                        <strong>$20</strong>
-                    </li>
-                </ul>
-            </div>
+                <div class="mb-3">
+                    <label for="address">Address</label>
+                    <input type="text" class="form-control" name="street_address" placeholder="1234 Main St" required>
+                </div>
 
-            <div class="col-md-7">
-
-                <form class="needs-validation" method="post" action="cart.php">
-                    <h4 class="mb-3">Payment</h4>
-
-                    <div class="mb-3">
-                        <label for="cc-name">Name on card</label>
-                        <input type="text" class="form-control" name="card_name" required>
-                        <small class="text-muted">Full name as displayed on card</small>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label for="country">Country</label>
+                        <input type="text" class="form-control" name="country" placeholder="Canada" required>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="cc-number">Credit card number</label>
-                        <input type="text" class="form-control" name="card_number" required>
+                    <div class="col-md-4 mb-3">
+                        <label for="address">Province</label>
+                        <input type="text" class="form-control" name="province" placeholder="BC" required>
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="cc-expiration">Expiration</label>
-                            <input type="date" class="form-control" name="expiry_date" required>
-                        </div>
-
-                        <div class="col-md-6 mb-3">
-                            <label for="cc-cvv">CVV</label>
-                            <input class="form-control" type="number" maxlength="3" pattern="([0-9]|[0-9]|[0-9])" name="card_cvc" required>
-                        </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="address">City</label>
+                        <input type="text" class="form-control" name="city" placeholder="Surrey" required>
                     </div>
+                </div>
 
-                    <hr class="mb-4">
-                    <?php
-                    require('db.php');
+                <div class="mb-4">
+                    <label for="zip">Zip</label>
+                    <input type="text" class="form-control" name="postal_code" placeholder="xxxxxx" required>
+                </div>
 
-                    $cardName = (!empty($_POST['card_name']) ? $_POST['card_name'] : "");
-                    $cardNumber = (!empty($_POST['card_number']) ? $_POST['card_number'] : "");
-                    $expiryDate = (!empty($_POST['expiry_date']) ? $_POST['expiry_date'] : "");
-                    $cardCvc = (!empty($_POST['card_cvc']) ? $_POST['card_cvc'] : "");
+                <hr class="mb-4">
 
-                    $sql = "INSERT INTO `payment` (card_name, card_number, expiry_date, card_cvc)
-                     VALUES ('$cardName','$cardNumber','$expiryDate','$cardCvc') ON DUPLICATE KEY UPDATE payment_id=  VALUES(card_number) + VALUES(card_cvc); ";
-                    $result = mysqli_query($conn, $sql);
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="same-address">
+                    <label class="custom-control-label" for="same-address">Shipping address is the same as my billing address</label>
+                </div>
 
-                    // if ($result) {
-                    //     echo "
-                    //     <div class='container text-center'>
-                    //         <h2>Submit Successfully</h2>
-                    //         <h2><a href='delivery.php'>Go to Next Step</a></h2>
-                    //     </div>";
-                    // } else {
-                    //     echo "<p>Error: " . $sql . "</p>" . mysqli_error($conn);
-                    // }
+                <hr class="mb-4">
 
-                    if ($result) {
-                        echo  '
-                        <p>Submit Successfully</p>
-                        <p><a class="btn btn-secondary w-25" href="delivery.php" role="button">Next Step&raquo;</a></p>
-                        ';
-                    } else {
-                        echo '
-                        <button class="btn btn-dark btn-lg" type="submit"  name="submit" value ="submit">Submit</button>
-                        ';
-                    }
-                    mysqli_close($conn);
+                <button class="btn btn-dark btn-lg" type="submit">Place Order</button>
+            </form>
+            <?php
+            require('db.php');
 
-                    ?>
+            $recipientName = (!empty($_POST['recipient_name']) ? $_POST['recipient_name'] : "");
+            $recipientPhone = (!empty($_POST['recipient_phone']) ? $_POST['recipient_phone'] : "");
+            $streetAddress = (!empty($_POST['street_address']) ? $_POST['street_address'] : "");
+            $country = (!empty($_POST['country']) ? $_POST['country'] : "");
+            $province = (!empty($_POST['province']) ? $_POST['province'] : "");
+            $city = (!empty($_POST['city']) ? $_POST['city'] : "");
+            $postalCode = (!empty($_POST['postal_code']) ? $_POST['postal_code'] : "");
 
-                </form>
+            $sql = "INSERT INTO `delivery` (recipient_name, recipient_phone, street_address, country, province, city, postal_code)
+                     VALUES ('$recipientName',' $recipientPhone','$streetAddress','$country', ' $province', '$city', '$postalCode') ON DUPLICATE KEY UPDATE deliverey_id= '$recipientPhone'+1 ; ";
+            $result = mysqli_query($conn, $sql);
 
+            if ($result) {
+                echo  '
+                <p>Submit Successfully</p>
+                <p><a class="btn btn-secondary w-25" href="order.php" role="button">Next Step&raquo;</a></p>
+                ';
+            } else {
+                echo '
+                <button class="btn btn-dark btn-lg" type="submit"  name="submit" value ="submit">Submit</button>
+                ';
+            }
+            mysqli_close($conn);
 
-            </div>
-
+            ?>
         </div>
-    </div>
+    </main>
     <footer>
         <div class="container">
             <div class="row">

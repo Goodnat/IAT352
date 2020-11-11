@@ -3,7 +3,7 @@
 $servername="localhost";
 $username="root";
 $password="";
-$dbname="register";
+$dbname="pengyu_li";
 
 $conn=new mysqli($servername, $username, $password, $dbname);
 if($conn->connect_error){

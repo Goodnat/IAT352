@@ -34,10 +34,10 @@
                             <a class="nav-link" href="index.php">Shop</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="login.php">Account</a>
+                            <a class="nav-link" href="membersLogin.php">Account</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="cart.php">Cart</a>
+                            <a class="nav-link" href="membersLogin.php">Cart</a>
                         </li>
                     </ul>
                 </div>
@@ -212,17 +212,16 @@
     <footer>
         <div class="container">
             <div class="row">
-                <div class="col-6">
+            <div class="col-6">
                     <div class="row ">
                         <div class="col-6">
 
                             <div class="text">
                                 <h5>ERSHOP</h5>
                                 <ul class="list-unstyled text-small">
-                                    <li><a class="text-muted" href="index.php">Home</a></li>
                                     <li><a class="text-muted" href="index.php">Shop</a></li>
-                                    <li><a class="text-muted" href="login.php">Account</a></li>
-                                    <li><a class="text-muted" href="cart.php">Cart</a></li>
+                                    <li><a class="text-muted" href="membersLogin.php">Account</a></li>
+                                    <li><a class="text-muted" href="membersLogin.php">Cart</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -231,9 +230,9 @@
                                 <h5>Services</h5>
                                 <ul class="list-unstyled text-small">
                                     <li><a class="text-muted" href="login.php">Login</a></li>
-                                    <li><a class="text-muted" href="login.php">Register</a></li>
-                                    <li><a class="text-muted" href="login.php">My Cart</a></li>
-                                    <li><a class="text-muted" href="login.php">Checkout</a></li>
+                                    <li><a class="text-muted" href="register.php">Register</a></li>
+                                    <li><a class="text-muted" href="membersLogin.php">My Cart</a></li>
+                                    <li><a class="text-muted" href="membersLogin.php">Order History</a></li>
                                 </ul>
                             </div>
                         </div>

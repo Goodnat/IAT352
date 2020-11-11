@@ -45,94 +45,22 @@
         </div>
     </header>
 
-    <div class="container">
-        <div class="row">
+    <main>
+        <div class="container text-center" style="margin:5em auto;">
 
-            <div class="col-md-5 order-md-2 mb-4">
-                <h4 class="d-flex justify-content-between align-items-center mb-3">
-                    <span class="text-muted">Your cart</span>
-                    <span class="badge badge-secondary badge-pill">3</span>
-                </h4>
-                <ul class="list-group mb-3">
-                    <li class="list-group-item d-flex justify-content-between">
-                        <span>Total (USD)</span>
-                        <strong>$20</strong>
-                    </li>
-                </ul>
-            </div>
+            <h1>Thank you for shopping with us!</h1>
 
-            <div class="col-md-7">
+            <p>Your order number is <em>#339339</em>. We have received your order and will process it immediately.</p>
+            <p>You will see the order detail in your account.</p>
 
-                <form class="needs-validation" method="post" action="cart.php">
-                    <h4 class="mb-3">Payment</h4>
+            <h3>Please feel free to continue shoppping at any time.</h3>
 
-                    <div class="mb-3">
-                        <label for="cc-name">Name on card</label>
-                        <input type="text" class="form-control" name="card_name" required>
-                        <small class="text-muted">Full name as displayed on card</small>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="cc-number">Credit card number</label>
-                        <input type="text" class="form-control" name="card_number" required>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="cc-expiration">Expiration</label>
-                            <input type="date" class="form-control" name="expiry_date" required>
-                        </div>
-
-                        <div class="col-md-6 mb-3">
-                            <label for="cc-cvv">CVV</label>
-                            <input class="form-control" type="number" maxlength="3" pattern="([0-9]|[0-9]|[0-9])" name="card_cvc" required>
-                        </div>
-                    </div>
-
-                    <hr class="mb-4">
-                    <?php
-                    require('db.php');
-
-                    $cardName = (!empty($_POST['card_name']) ? $_POST['card_name'] : "");
-                    $cardNumber = (!empty($_POST['card_number']) ? $_POST['card_number'] : "");
-                    $expiryDate = (!empty($_POST['expiry_date']) ? $_POST['expiry_date'] : "");
-                    $cardCvc = (!empty($_POST['card_cvc']) ? $_POST['card_cvc'] : "");
-
-                    $sql = "INSERT INTO `payment` (card_name, card_number, expiry_date, card_cvc)
-                     VALUES ('$cardName','$cardNumber','$expiryDate','$cardCvc') ON DUPLICATE KEY UPDATE payment_id=  VALUES(card_number) + VALUES(card_cvc); ";
-                    $result = mysqli_query($conn, $sql);
-
-                    // if ($result) {
-                    //     echo "
-                    //     <div class='container text-center'>
-                    //         <h2>Submit Successfully</h2>
-                    //         <h2><a href='delivery.php'>Go to Next Step</a></h2>
-                    //     </div>";
-                    // } else {
-                    //     echo "<p>Error: " . $sql . "</p>" . mysqli_error($conn);
-                    // }
-
-                    if ($result) {
-                        echo  '
-                        <p>Submit Successfully</p>
-                        <p><a class="btn btn-secondary w-25" href="delivery.php" role="button">Next Step&raquo;</a></p>
-                        ';
-                    } else {
-                        echo '
-                        <button class="btn btn-dark btn-lg" type="submit"  name="submit" value ="submit">Submit</button>
-                        ';
-                    }
-                    mysqli_close($conn);
-
-                    ?>
-
-                </form>
-
-
-            </div>
+            <p><a class="btn btn-secondary w-25 mt-3" href="membersLogin.php" role="button">Personal Account&raquo;</a></p>
+            <p><a class="btn btn-secondary w-25" href="index.php" role="button">Continue shopping&raquo;</a></p>
 
         </div>
-    </div>
+    </main>
+
     <footer>
         <div class="container">
             <div class="row">

@@ -19,6 +19,7 @@
 </head>
 
 <body>
+
 	<header class="header_area">
 		<!-- code source from https://getbootstrap.com/docs/4.5/components/navbar/ -->
 		<div class="main-menu">
@@ -35,10 +36,10 @@
 							<a class="nav-link" href="index.php">Shop</a>
 						</li>
 						<li class="nav-item active">
-							<a class="nav-link" href="login.php">Account<span class="sr-only">(current)</span></a>
+							<a class="nav-link" href="membersLogin.php">Account<span class="sr-only">(current)</span></a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="cart.php">Cart</a>
+							<a class="nav-link" href="membersLogin.php">Cart</a>
 						</li>
 					</ul>
 				</div>
@@ -46,51 +47,54 @@
 		</div>
 	</header>
 
+	<main>
+
+		<?php
+		require('db.php'); //connection to db code
+		include("auth_sessionActiveCheck.php");
+
+		// session_start();
+		if (isset($_POST['username'])) {
+			$username = stripslashes($_REQUEST['username']); // removes backslashes
+			$username = mysqli_real_escape_string($conn, $username);
+			$password = stripslashes($_REQUEST['password']);
+			$password = mysqli_real_escape_string($conn, $password);
+
+			//check if the username in the database
+			//check if the user enters the right password
+			$sql = "SELECT * FROM `users` WHERE username='$username' and password='" . md5($password) . "'";
+			$result = $conn->query($sql) or die($conn->connect_error);
+			$rows = mysqli_num_rows($result);
+
+			//if row equal 1 means user does exist
+			if ($rows == 1) {
+				$_SESSION['username'] = $username;
+				header("Location: membersLogin.php");
+			} else {
+
+				//else means user enters the wrong username or password
+				echo "<div class='form'>
+					<h3>Username/password is incorrect.</h3>
+				</div>";
 
 
-	<?php
-	require('db.php');//connection to db code
-  	include("auth_sessionActiveCheck.php");
-
-	// session_start();
-	if (isset($_POST['username'])){
-	$username = stripslashes($_REQUEST['username']);// removes backslashes
-	$username = mysqli_real_escape_string($conn,$username);
-	$password = stripslashes($_REQUEST['password']);
-	$password = mysqli_real_escape_string($conn,$password);
-
-	//check if the username in the database
-	//check if the user enters the right password
-	$sql = "SELECT * FROM `users` WHERE username='$username'
-	and password='".md5($password)."'";
-	$result = $conn->query($sql) or die($conn->connect_error);
-	$rows = mysqli_num_rows($result);
-
-	//if row equal 1 means user does exist
-	if($rows==1){
-	$_SESSION['username'] = $username;
-	header("Location: membersLogin.php");
-}else{
-
-	//else means user enters the wrong username or password
-echo "<div class='form'>
-	<h3>Username/password is incorrect.</h3>";
-	
-	// echo "<p>Not registered yet? <a href='register.php'>Register Here</a></p>";
-}
-}
-?>
+				// echo "<p>Not registered yet? <a href='register.php'>Register Here</a></p>";
+			}
+		}
+		?>
 
 
-	<div class="form register container mx-auto my-5">
-		<h1>Log In</h1>
-		<form action="" method="post" name="login">
-			<input type="text" name="username" placeholder="Username" required />
-			<input type="password" name="password" placeholder="Password" required />
-			<input name="submit" type="submit" value="Login" />
-		</form>
-		<p>Not registered yet? <a href='register.php'>Register Here</a></p>
-	</div>
+		<div class="form register container mx-auto my-5">
+			<h1>Log In</h1>
+			<form action="" method="post" name="login">
+				<input type="text" name="username" placeholder="Username" required />
+				<input type="password" name="password" placeholder="Password" required />
+				<input name="submit" type="submit" value="Login" />
+			</form>
+			<p>Not registered yet? <a href='register.php'>Register Here</a></p>
+		</div>
+
+	</main>
 
 	<footer>
 		<div class="container">
@@ -101,12 +105,11 @@ echo "<div class='form'>
 
 							<div class="text">
 								<h5>ERSHOP</h5>
-                                <ul class="list-unstyled text-small">
-                                    <li><a class="text-muted" href="index.php">Home</a></li>
-                                    <li><a class="text-muted" href="index.php">Shop</a></li>
-                                    <li><a class="text-muted" href="login.php">Account</a></li>
-                                    <li><a class="text-muted" href="cart.php">Cart</a></li>
-                                </ul>
+								<ul class="list-unstyled text-small">
+									<li><a class="text-muted" href="index.php">Shop</a></li>
+									<li><a class="text-muted" href="membersLogin.php">Account</a></li>
+									<li><a class="text-muted" href="membersLogin.php">Cart</a></li>
+								</ul>
 							</div>
 						</div>
 						<div class="col-6">
@@ -114,9 +117,9 @@ echo "<div class='form'>
 								<h5>Services</h5>
 								<ul class="list-unstyled text-small">
 									<li><a class="text-muted" href="login.php">Login</a></li>
-									<li><a class="text-muted" href="login.php">Register</a></li>
-									<li><a class="text-muted" href="login.php">My Cart</a></li>
-									<li><a class="text-muted" href="login.php">Checkout</a></li>
+									<li><a class="text-muted" href="register.php">Register</a></li>
+									<li><a class="text-muted" href="membersLogin.php">My Cart</a></li>
+									<li><a class="text-muted" href="membersLogin.php">Order History</a></li>
 								</ul>
 							</div>
 						</div>
@@ -150,7 +153,6 @@ echo "<div class='form'>
 
 	</footer>
 
-	</main>
 
 
 	<!-- Jquery js file-->

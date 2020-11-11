@@ -34,10 +34,10 @@
                             <a class="nav-link" href="index.php">Shop<span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="login.php">Account</a>
+                            <a class="nav-link" href="membersLogin.php">Account</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="cart.php">Cart</a>
+                            <a class="nav-link" href="membersLogin.php">Cart</a>
                         </li>
                     </ul>
                 </div>
@@ -295,66 +295,65 @@
                 </div>
             </div>
         </section>
+    </main>
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-6">
+                    <div class="row ">
+                        <div class="col-6">
 
-        <footer>
-            <div class="container">
-                <div class="row">
-                    <div class="col-6">
-                        <div class="row ">
-                            <div class="col-6">
-
-                                <div class="text">
-                                    <h5>ERSHOP</h5>
-                                    <ul class="list-unstyled text-small">
-                                        <li><a class="text-muted" href="index.php">Home</a></li>
-                                        <li><a class="text-muted" href="index.php">Shop</a></li>
-                                        <li><a class="text-muted" href="login.php">Account</a></li>
-                                        <li><a class="text-muted" href="cart.php">Cart</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="text">
-                                    <h5>Services</h5>
-                                    <ul class="list-unstyled text-small">
-                                        <li><a class="text-muted" href="login.php">Login</a></li>
-                                        <li><a class="text-muted" href="login.php">Register</a></li>
-                                        <li><a class="text-muted" href="login.php">My Cart</a></li>
-                                        <li><a class="text-muted" href="login.php">Checkout</a></li>
-                                    </ul>
-                                </div>
+                            <div class="text">
+                                <h5>ERSHOP</h5>
+                                <ul class="list-unstyled text-small">
+                                    <li><a class="text-muted" href="index.php">Shop</a></li>
+                                    <li><a class="text-muted" href="membersLogin.php">Account</a></li>
+                                    <li><a class="text-muted" href="membersLogin.php">Cart</a></li>
+                                </ul>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-6 text-center">
-                        <div class="row ">
-                            <div class="col-6">
-                            </div>
-                            <div class="col-6">
-                                <div class="social text">
-                                    <h5>Contact</h5>
-                                    <p>604-666-8488</p>
-                                    <p>8888 University St</p>
-                                    <a href="#"><i class="fab fa-facebook"></i></a>
-                                    <a href="#"><i class="fab fa-instagram"></i></a>
-                                    <a href="#"><i class="fab fa-youtube"></i></a>
-                                    <a href="#"><i class="fab fa-twitter"></i></a>
-                                </div>
+                        <div class="col-6">
+                            <div class="text">
+                                <h5>Services</h5>
+                                <ul class="list-unstyled text-small">
+                                    <li><a class="text-muted" href="login.php">Login</a></li>
+                                    <li><a class="text-muted" href="register.php">Register</a></li>
+                                    <li><a class="text-muted" href="membersLogin.php">My Cart</a></li>
+                                    <li><a class="text-muted" href="membersLogin.php">Order History</a></li>
+                                </ul>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <div class="copyrights text-center">
-                    <p class="para">
-                        <p>Copyright © 2018 ESHOP. All Rights Reserved. </p>
-                    </p>
+                <div class="col-6 text-center">
+                    <div class="row ">
+                        <div class="col-6">
+                        </div>
+                        <div class="col-6">
+                            <div class="social text">
+                                <h5>Contact</h5>
+                                <p>604-666-8488</p>
+                                <p>8888 University St</p>
+                                <a href="#"><i class="fab fa-facebook"></i></a>
+                                <a href="#"><i class="fab fa-instagram"></i></a>
+                                <a href="#"><i class="fab fa-youtube"></i></a>
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-        </footer>
+            <div class="copyrights text-center">
+                <p class="para">
+                    <p>Copyright © 2018 ESHOP. All Rights Reserved. </p>
+                </p>
+            </div>
+        </div>
 
-    </main>
+    </footer>
+
+
 
 
     <!-- Jquery js file-->
