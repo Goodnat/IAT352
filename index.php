@@ -47,91 +47,90 @@
 
     <main>
 
-        <section class="slides-area container">
 
-            <!-- code source from https://getbootstrap.com/docs/4.5/components/carousel/-->
-            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-                <ol class="carousel-indicators">
-                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                </ol>
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <div class="container">
-                            <div class="row text-center">
-                                <div class="col-6">
-                                    <div class="about-title">
-                                        <img src="imgs/Sony Camera.PNG" class="d-block w-50" alt="1">
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="about-title mx-auto my-5">
-                                        <h1 class="text-uppercase title-h1">Sony</h1>
-                                        <p class="para">
-                                            a7 III Full-Frame Mirrorless Camera with 28-70mm OSS Lens Kit
-                                        </p>
-                                        <!--move to product area-->
-                                        <a href="#product">Learned More</a>
-                                    </div>
+
+        <!-- code source from https://getbootstrap.com/docs/4.5/components/carousel/-->
+        <div id="carouselExampleIndicators" class="carousel slide jumbotron" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="container">
+                        <div class="row text-center align-items-center">
+                            <div class="col-6">
+                                <div class="about-title">
+                                    <img src="imgs/Sony Camera.PNG" class="d-block w-75" alt="1">
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="container">
-                            <div class="row text-center">
-                                <div class="col-6">
-                                    <div class="about-title">
-                                        <img src="imgs/Samsung Smart TV.PNG" class="d-block w-50" alt="1">
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="about-title mx-auto my-5">
-                                        <h1 class="text-uppercase title-h1">Samsung</h1>
-                                        <p class="para">
-                                            65" 4K UHD HDR LED Tizen Smart TV (UN65TU8500FXZC)
-                                        </p>
-                                        <!--move to product area-->
-                                        <a href="#product">Learned More</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="container">
-                            <div class="row text-center">
-                                <div class="col-6">
-                                    <div class="about-title">
-                                        <img src="imgs/Beats Headphones.PNG" class="d-block w-50" alt="1">
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="about-title mx-auto my-5">
-                                        <h1 class="text-uppercase title-h1">Beats</h1>
-                                        <p class="para">
-                                            by Dr. Dre Solo3 Icon On-Ear Sound Isolating Bluetooth Headphones
-                                        </p>
-                                        <!--move to product area-->
-                                        <a href="#product">Learned More</a>
-                                    </div>
+                            <div class="col-6">
+                                <div class="about-title mx-auto my-5">
+                                    <h1 class="text-uppercase title-h1">Sony</h1>
+                                    <p class="para">
+                                        a7 III Full-Frame Mirrorless Camera with 28-70mm OSS Lens Kit
+                                    </p>
+                                    <!--move to product area-->
+                                    <a href="#product">Learned More</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
+                <div class="carousel-item">
+                    <div class="container">
+                        <div class="row text-center align-items-center">
+                            <div class="col-6">
+                                <div class="about-title">
+                                    <img src="imgs/Samsung Smart TV.PNG" class="d-block w-75" alt="1">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="about-title mx-auto my-5">
+                                    <h1 class="text-uppercase title-h1">Samsung</h1>
+                                    <p class="para">
+                                        65" 4K UHD HDR LED Tizen Smart TV (UN65TU8500FXZC)
+                                    </p>
+                                    <!--move to product area-->
+                                    <a href="#product">Learned More</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="container">
+                        <div class="row text-center align-items-center">
+                            <div class="col-6">
+                                <div class="about-title">
+                                    <img src="imgs/Beats Headphones.PNG" class="d-block w-75" alt="1">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="about-title mx-auto my-5">
+                                    <h1 class="text-uppercase title-h1">Beats</h1>
+                                    <p class="para">
+                                        by Dr. Dre Solo3 Icon On-Ear Sound Isolating Bluetooth Headphones
+                                    </p>
+                                    <!--move to product area-->
+                                    <a href="#product">Learned More</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
 
-        </section>
 
         <!-- shop area start -->
         <section class="product-area" id="product">

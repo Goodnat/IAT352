@@ -74,25 +74,36 @@
 
 		<div class="container">
 			<!-- Example row of columns -->
-			<div class="row">
+			<div class="row mt-5">
 				<div class="col-md-4">
-					<h2>Heading</h2>
-					<p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-					<p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+					<div class="card" style="width: 20rem;">
+						<div class="card-body">
+							<h2>Order History</h2>
+							<p class="card-text">Track your recent purchases and view past orders with ease.</p>
+							<p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+						</div>
+					</div>
 				</div>
 				<div class="col-md-4">
-					<h2>Heading</h2>
-					<p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-					<p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+					<div class="card" style="width: 20rem;">
+						<div class="card-body">
+							<h2>Order Payment</h2>
+							<p class="card-text">Manage your payment details for the order.</p>
+							<p><a class="btn btn-secondary" href="#" role="button">Change Payment Info &raquo;</a></p>
+						</div>
+					</div>
 				</div>
-				<div class="col-md-4">
-					<h2>Heading</h2>
-					<p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-					<p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+				<div class="col-md-4 ">
+					<div class="card" style="width: 20rem;">
+						<div class="card-body">
+							<h2>Order Delivery</h2>
+							<p class="card-text">Manage your delivery details for the order.</p>
+							<p><a class="btn btn-secondary" href="#" role="button">Change Delivery Info &raquo;</a></p>
+						</div>
+					</div>
 				</div>
 			</div>
 
-			<hr>
 
 	</body>
 

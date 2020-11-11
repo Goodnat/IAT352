@@ -63,6 +63,70 @@
 
             <div class="col-md-7">
 
+                <form class="needs-validation" method="post" action="cart.php">
+                    <h4 class="mb-3">Payment</h4>
+
+                    <div class="mb-3">
+                        <label for="cc-name">Name on card</label>
+                        <input type="text" class="form-control" name="card_name" required>
+                        <small class="text-muted">Full name as displayed on card</small>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="cc-number">Credit card number</label>
+                        <input type="text" class="form-control" name="card_number" required>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="cc-expiration">Expiration</label>
+                            <input type="date" class="form-control" name="expiry_date" required>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="cc-cvv">CVV</label>
+                            <input class="form-control" type="number" maxlength="3" pattern="([0-9]|[0-9]|[0-9])" name="card_cvc" required>
+                        </div>
+                    </div>
+                    <button class="btn btn-dark btn-lg" type="submit" name="submit" value="submit">Submit</button>
+                    <hr class="mb-4">
+                    <?php
+                    require('db.php');
+
+                    $cardName = (!empty($_POST['card_name']) ? $_POST['card_name'] : "");
+                    $cardNumber = (!empty($_POST['card_number']) ? $_POST['card_number'] : "");
+                    $expiryDate = (!empty($_POST['expiry_date']) ? $_POST['expiry_date'] : "");
+                    $cardCvc = (!empty($_POST['card_cvc']) ? $_POST['card_cvc'] : "");
+
+                    $sql = "INSERT INTO `payment` (card_name, card_number, expiry_date, card_cvc)
+                     VALUES ('$cardName','$cardNumber','$expiryDate','$cardCvc'); ";
+                    $result = mysqli_query($conn, $sql);
+
+                    if ($result) {
+                        echo "
+                        <div class='container text-center'>
+                            <h2>Submit Successfully</h2>
+                            <h2><a href='delivery.php'>Go to Next Step</a></h2>
+                        </div>";
+                    } else {
+                        echo "<p>Error: " . $sql . "</p>" . mysqli_error($conn);
+                    }
+
+                    // if ($result) {
+                    //     echo  '
+                    //     <p>Submit Successfully</p>
+                    //     <p><a class="btn btn-secondary w-25" href="delivery.php" role="button">Next Step&raquo;</a></p>
+                    //     ';
+                    // } else {
+                    //     echo '
+                        
+                    //     ';
+                    // }
+                    mysqli_close($conn);
+
+                    ?>
+
+                </form>
 
 
             </div>

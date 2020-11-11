@@ -100,7 +100,7 @@
 					echo "
 					<div class='container text-center'>
 			 <p>Successfull registration</p>
-			 <p>Go to <a href='login.php'>Logo in</a> page</p>
+			 <p>Go to <a href='login.php'>Log in</a> page</p>
 			 </div>";
 				}
 			}

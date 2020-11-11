@@ -88,16 +88,16 @@
 
 	<div class="form register container mx-auto my-5">
 		<h2>Change password</h2>
-<?php
-if (count($errors) > 0) {
-	echo "<h5>ERROR: </h5>";
-	echo "<ul style='color:red'>";
-	foreach ($errors as $value) {
-		echo "<li>$value </li>";
-	}
-	echo "</ul>";
-}
-?>
+		<?php
+		if (count($errors) > 0) {
+			echo "<h5>ERROR: </h5>";
+			echo "<ul style='color:red'>";
+			foreach ($errors as $value) {
+				echo "<li>$value </li>";
+			}
+			echo "</ul>";
+		}
+		?>
 		<form action="new_pass.php" method="post" name="login">
 			<div>
 				<label>New password</label>
