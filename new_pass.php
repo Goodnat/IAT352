@@ -87,11 +87,29 @@
 
 
 	<div class="form register container mx-auto my-5">
-		<h1>Log In</h1>
-		<form action="" method="post" name="login">
-			<input type="text" name="username" placeholder="Username" required />
-			<input type="password" name="password" placeholder="Password" required />
-			<input name="submit" type="submit" value="Login" />
+		<h2>Change password</h2>
+<?php
+if (count($errors) > 0) {
+	echo "<h5>ERROR: </h5>";
+	echo "<ul style='color:red'>";
+	foreach ($errors as $value) {
+		echo "<li>$value </li>";
+	}
+	echo "</ul>";
+}
+?>
+		<form action="new_pass.php" method="post" name="login">
+			<div>
+				<label>New password</label>
+				<input type="password" name="new_pass">
+			</div>
+
+			<div>
+				<label>Confirm new password</label>
+				<input type="password" name="new_pass_c">
+			</div>
+			<br><input name="new_password" type="submit" value="submit" />
+
 		</form>
 		<p>Not registered yet? <a href='register.php'>Register Here</a></p>
 	</div>
