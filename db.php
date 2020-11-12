@@ -1,9 +1,10 @@
+<!--This file is used to connect to the database-->
 <?php
 
 $servername="localhost";
 $username="root";
 $password="";
-$dbname="pengyu_li";
+$dbname="Eshop";
 
 $conn=new mysqli($servername, $username, $password, $dbname);
 if($conn->connect_error){
