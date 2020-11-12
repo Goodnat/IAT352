@@ -154,24 +154,7 @@ input[type='submit']:hover {
     color: #777777;
 }
 
-<<<<<<< HEAD
 .our-product .img {
-=======
-.product-area .grid {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    margin: auto;
-}
-
-.product-area .grid .our-product {
-    flex-basis: 20rem;
-    flex-grow: 1;
-    padding: 4rem 1rem;
-}
-
-.product-area .grid .our-product .img {
->>>>>>> main
     width: 100%;
 }
 

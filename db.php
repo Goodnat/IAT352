@@ -4,7 +4,7 @@
 $servername="localhost";
 $username="root";
 $password="";
-$dbname="Eshop";
+$dbname="pengyu_li";
 
 $conn=new mysqli($servername, $username, $password, $dbname);
 if($conn->connect_error){
