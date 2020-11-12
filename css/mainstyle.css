@@ -154,29 +154,15 @@ input[type='submit']:hover {
     color: #777777;
 }
 
-
-/* .product-area .grid {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    margin: auto;
-}
-
-.product-area .grid .our-product {
-    flex-basis: 20rem;
-    flex-grow: 1;
-    padding: 4rem 1rem;
-} */
-
-.product-area .grid .our-product .img {
+.our-product .img {
     width: 100%;
 }
 
-.product-area .grid .our-product>.title h4 {
+.our-product>.title h4 {
     font: normal 700 25px/12px 'Roboto', cursive;
 }
 
-.product-area .grid .our-product .img a:hover img {
+.our-product .img a:hover img {
     filter: brightness(1.1) drop-shadow(1px 8px 30px #b1afaf);
 }
 
