@@ -45,174 +45,49 @@
         </div>
     </header>
 
-
     <?php
-
-
-    $currentProduction = $_GET['id'];
-    //get the value from the url
-
-    $info = explode('@', $currentProduction); //explode the array to the alone string
-    if ($info[0] == 'audio') { // check the string is equal to the condition
-        if ($info[1] == 'Beats') { //double check the string is equal to the condition
-            $type = 'audio';
-            $brand = 'Beats';
-            $imgName = 'Beats Headphones.PNG'; // depends on what production you click on the index page.
-        }
-    }
-    if ($info[0] == 'audio') {
-        if ($info[1] == 'Sony') {
-            $type = 'audio';
-            $brand = 'Sony';
-            $imgName = 'Sony Headphones.PNG';
-        }
-    }
-    if ($info[0] == 'audio') {
-        if ($info[1] == 'Beats') {
-            $type = 'audio';
-            $brand = 'Beats';
-            $imgName = 'Beats Headphones.PNG';
-        }
-    }
-    if ($info[0] == 'audio') {
-        if ($info[1] == 'Bose') {
-            $type = 'audio';
-            $brand = 'Bose';
-            $imgName = 'Bose Headphones.PNG';
-        }
-    }
-    if ($info[0] == 'camera') {
-        if ($info[1] == 'Fujifilm') {
-            $type = 'camera';
-            $brand = 'Fujifilm';
-            $imgName = 'Fujifilm Camera.PNG';
-        }
-    }
-    if ($info[0] == 'camera') {
-        if ($info[1] == 'Sony') {
-            $type = 'camera';
-            $brand = 'Sony';
-            $imgName = 'Sony Camera.PNG';
-        }
-    }
-    if ($info[0] == 'camera') {
-        if ($info[1] == 'Nikon') {
-            $type = 'camera';
-            $brand = 'Nikon';
-            $imgName = 'Nikon Camera.PNG';
-        }
-    }
-    if ($info[0] == 'computer') {
-        if ($info[1] == 'Dell') {
-            $type = 'computer';
-            $brand = 'Dell';
-            $imgName = 'Dell G5 Gaming PC.PNG';
-        }
-    }
-    if ($info[0] == 'computer') {
-        if ($info[1] == 'ASUS') {
-            $type = 'computer';
-            $brand = 'ASUS';
-            $imgName = 'ASUS VivoBook.PNG';
-        }
-    }
-    if ($info[0] == 'computer') {
-        if ($info[1] == 'HP') {
-            $type = 'computer';
-            $brand = 'HP';
-            $imgName = 'HP Gaming Laptop.PNG';
-        }
-    }
-    if ($info[0] == 'TV') {
-        if ($info[1] == 'Samsung') {
-            $type = 'TV';
-            $brand = 'Samsung';
-            $imgName = 'Samsung Smart TV.PNG';
-        }
-    }
-    if ($info[0] == 'TV') {
-        if ($info[1] == 'Sony') {
-            $type = 'TV';
-            $brand = 'Sony';
-            $imgName = 'Sony Smart TV.PNG';
-        }
-    }
-    if ($info[0] == 'TV') {
-        if ($info[1] == 'LG') {
-            $type = 'TV';
-            $brand = 'LG';
-            $imgName = 'LG Smart TV.PNG';
-        }
-    }
-
-
-
-    echo '
-    <!-- set a container to store the product pic and detail information -->                        
-    <div class="container detail" > 
-
-                <div class="row justify-content-center align-items-center" >
-                    <div class="col-md-6 col-sm-12" >
-                        <div class="img">
-                            <a class="test-popup-link" href="">
-                                    <img src="imgs/' . $imgName . '" class="img-fluid">
-                            </a>
+    include("db.php");
+    $id = intval($_GET['id']);
+    $sql = "SELECT * FROM `product` INNER JOIN `category` ON product.category_id = category.category_id WHERE product.product_id=$id";
+    $result = mysqli_query($conn, $sql);
+    while ($row = mysqli_fetch_array($result)) {
+        echo '
+        <!-- set a container to store the product pic and detail information -->                        
+        <div class="container detail" > 
+                    <div class="row justify-content-center align-items-center" >
+                        <div class="col-md-6 col-sm-12" >
+                            <div class="img">
+                                <a class="test-popup-link" href="">
+                                    <img src="imgs/' . $row['product_id'] . '.PNG" class="img-fluid">
+                                </a>
+                            </div>
+                            <div class="py-5">
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-12">
+                            <div class="title py-5" >
+                                <h1 class="text-uppercase">' . $row['category_name'] . ' $' . $row['price'] . '</h1>
+                                <h5 class="text-uppercase">' . $row['name'] . '</h5>                            
+                                <button type="button" class="btn btn-dark btn-lg mt-5">ADD TO CART</button>   
+                                <div class="mt-5">
+                                    <p ><strong>Sold and shipped by ESHOP</strong></p> 
+                                    <h3>Overview:</h3>
+                                    <p class="">"' . $row['description'] . '"</p>      
+                                </div>                                             
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-6 col-sm-12">
-                        <div class="title py-5" >
-                            <h1 class="text-uppercase"> ' . $info[0] . '</h1>
-                            <h3 class="text-uppercase">' . $info[1] . ' $' . $info[3] . '</h3>
-                            <p class="">"' . $info[2] . '"</p>
-                            <button type="button" class="btn btn-dark btn-lg">BUY</button>                                                           
-                         </div>
+                    <hr>
                     </div>
                 </div>
-                <hr>
-                </div>
-                <div class="container p-2 mt-5">  <!-- set a container to store the other production pic and information-->
-                <div class="row justify-content-center align-items-center">
-                    <h4 class=" text-uppercase text-center">You Might Also Like</h4> <!-- the title --> 
+         </div>';
+    }
 
-                </div>
-                <div class="row justify-content-center align-items-center our-product " >
-                <div class="col-md-4 col-sm-12"> 
-                    <div class="img">
-                        <img src="imgs/Dell G5 Gaming PC.PNG" class="img-fluid">             
-                    </div>
-                    <div class="title py-4">
-                        <h4 class="text-uppercase"> computer   $1699  </h4>
-                        <span class="text-secondary">  Dell    G5 Gaming PC - Abyss Grey (Intel Core i7 9700/512GB SSD/16GB RAM/GeForce RTX 2060)  </span>
-                    </div>
-                </div> 
-                <div class="col-md-4 col-sm-12">
-                    <div class="img">
-                        <img src="imgs/Nikon Camera.PNG" class="img-fluid">
-                                       
-                    </div>
-                    <div class="title py-4">
-                        <h4 class="text-uppercase"> camera   $3399  </h4>
-                        <span class="text-secondary"> Nikon Z6 Mirrorless Camera with NIKKOR Z 24-70mm Lens Kit </span>
-                                       
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-12">
-                    <div class="img">                  
-                        <img src="imgs/LG Smart TV.PNG" class="img-fluid">                                      
-                    </div>
-                    <div class="title py-4">
-                        <h4 class="text-uppercase"> TV   $649  </h4>
-                        <span class="text-secondary"> LG 55” 4K UHD HDR LCD webOS Smart TV (55UN7000) - 2020 </span>
-                    </div>
-                </div>
-                </div> 
-            </div>
-     </div>';
     ?>
     <footer>
         <div class="container">
             <div class="row">
-            <div class="col-6">
+                <div class="col-6">
                     <div class="row ">
                         <div class="col-6">
 

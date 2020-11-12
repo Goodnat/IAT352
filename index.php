@@ -62,7 +62,7 @@
                         <div class="row text-center align-items-center">
                             <div class="col-6">
                                 <div class="about-title">
-                                    <img src="imgs/Sony Camera.PNG" class="d-block w-75" alt="1">
+                                    <img src="imgs/5.PNG" class="d-block w-75" alt="1">
                                 </div>
                             </div>
                             <div class="col-6">
@@ -83,7 +83,7 @@
                         <div class="row text-center align-items-center">
                             <div class="col-6">
                                 <div class="about-title">
-                                    <img src="imgs/Samsung Smart TV.PNG" class="d-block w-75" alt="1">
+                                    <img src="imgs/10.PNG" class="d-block w-75" alt="1">
                                 </div>
                             </div>
                             <div class="col-6">
@@ -104,7 +104,7 @@
                         <div class="row text-center align-items-center">
                             <div class="col-6">
                                 <div class="about-title">
-                                    <img src="imgs/Beats Headphones.PNG" class="d-block w-75" alt="1">
+                                    <img src="imgs/1.PNG" class="d-block w-75" alt="1">
                                 </div>
                             </div>
                             <div class="col-6">
@@ -140,158 +140,103 @@
                     <h1 class="text-uppercase title-h1">Best Sales</h1>
                 </div>
                 <div>
-                    <form action="index.php" method="get">
+                    <form action="index.php" method="post">
+
                         <!-- the filter to show the product -->
-                        <?php
+                        <!-- all the form checked as when the query has been submitted. -->
+                        <label>
+                            <input type="checkbox" name="category[]" value="1" /> AUDIO
+                        </label>
 
-                        if (isset($_GET['product'])) {
-                            if ($_GET['product'] == "all") {
-                                $product = array("audio", "camera", "computer", "TV");
-                            } else {
-                                $product = array($_GET['product']);
-                            }
-                        } else {
-                            $product = array("audio", "camera", "computer", "TV");
-                        }
+                        <label>
+                            <input type="checkbox" name="category[]" value="2" /> CAMERA
+                        </label>
 
-                        if (count($product) > 1) { //if select all
-                            echo " 
-                            <input type='radio' name='product' value='all' selected> All 
-                            <input type='radio' name='product' value='audio'> Audio   
-                            <input type='radio' name='product' value='camera'> Camera           
-                            <input type='radio' name='product' value='computer'> Computer  
-                            <input type='radio' name='product' value='TV'>TV";
-                        } else if ($product[0] == 'audio') { //if select audio
-                            echo " 
-                            <input type='radio' name='product' value='all'> All 
-                            <input type='radio' name='product' value='audio' selected> Audio   
-                            <input type='radio' name='product' value='camera'> Camera           
-                            <input type='radio' name='product' value='computer'> Computer  
-                            <input type='radio' name='product' value='TV'> TV";
-                        } else if ($product[0] == 'camera') { //if select camera
-                            echo " 
-                            <input type='radio' name='product' value='all'> All 
-                            <input type='radio' name='product' value='audio'> Audio   
-                            <input type='radio' name='product' value='camera' selected> Camera           
-                            <input type='radio' name='product' value='computer'> Computer  
-                            <input type='radio' name='product' value='TV'> TV";
-                        } else if ($product[0] == 'computer') { //if select computer
-                            echo " 
-                            <input type='radio' name='product' value='all'> All 
-                            <input type='radio' name='product' value='audio'> Audio   
-                            <input type='radio' name='product' value='camera'> Camera           
-                            <input type='radio' name='product' value='computer' selected> Computer  
-                            <input type='radio' name='product' value='TV'> TV";
-                        } else if ($product[0] == 'TV') { //if select TV
-                            echo " 
-                            <input type='radio' name='product' value='all'> All 
-                            <input type='radio' name='product' value='audio'> Audio   
-                            <input type='radio' name='product' value='camera'> Camera           
-                            <input type='radio' name='product' value='computer'> Computer  
-                            <input type='radio' name='product' value='TV' selected> TV";
-                        }
+                        <label>
+                            <input type="checkbox" name="category[]" value="3" /> COMPUTER
+                        </label>
 
-                        ?>
+                        <label>
+                            <input type="checkbox" name="category[]" value="4" /> TV
+                        </label>
+                        <div>
+                            PRICE FROM: <input type="number" name="price1" value="<?php echo (isset($_POST['price1']) ? $_POST['price1'] : ''); ?>" />
+                            TO: <input type="number" name="price2" value="<?php echo (isset($_POST['price2']) ? $_POST['price2'] : ''); ?>" />
+                        </div>
+
                         <input type="submit" value="  Search  " /><!-- do the search -->
                     </form>
-                </div>
-
-                <div class="grid">
-
                     <?php
-                    //open file
-                    $file = 'productsList.txt';
 
-                    if ($handle = fopen($file, 'r')) {
-                        while (!feof($handle)) {
-                            $aLine = explode(",", trim(fgets($handle)));
-                            if (!in_array($aLine[0], $product)) {
-                                continue;
-                            }
-                            //show the img if the information in the .txt file correct
-                            if ($aLine[0] == 'audio') {
-                                if ($aLine[1] == 'Beats') {
-                                    $imgName = 'Beats Headphones.PNG';
-                                }
-                            }
-                            if ($aLine[0] == 'audio') {
-                                if ($aLine[1] == 'Sony') {
-                                    $imgName = 'Sony Headphones.PNG';
-                                }
-                            }
-                            if ($aLine[0] == 'audio') {
-                                if ($aLine[1] == 'Bose') {
-                                    $imgName = 'Bose Headphones.PNG';
-                                }
-                            }
-                            if ($aLine[0] == 'camera') {
-                                if ($aLine[1] == 'Fujifilm') {
-                                    $imgName = 'Fujifilm Camera.PNG';
-                                }
-                            }
-                            if ($aLine[0] == 'camera') {
-                                if ($aLine[1] == 'Sony') {
-                                    $imgName = 'Sony Camera.PNG';
-                                }
-                            }
-                            if ($aLine[0] == 'camera') {
-                                if ($aLine[1] == 'Nikon') {
-                                    $imgName = 'Nikon Camera.PNG';
-                                }
-                            }
-                            if ($aLine[0] == 'computer') {
-                                if ($aLine[1] == 'Dell') {
-                                    $imgName = 'Dell G5 Gaming PC.PNG';
-                                }
-                            }
-                            if ($aLine[0] == 'computer') {
-                                if ($aLine[1] == 'ASUS') {
-                                    $imgName = 'ASUS VivoBook.PNG';
-                                }
-                            }
-                            if ($aLine[0] == 'computer') {
-                                if ($aLine[1] == 'HP') {
-                                    $imgName = 'HP Gaming Laptop.PNG';
-                                }
-                            }
-                            if ($aLine[0] == 'TV') {
-                                if ($aLine[1] == 'Samsung') {
-                                    $imgName = 'Samsung Smart TV.PNG';
-                                }
-                            }
-                            if ($aLine[0] == 'TV') {
-                                if ($aLine[1] == 'Sony') {
-                                    $imgName = 'Sony Smart TV.PNG';
-                                }
-                            }
-                            if ($aLine[0] == 'TV') {
-                                if ($aLine[1] == 'LG') {
-                                    $imgName = 'LG Smart TV.PNG';
-                                }
-                            }
-                            $show = $aLine[0] . '@' . $aLine[1] . '@' . $aLine[2] . '@' . $aLine[3];
+                    include("db.php");
 
-                            //show the correct product information
-                            echo '
+                    //initialize condition is ""
+                    $condition = "";
 
-                                <div class="our-product">
-                                    <div class="img">
-                                        <a class="test-popup-link" href="detail.php?id=' . $show . '">
-                                             <img src="imgs/' . $imgName . '" class="img-fluid">
-                                        </a>
-                                    </div>
-                                    <div class="title py-4">
-                                        <h4 class="text-uppercase">' . $aLine[1] . ' $' . $aLine[3] . '</h4>
-                                        <span class="text-secondary">' . $aLine[0] . ', ' . $aLine[2] . '</span>
-                                        <div class="text-secondary"><a href="detail.php?id=' . $show . '">Detail info</a></div>
-                                    </div>
-                                </div>
-                            
-                        ';
+                    // to detect whether the variable has been set and is not NULL.
+                    if (isset($_POST['category'])) {
+                        if (!empty($_POST['category'])) {
+                            foreach ($_POST['category'] as $selected) {
+                                $checked_items = $selected;
+                            }
+                            $items = implode(',', $_POST['category']);
+                            $condition = $condition . "product.category_id IN (" . $items . ")";
                         }
                     }
+                    //if orderDate not null
+                    if (isset($_POST['price1']) && isset($_POST['price2'])) {
+                        if (!empty($_POST['price1']) && !empty($_POST['price2'])) {
+                            if ($condition == "") {
+                                $condition = $condition . " product.price BETWEEN '" . $_POST['price1'] . "'AND'" . $_POST['price2'] . "'";
+                            } else {
+                                $condition = $condition . " AND product.price BETWEEN '" . $_POST['price1'] . "'AND'" . $_POST['price2'] . "'";
+                            }
+                        }
+                    }
+
+                    if ($condition == "") {
+                        $sql = "SELECT product.product_id, product.name, product.price, product.description, category.category_name 
+                        FROM `product` 
+                        INNER JOIN `category` 
+                        ON product.category_id = category.category_id 
+                        WHERE product.price BETWEEN 0 AND 4000
+                    ";
+                    } else {
+                        $sql = "SELECT product.product_id, product.name, product.price, product.description, category.category_name 
+                        FROM `product`
+                        INNER JOIN `category`
+                        ON product.category_id = category.category_id
+                        WHERE $condition;    
+                    ";
+                    }
+                    //echo "$sql";
+                    $result = mysqli_query($conn, $sql);
+                    echo '
+                    <div class="container mt-5">
+                        <div class = "row">';
+                    while ($row = mysqli_fetch_array($result)) {
+
+                        echo '                                               
+                                <div class="col-lg-4 col-md-6 col-sm-12 our-product">
+                                    <div class="img">
+                                        <a class="test-popup-link" href="detail.php?id=' . $row['product_id'] . '">
+                                            <img src="imgs/' . $row['product_id'] . '.PNG" class="img-fluid">
+                                        </a>
+                                    </div>
+                                    <div class="title py-4"> 
+                                        <h3 class="text-uppercase">' . $row['category_name'] . ' $' . $row['price'] . ' </h3>
+                                            <span class="text-secondary">' . $row['name'] . '</span>
+                                            <div class="text-secondary"><a href="detail.php?id=' . $row['product_id'] . '">Detail info</a></div>
+                                    </div>
+                                </div>';
+                    }
+                    echo '                            
+                        </div>
+                    </div>
+                    ';
                     ?>
                 </div>
+
             </div>
         </section>
     </main>
