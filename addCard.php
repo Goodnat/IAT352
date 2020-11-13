@@ -1,13 +1,9 @@
-<!--This page is designed as members' log in page-->
-<!--After user sucessfully register, the website wil turn to this page-->
-<!--If the user enter the right user name and password, show successfully log in-->
-<!--If the user enter the wrong information, show fail to log in-->
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
 	<meta charset="UTF-8">
-	<title>Login</title>
+	<title>Change Address</title>
 	<!-- Boostrap css file-->
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 
@@ -51,9 +47,14 @@
 	<?php
 	require('db.php'); //connection to db code
 	include("auth_sessionNotActiveCheck.php");
+	   $order_id 
+        = 
+        $_SESSION
+        [
+        'order_id'
+        ];
 	?>
-
-	<!DOCTYPE html>
+		<!DOCTYPE html>
 	<html>
 
 	<head>
@@ -71,56 +72,86 @@
 				<p><a class="btn btn-secondary" href="new_pass.php" role="button">Reset Password&raquo;</a></p>
 			</div>
 		</div>
-
 		<div class="container">
-			<!-- Example row of columns -->
-			<div class="row mt-5">
-				<div class="col-md-4">
-					<div class="card" style="width: 20rem;">
-						<div class="card-body">
-							<h2>Order History</h2>
-							<p class="card-text">Track your recent purchases and view past orders with ease.</p>
-							<p><a class="btn btn-secondary" href="./orderHistory.php" role="button">View details &raquo;</a></p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="card" style="width: 20rem;">
-						<div class="card-body">
-							<h2>Order Payment</h2>
-							<p class="card-text">Manage your payment details for the order.</p>
-							<p><a class="btn btn-secondary" href="./orderPayment.php" role="button">Change Payment Info &raquo;</a></p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-4 ">
-					<div class="card" style="width: 20rem;">
-						<div class="card-body">
-							<h2>Order Delivery</h2>
-							<p class="card-text">Manage your delivery details for the order.</p>
-							<p><a class="btn btn-secondary" href="./changeAddress.php" role="button">Change Delivery Info &raquo;</a></p>
-						</div>
-					</div>
-				</div>
-			</div>
+			              <?php 
+if(!isset($_POST['submit'])){ 
+//如果没有表单提交，显示一个表单 
+?> 
+
+<div>
+	<!-- <h2>your order Number is : <?php echo"$order_id";?></h2> -->
+	<?php
+	
+	$cursql = "select orders.order_id,orders.order_date,payment_required.card_number from orders inner join payment_required on orders.order_id = payment_required.order_id where orders.order_id='$order_id'";
+            $curresult = $conn->query($cursql);
+            
+  echo "<table class='table-striped table-hover table-bordered display-5 '>";
+            echo "<tr ><td class='p-2'>Order ID</td>
+            
+            <td class='p-2'>date</td>
+            <td class='p-2'>Card Number</td>
+            <td class='p-2'>Edit</td>
+            </tr>";
+            ?>
+            <?php
+           
+         while($row = $curresult->fetch_assoc()){
+         	if($row>0){
+        
+
+echo "<tr>";
+echo "<td>".$row["order_id"]."</td>"; //display ID
+echo "<td>".$row["order_date"]." </td>"; //display name
+echo "<td>".$row["card_number"]." </td>";//display price
+echo"<td><button id='button' onclick='Click()'> Edit</button></td>";
 
 
+echo "</tr>";
+}}
+
+
+echo "</table>";
+            ?>
+
+
+</div>
+<form  style="display:none"id ="form"action="" method="post"> 
+Card Number：<input type="text" name="num" /> <br>
+Name On Card：<input type="text" name="name" /> <br>
+Expirty Date：<input type="text" name="expiry" /> <br>
+Code：<input type="text" name="code" /> <br>
+<input type="submit" name="submit" value="Add" /> 
+</form> 
+<?php 
+} 
+else
+{ 
+
+// 何问起 hovertree.com
+//取得表单中的值，检查表单中的值是否符合标准，并做适当转义，防止SQL注入 
+$num = empty($_POST['num'])? die("plase enter card number"): 
+($_POST['num']); 
+$name = empty($_POST['name'])? die("plase enter name"): 
+($_POST['name']); 
+$expiry = empty($_POST['expiry'])? die("plase enter expiry date"): 
+($_POST['expiry']); 
+$code = empty($_POST['code'])? die("plase enter code"): 
+($_POST['code']); 
+//打开数据库连接 
+
+//构造一个SQL查询 
+$query = "UPDATE payment_required SET card_number ='$num', card_name= '$name', expiry_Date= '$expiry',card_cvc= '$code' where order_id = $order_id;";
+//执行该查询 
+// mysql_query($query);
+$result=$conn->query($query);
+//插入操作成功后，显示插入记录的记录号 
+echo "add Successful";
+//关闭当前数据库连接 
+
+} 
+?>
+		</div>
 	</body>
-
-	</html>
-
-
-	<!-- <div class="form register container mx-auto my-5">
-		<h1>Log In</h1>
-		<form action="" method="post" name="login">
-			<input type="text" name="username" placeholder="Username" required />
-			<input type="password" name="password" placeholder="Password" required />
-			<input name="submit" type="submit" value="Login" />
-		</form>
-		<p>Not registered yet? <a href='register.php'>Register Here</a></p>
-	</div> -->
-
-
 	<footer>
 		<div class="container">
 			<div class="row">
@@ -186,6 +217,24 @@
 
 	<!-- Boostrap js file-->
 	<script src="js/bootstrap.min.js"></script>
+	<script>
+	
+
+	function Click(){
+		
+		
+	    var div = document.getElementById('form');
+		if(div.style.display="none"){
+			div.style.display="block";
+		}
+		else{
+			div.style.display="none";
+		}
+
+
+	}
+
+</script>
 
 
 
