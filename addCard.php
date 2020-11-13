@@ -120,6 +120,7 @@ include("auth_sessionNotActiveCheck.php");
 					where manage_order.user_id='$id'";
 
 					$curresult = mysqli_query($conn, $cursql);
+				
 					echo "<div class='table-responsive'>
           		  			<table class='table table-bordered'>
 								<tr>
@@ -136,15 +137,25 @@ include("auth_sessionNotActiveCheck.php");
 					while ($row = mysqli_fetch_array($curresult)) {
 						if ($row > 0) {
 							echo "<tr>";
-							echo "<td>" . $row["order_id"] . "</td>"; //display ID
+							echo "<td>" .  $row["order_id"]. "</td>"; //display ID
+							$curid= $row["order_id"];
+													
 							echo "<td>" . $row["order_date"] . " </td>"; //display name
 							echo "<td>" . $row["card_number"] . " </td>"; //display price
 							echo "<td>" . $row["card_name"] . " </td>";
-							echo "<td><button id='button' onclick='Click()'> Edit</button></td>";
+							echo "<td><form method='post'><input type='button' name='$curid' value ='edit' onclick='Click()'></td>";
+							// $cur_id = (!empty($_POST['$row["order_id"]']) ? $_POST['$row["order_id"]'] : "");
+							if (isset($_POST["$curid"])) {
+							$cur_id=$_GET["$curid"];}
 							echo "</tr>";
+							
+							
 						}
 					}
 					echo "</table>";
+					
+					
+					
 					?>
 
 
@@ -206,7 +217,7 @@ include("auth_sessionNotActiveCheck.php");
 				$code = empty($_POST['card_cvc']) ? die("plase enter code") : ($_POST['card_cvc']);
 
 
-				$query = "UPDATE payment_required SET card_number ='$num', card_name= '$name', expiry_Date= '$expiry',card_cvc= '$code' where order_id = '$order_id';";
+				$query = "UPDATE payment_required SET card_number ='$num', card_name= '$name', expiry_Date= '$expiry',card_cvc= '$code' where order_id = '$select_id';";
 
 				$result = mysqli_query($conn, $query);
 				echo "add Successful";
@@ -285,6 +296,8 @@ include("auth_sessionNotActiveCheck.php");
 
 
 		var div = document.getElementById('form');
+		var select = '<?php $select_id = $curid;?>';
+
 		if (div.style.display = "none") {
 			div.style.display = "block";
 		} else if (div.style.display = "block") {
@@ -294,6 +307,7 @@ include("auth_sessionNotActiveCheck.php");
 
 	}
 </script>
+
 
 
 
