@@ -85,10 +85,14 @@
 			if ($result_search->num_rows != 0) {
 				while ($row = $result_search->fetch_assoc()) {
 					echo "
-				<div class='container text-center'>
-				 <p>The user already exists, please enter a different user name.</p>
-				 <p>Go back to <a href='register.php'>Register</a></p>
-				 </div>";
+				<div class='container card text-center mx-auto my-5' style='width: 20rem;'>
+				 <p class='mt-3'>The user already exists, please enter a different user name.</p>
+				 <p>Go back to</p>
+				 <a class='btn btn-secondary mb-3' href='register.php'>Register</a>
+				 </div>
+				 
+				 ";
+				 
 				}
 			} else {
 
@@ -98,10 +102,11 @@
 				$result = $conn->query($sql);
 				if ($result) {
 					echo "
-					<div class='container text-center'>
-			 <p>Successfull registration</p>
-			 <p>Go to <a href='login.php'>Log in</a> page</p>
-			 </div>";
+					<div class='container card text-center mx-auto my-5' style='width: 20rem;'>
+						<p class='mt-3'>Successfull registration</p>
+						<p>Go to</p>
+						<a class='btn btn-secondary mb-3' href='login.php'>Log in</a>
+					</div>";
 				}
 			}
 		}
@@ -119,7 +124,7 @@
 		</div>
 
 	<?php } ?>
-
+	</main>
 	<footer>
 		<div class="container">
 			<div class="row">
@@ -132,7 +137,7 @@
 								<ul class="list-unstyled text-small">
 									<li><a class="text-muted" href="index.php">Shop</a></li>
 									<li><a class="text-muted" href="membersLogin.php">Account</a></li>
-									<li><a class="text-muted" href="membersLogin.php">Cart</a></li>
+									<li><a class="text-muted" href="cart.php">Cart</a></li>
 								</ul>
 							</div>
 						</div>
@@ -142,8 +147,8 @@
 								<ul class="list-unstyled text-small">
 									<li><a class="text-muted" href="login.php">Login</a></li>
 									<li><a class="text-muted" href="register.php">Register</a></li>
-									<li><a class="text-muted" href="membersLogin.php">My Cart</a></li>
 									<li><a class="text-muted" href="membersLogin.php">Order History</a></li>
+									<li><a class="text-muted" href="membersLogin.php">Change Info</a></li>
 								</ul>
 							</div>
 						</div>
@@ -174,10 +179,7 @@
 				</p>
 			</div>
 		</div>
-
 	</footer>
-	</main>
-
 
 	<!-- Jquery js file-->
 	<script src="js/jquery.3.5.1.js"></script>

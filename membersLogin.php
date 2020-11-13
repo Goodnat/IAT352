@@ -2,12 +2,18 @@
 <!--After user sucessfully register, the website wil turn to this page-->
 <!--If the user enter the right user name and password, show successfully log in-->
 <!--If the user enter the wrong information, show fail to log in-->
+
+<?php
+require('db.php'); //connection to db code
+include("auth_sessionNotActiveCheck.php");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
 	<meta charset="UTF-8">
-	<title>Login</title>
+	<title>Welcome <?php echo $_SESSION['username']; ?></title>
 	<!-- Boostrap css file-->
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 
@@ -46,22 +52,7 @@
 		</div>
 	</header>
 
-
-
-	<?php
-	require('db.php'); //connection to db code
-	include("auth_sessionNotActiveCheck.php");
-	?>
-
-	<!DOCTYPE html>
-	<html>
-
-	<head>
-		<meta charset="utf-8">
-		<title> Members Only</title>
-	</head>
-
-	<body>
+	<main>
 		<div class="jumbotron">
 			<div class="container">
 				<h1 class="display-3">Welcome, <?php echo $_SESSION['username']; ?>!</h1>
@@ -103,12 +94,9 @@
 					</div>
 				</div>
 			</div>
+		</div>
 
-
-	</body>
-
-	</html>
-
+	</main>
 
 	<!-- <div class="form register container mx-auto my-5">
 		<h1>Log In</h1>
@@ -143,8 +131,8 @@
 								<ul class="list-unstyled text-small">
 									<li><a class="text-muted" href="login.php">Login</a></li>
 									<li><a class="text-muted" href="register.php">Register</a></li>
-									<li><a class="text-muted" href="cart.php">My Cart</a></li>
 									<li><a class="text-muted" href="membersLogin.php">Order History</a></li>
+									<li><a class="text-muted" href="membersLogin.php">Change Info</a></li>
 								</ul>
 							</div>
 						</div>
@@ -178,14 +166,12 @@
 
 	</footer>
 
-	</main>
+</body>
+<!-- Jquery js file-->
+<script src="js/jquery.3.5.1.js"></script>
 
-
-	<!-- Jquery js file-->
-	<script src="js/jquery.3.5.1.js"></script>
-
-	<!-- Boostrap js file-->
-	<script src="js/bootstrap.min.js"></script>
+<!-- Boostrap js file-->
+<script src="js/bootstrap.min.js"></script>
 
 
 

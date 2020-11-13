@@ -182,6 +182,9 @@ if (isset($_GET["action"])) {
             </table>
         </div>
     </div>
+
+    </main>
+
     <footer>
         <div class="container">
             <div class="row">
@@ -194,7 +197,7 @@ if (isset($_GET["action"])) {
                                 <ul class="list-unstyled text-small">
                                     <li><a class="text-muted" href="index.php">Shop</a></li>
                                     <li><a class="text-muted" href="membersLogin.php">Account</a></li>
-                                    <li><a class="text-muted" href="membersLogin.php">Cart</a></li>
+                                    <li><a class="text-muted" href="cart.php">Cart</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -204,8 +207,8 @@ if (isset($_GET["action"])) {
                                 <ul class="list-unstyled text-small">
                                     <li><a class="text-muted" href="login.php">Login</a></li>
                                     <li><a class="text-muted" href="register.php">Register</a></li>
-                                    <li><a class="text-muted" href="membersLogin.php">My Cart</a></li>
                                     <li><a class="text-muted" href="membersLogin.php">Order History</a></li>
+                                    <li><a class="text-muted" href="membersLogin.php">Change Info</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -239,7 +242,6 @@ if (isset($_GET["action"])) {
 
     </footer>
 
-    </main>
 
 
     <!-- Jquery js file-->

@@ -1,3 +1,7 @@
+<?php
+require('db.php'); //connection to db code
+include("auth_sessionNotActiveCheck.php");
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -42,24 +46,7 @@
 		</div>
 	</header>
 
-
-
-	<?php
-	
-	
-       
-	require('db.php'); //connection to db code
-	include("auth_sessionNotActiveCheck.php");
-	?>
-		<!DOCTYPE html>
-	<html>
-
-	<head>
-		<meta charset="utf-8">
-		<title> Members Only</title>
-	</head>
-
-	<body>
+	<main>
 		<div class="jumbotron">
 			<div class="container ">
 				<h1 class="display-3">Welcome, <?php echo $_SESSION['username']; ?>!</h1>
@@ -69,61 +56,64 @@
 				<p><a class="btn btn-secondary" href="new_pass.php" role="button">Reset Password&raquo;</a></p>
 			</div>
 		</div>
-		<div class="container p-2" >
+		<div class="container p-2">
 			<?php
-			$name=$_SESSION['username'];
-			
+			$name = $_SESSION['username'];
+
 			$idsql = "select users.user_id from `users` where users.username = '$name';";
-			
-			$idresult = $conn->query($idsql);
 
-			
-			while ($row1 = $idresult->fetch_assoc()) {
-            $id= $row1['user_id'];}
-            echo"$id";
+			$idresult = mysqli_query($conn, $idsql);
 
-			$sql = "select order_detail.order_id,product.name,product.price,order_detail.quantity from order_detail inner join product on product.product_id = order_detail.product_id inner join manage_order on order_detail.order_id = manage_order.order_id where manage_order.user_id = '$id'";
-			echo"$sql";
-            $result = $conn->query($sql);
-            
-            echo "<table class='table-striped table-hover table-bordered display-5 '>";
-            echo "<tr ><td class='p-2'>Order ID</td>
+			while ($row1 = mysqli_fetch_array($idresult)) {
+				$id = $row1['user_id'];
+			}
+			echo "$id";
+
+			$sql = "SELECT order_detail.order_id,product.name,product.price,order_detail.quantity 
+			from order_detail inner join product 
+			on product.product_id = order_detail.product_id 
+			inner join manage_order 
+			on order_detail.order_id = manage_order.order_id 
+			where manage_order.user_id = '$id'";
+
+			echo "$sql";
+			$result = mysqli_query($conn, $sql);
+
+			echo "<table class='table-striped table-hover table-bordered display-5 '>";
+			echo "<tr ><td class='p-2'>Order ID</td>
             <td class='p-2'>Product Name</td>
             <td class='p-2'>Price</td>
             <td class='p-2'>Quantity</td>
             <td class='p-2'>Date</td>
             <td class='p-2'>Total Price</td>
-            <td class='p-2'>Edit Payment</td></tr>";?>
-<?php
-           
-            while($row = $result->fetch_assoc()){
-        
+            <td class='p-2'>Edit Payment</td></tr>"; ?>
+			<?php
 
-echo "<tr>";
-echo "<td>".$row["order_id"]."</td>"; 
- //display ID
-echo "<td>".$row["name"]." </td>"; //display name
-echo "<td>".$row["price"]." </td>";//display price
-echo "<td>".$row["quantity"]." </td>"; //display number
-echo "<td>".$row["order_date"]." </td>"; //display date
-$singleprice=$row["price"];
-$quantityeach=$row["quantity"];
-$total=$singleprice * $quantityeach;
-echo"<td>".$total."</td>";
-echo"<td><a href='addCard.php'><p>edit</p></a></td>";
-$_SESSION
-        [
-        'order_id'
-        ]=$row["order_id"];
-
-echo "</tr>";
-}
+			while ($row = mysqli_fetch_array($result)) {
 
 
-echo "</table>";
-            ?>
+				echo "<tr>";
+				echo "<td>" . $row["order_id"] . "</td>";
+				//display ID
+				echo "<td>" . $row["name"] . " </td>"; //display name
+				echo "<td>" . $row["price"] . " </td>"; //display price
+				echo "<td>" . $row["quantity"] . " </td>"; //display number
+				echo "<td>" . $row["order_date"] . " </td>"; //display date
+				$singleprice = $row["price"];
+				$quantityeach = $row["quantity"];
+				$total = $singleprice * $quantityeach;
+				echo "<td>" . $total . "</td>";
+				echo "<td><a href='addCard.php'><p>edit</p></a></td>";
+				$_SESSION['order_id'] = $row["order_id"];
+
+				echo "</tr>";
+			}
+
+
+			echo "</table>";
+			?>
 		</div>
-	</body>
+	</main>
 	<footer>
 		<div class="container">
 			<div class="row">
@@ -146,8 +136,8 @@ echo "</table>";
 								<ul class="list-unstyled text-small">
 									<li><a class="text-muted" href="login.php">Login</a></li>
 									<li><a class="text-muted" href="register.php">Register</a></li>
-									<li><a class="text-muted" href="cart.php">My Cart</a></li>
 									<li><a class="text-muted" href="membersLogin.php">Order History</a></li>
+									<li><a class="text-muted" href="membersLogin.php">Change Info</a></li>
 								</ul>
 							</div>
 						</div>
@@ -178,17 +168,14 @@ echo "</table>";
 				</p>
 			</div>
 		</div>
-
 	</footer>
 
-	</main>
+</body>
+<!-- Jquery js file-->
+<script src="js/jquery.3.5.1.js"></script>
 
-
-	<!-- Jquery js file-->
-	<script src="js/jquery.3.5.1.js"></script>
-
-	<!-- Boostrap js file-->
-	<script src="js/bootstrap.min.js"></script>
+<!-- Boostrap js file-->
+<script src="js/bootstrap.min.js"></script>
 
 
 

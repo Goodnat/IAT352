@@ -1,5 +1,11 @@
 <!--This page is designed as password successfully page-->
 <!--After user sucessfully change password, the website wil turn to this page-->
+
+<?php
+require 'db.php'; //connection to db code
+include "auth_sessionNotActiveCheck.php";
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -45,41 +51,15 @@
 	</header>
 
 
+	<main>
 
-
-	<?php
-	require 'db.php'; //connection to db code
-	include "auth_sessionNotActiveCheck.php";
-	?>
-
-	<!DOCTYPE html>
-	<html>
-
-	<head>
-		<meta charset="utf-8">
-		<title> Members Only</title>
-	</head>
-
-	<body>
-		<div class="form">
-			<p>Welcome <?php echo $_SESSION['username']; ?>!</p>
+		<div class='container card text-center mx-auto my-5' style='width: 20rem;'>
+			<p class='mt-3'>Welcome <?php echo $_SESSION['username']; ?> !</p>
 			<p>You password is alreay reset.</p>
-			<a href="index.php">Goto home page</a>
-		</div>
-	</body>
+			<a class='btn btn-secondary mb-3' href='index.php'>Go Shoping</a>
+		</div>";
 
-	</html>
-
-
-	<!-- <div class="form register container mx-auto my-5">
-		<h1>Log In</h1>
-		<form action="" method="post" name="login">
-			<input type="text" name="username" placeholder="Username" required />
-			<input type="password" name="password" placeholder="Password" required />
-			<input name="submit" type="submit" value="Login" />
-		</form>
-		<p>Not registered yet? <a href='register.php'>Register Here</a></p>
-	</div> -->
+	</main>
 
 	<footer>
 		<div class="container">
@@ -93,7 +73,7 @@
 								<ul class="list-unstyled text-small">
 									<li><a class="text-muted" href="index.php">Shop</a></li>
 									<li><a class="text-muted" href="membersLogin.php">Account</a></li>
-									<li><a class="text-muted" href="membersLogin.php">Cart</a></li>
+									<li><a class="text-muted" href="cart.php">Cart</a></li>
 								</ul>
 							</div>
 						</div>
@@ -103,8 +83,8 @@
 								<ul class="list-unstyled text-small">
 									<li><a class="text-muted" href="login.php">Login</a></li>
 									<li><a class="text-muted" href="register.php">Register</a></li>
-									<li><a class="text-muted" href="membersLogin.php">My Cart</a></li>
 									<li><a class="text-muted" href="membersLogin.php">Order History</a></li>
+									<li><a class="text-muted" href="membersLogin.php">Change Info</a></li>
 								</ul>
 							</div>
 						</div>
@@ -135,11 +115,7 @@
 				</p>
 			</div>
 		</div>
-
 	</footer>
-
-	</main>
-
 
 	<!-- Jquery js file-->
 	<script src="js/jquery.3.5.1.js"></script>

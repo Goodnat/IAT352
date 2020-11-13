@@ -57,6 +57,8 @@
 		</form>
 	</div>
 
+	</main>
+
 	<footer>
 		<div class="container">
 			<div class="row">
@@ -69,7 +71,7 @@
 								<ul class="list-unstyled text-small">
 									<li><a class="text-muted" href="index.php">Shop</a></li>
 									<li><a class="text-muted" href="membersLogin.php">Account</a></li>
-									<li><a class="text-muted" href="membersLogin.php">Cart</a></li>
+									<li><a class="text-muted" href="cart.php">Cart</a></li>
 								</ul>
 							</div>
 						</div>
@@ -79,8 +81,8 @@
 								<ul class="list-unstyled text-small">
 									<li><a class="text-muted" href="login.php">Login</a></li>
 									<li><a class="text-muted" href="register.php">Register</a></li>
-									<li><a class="text-muted" href="membersLogin.php">My Cart</a></li>
 									<li><a class="text-muted" href="membersLogin.php">Order History</a></li>
+									<li><a class="text-muted" href="membersLogin.php">Change Info</a></li>
 								</ul>
 							</div>
 						</div>
@@ -111,11 +113,7 @@
 				</p>
 			</div>
 		</div>
-
 	</footer>
-
-	</main>
-
 
 	<!-- Jquery js file-->
 	<script src="js/jquery.3.5.1.js"></script>

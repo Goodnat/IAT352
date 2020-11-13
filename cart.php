@@ -13,49 +13,48 @@ if (isset($_GET["action"])) {
         }
     }
 }
+
 $sucessful = "";
- 
 
+$cardName = (!empty($_POST['card_name']) ? $_POST['card_name'] : "");
+$cardNumber = (!empty($_POST['card_number']) ? $_POST['card_number'] : "");
+$expiryDate = (!empty($_POST['expiry_date']) ? $_POST['expiry_date'] : "");
+$cardcvc = (!empty($_POST['card_cvc']) ? $_POST['card_cvc'] : "");
 
-                    $cardName = (!empty($_POST['card_name']) ? $_POST['card_name'] : "");
-                    $cardNumber = (!empty($_POST['card_number']) ? $_POST['card_number'] : "");
-                    $expiryDate = (!empty($_POST['expiry_date']) ? $_POST['expiry_date'] : "");
-                    $cardcvc = (!empty($_POST['card_cvc']) ? $_POST['card_cvc'] : "");
+$name = (!empty($_POST['recipient_name']) ? $_POST['recipient_name'] : "");
+$phone = (!empty($_POST['recipient_phone']) ? $_POST['recipient_phone'] : "");
+$street = (!empty($_POST['city']) ? $_POST['city'] : "");
+$city = (!empty($_POST['card_cvc']) ? $_POST['card_cvc'] : "");
+$province = (!empty($_POST['province']) ? $_POST['province'] : "");
+$country = (!empty($_POST['country']) ? $_POST['country'] : "");
+$code = (!empty($_POST['postal_code']) ? $_POST['postal_code'] : "");
 
-                    $name = (!empty($_POST['recipient_name']) ? $_POST['recipient_name'] : "");
-                    $phone = (!empty($_POST['recipient_phone']) ? $_POST['recipient_phone'] : "");
-                    $street = (!empty($_POST['city']) ? $_POST['city'] : "");
-                    $city = (!empty($_POST['card_cvc']) ? $_POST['card_cvc'] : "");
-                     $province = (!empty($_POST['province']) ? $_POST['province'] : "");
-                      $country = (!empty($_POST['country']) ? $_POST['country'] : "");
-                    $code = (!empty($_POST['postal_code']) ? $_POST['postal_code'] : "");
+$username = $_SESSION['username'];
 
-   
-  $username=$_SESSION['username'];
-            
-            $idsql = "select users.user_id from `users` where users.username = '$username';";
-            
-            $idresult = $conn->query($idsql);
-            
-            while ($row1 = $idresult->fetch_assoc()) {
-            $id= $row1['user_id'];}
+$idsql = "select users.user_id from `users` where users.username = '$username';";
 
+$idresult = mysqli_query($conn, $idsql);
+
+while ($row1 = mysqli_fetch_array($idresult)) {
+    $id = $row1['user_id'];
+}
 
 if (isset($_POST["palce_an_order"])) {
-    $sql = "INSERT INTO `orders` (order_date)
+    $sql_orders = "INSERT INTO `orders` (order_date)
     VALUES ('" . date('Y-m-d H:i:s') . "'); ";
-    $result = mysqli_query($conn, $sql);
+    $result = mysqli_query($conn, $sql_orders);
 
     $sql = "SELECT order_id FROM orders order by order_id DESC limit 1";
     $result = mysqli_query($conn, $sql);
     $order_id = mysqli_fetch_assoc($result)["order_id"];
 
-    $sql = "INSERT INTO `payment_required` (order_id,card_name, card_number, expiry_date, card_cvc)
+    $sql_payment_required = "INSERT INTO `payment_required` (order_id,card_name, card_number, expiry_date, card_cvc)
                      VALUES ('$order_id','$cardName','$cardNumber','$expiryDate','$cardcvc'); ";
-                    $result = mysqli_query($conn, $sql);
-    $sql = "INSERT INTO `delivery_required` (order_id,create_time,recipient_name,recipient_phone, street_address, city,province,country,postal_code)
+    $result_payment_required = mysqli_query($conn, $sql_payment_required);
+
+    $sql_delivery_required = "INSERT INTO `delivery_required` (order_id,create_time,recipient_name,recipient_phone, street_address, city,province,country,postal_code)
                      VALUES ('$order_id','" . date('Y-m-d H:i:s') . "','$name','$phone','$street','$city','$province','$country','$code'); ";
-                    $result = mysqli_query($conn, $sql);
+    $result_delivery_required = mysqli_query($conn, $sql_delivery_required);
 
 
     foreach ($_SESSION["shopping_cart"] as $keys => $values) {
@@ -63,35 +62,29 @@ if (isset($_POST["palce_an_order"])) {
         $product_quantity = $values["item_quantity"];
         $product_unit_price = $values["item_price"];
 
-        $sql = "INSERT INTO `order_detail` (order_id, product_id, quantity, unit_price)
+        $sql_order_detail = "INSERT INTO `order_detail` (order_id, product_id, quantity, unit_price)
                 VALUES ('$order_id', '$product_id','$product_quantity', '$product_unit_price'); ";
-        $result = mysqli_query($conn, $sql);
+        $result_order_detail = mysqli_query($conn, $sql_order_detail);
 
-         $sql="INSERT INTO `manage_order`(order_id,user_id,product_id,quantity,order_date)
-                VALUES('$order_id','$id','$product_id','$product_quantity','" . date('Y-m-d H:i:s') . "')";
-                $result = mysqli_query($conn, $sql);
-
-       
-
+        $sql_manage_order = "INSERT INTO `manage_order`(order_id,user_id)
+                VALUES('$order_id','$id')";
+        $result_manage_order  = mysqli_query($conn,  $sql_manage_order);
     }
-   
-     
 
     $_SESSION["shopping_cart"] = array();
 
-    if ($result) {
+    if ($result_order_detail) {
         $sucessful = '
         <div class="container text-center" style="margin:5em auto;">
 
             <h1>Thank you for shopping with us!</h1>
 
-            <p>Your order number is <em>#' . $order_id . '</em>. We have received your order and hope you can enter your payement method and delivery information immediately.</p>
+            <p>Your order number is <em>#' . $order_id . '</em>. We have received your order and will process it immediately.</p>
             <p>You will see the order detail in your account.</p>
 
             <h3>Please feel free to continue shoppping at any time.</h3>
 
-            <p><a class="btn btn-secondary w-25 mt-3" href="payment.php" role="button">Payment &raquo;</a></p>
-            <p><a class="btn btn-secondary w-25" href="delivery.php" role="button">Delivery &raquo;</a></p>
+            <p><a class="btn btn-secondary w-25 mt-3" href="payment.php" role="button">CONTINUE SHOPPING &raquo;</a></p>
 
         </div>
         ';
@@ -140,7 +133,7 @@ if (isset($_POST["palce_an_order"])) {
                         <li class="nav-item">
                             <a class="nav-link" href="membersLogin.php">Account</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item active">
                             <a class="nav-link" href="cart.php">Cart</a>
                         </li>
                     </ul>
@@ -293,7 +286,7 @@ if (isset($_POST["palce_an_order"])) {
         </form>
     </div>
 
-  
+
 
     <footer>
         <div class="container">
@@ -307,7 +300,7 @@ if (isset($_POST["palce_an_order"])) {
                                 <ul class="list-unstyled text-small">
                                     <li><a class="text-muted" href="index.php">Shop</a></li>
                                     <li><a class="text-muted" href="membersLogin.php">Account</a></li>
-                                    <li><a class="text-muted" href="membersLogin.php">Cart</a></li>
+                                    <li><a class="text-muted" href="cart.php">Cart</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -317,8 +310,8 @@ if (isset($_POST["palce_an_order"])) {
                                 <ul class="list-unstyled text-small">
                                     <li><a class="text-muted" href="login.php">Login</a></li>
                                     <li><a class="text-muted" href="register.php">Register</a></li>
-                                    <li><a class="text-muted" href="membersLogin.php">My Cart</a></li>
                                     <li><a class="text-muted" href="membersLogin.php">Order History</a></li>
+                                    <li><a class="text-muted" href="membersLogin.php">Change Info</a></li>
                                 </ul>
                             </div>
                         </div>

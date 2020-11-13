@@ -49,70 +49,71 @@
 
 
 
-
-	<?php
-	require 'db.php'; //connection to db code
-	include "auth_sessionNotActiveCheck.php";
-
-	$errors = [];
-
-	//when user press the submit button
-	if (isset($_POST['new_password'])) {
-		$new_pass = mysqli_real_escape_string($conn, $_POST['new_pass']);
-		$new_pass_c = mysqli_real_escape_string($conn, $_POST['new_pass_c']);
-
-		//when user enter an empty psw, show warnings
-		if (empty($new_pass) || empty($new_pass_c)) {
-			array_push($errors, "Password is required");
-		}
-
-		//when the new psw doesn't match each other, show warnings
-		if ($new_pass !== $new_pass_c) {
-			array_push($errors, "Password do not match");
-		}
-
-		//if there is no error
-		if (count($errors) == 0) {
-
-			$new_pass = md5($new_pass);
-			//update the password
-			$sql = "UPDATE users SET `password`='$new_pass' where username='" . $_SESSION['username'] . "'";
-			echo $sql;
-			$results = mysqli_query($conn, $sql);
-			//when psw successfully changed, turn inton resetpswsuccessful page
-			header('location: resetpswsuccessful.php');
-		}
-	}
-	?>
-
-
-	<div class="form register container mx-auto my-5">
-		<h2>Change password</h2>
+	<main>
 		<?php
-		if (count($errors) > 0) {
-			echo "<h5>ERROR: </h5>";
-			echo "<ul style='color:red'>";
-			foreach ($errors as $value) {
-				echo "<li>$value </li>";
+		require 'db.php'; //connection to db code
+		include "auth_sessionNotActiveCheck.php";
+
+		$errors = [];
+
+		//when user press the submit button
+		if (isset($_POST['new_password'])) {
+			$new_pass = mysqli_real_escape_string($conn, $_POST['new_pass']);
+			$new_pass_c = mysqli_real_escape_string($conn, $_POST['new_pass_c']);
+
+			//when user enter an empty psw, show warnings
+			if (empty($new_pass) || empty($new_pass_c)) {
+				array_push($errors, "Password is required");
 			}
-			echo "</ul>";
+
+			//when the new psw doesn't match each other, show warnings
+			if ($new_pass !== $new_pass_c) {
+				array_push($errors, "Password do not match");
+			}
+
+			//if there is no error
+			if (count($errors) == 0) {
+
+				$new_pass = md5($new_pass);
+				//update the password
+				$sql = "UPDATE users SET `password`='$new_pass' where username='" . $_SESSION['username'] . "'";
+				echo $sql;
+				$results = mysqli_query($conn, $sql);
+				//when psw successfully changed, turn inton resetpswsuccessful page
+				header('location: resetpswsuccessful.php');
+			}
 		}
 		?>
-		<form action="new_pass.php" method="post" name="login">
-			<div>
-				<label>New password</label>
-				<input type="password" name="new_pass">
-			</div>
 
-			<div>
-				<label>Confirm new password</label>
-				<input type="password" name="new_pass_c">
-			</div>
-			<br><input name="new_password" type="submit" value="submit" />
 
-		</form>
-		<p>Not registered yet? <a href='register.php'>Register Here</a></p>
-	</div>
+		<div class="form register container mx-auto my-5">
+			<h2>Change password</h2>
+			<?php
+			if (count($errors) > 0) {
+				echo "<h5>ERROR: </h5>";
+				echo "<ul style='color:red'>";
+				foreach ($errors as $value) {
+					echo "<li>$value </li>";
+				}
+				echo "</ul>";
+			}
+			?>
+			<form action="new_pass.php" method="post" name="login">
+				<div>
+					<label>New password</label>
+					<input type="password" name="new_pass">
+				</div>
+
+				<div>
+					<label>Confirm new password</label>
+					<input type="password" name="new_pass_c">
+				</div>
+				<br><input name="new_password" type="submit" value="submit" />
+
+			</form>
+			<p>Not registered yet? <a href='register.php'>Register Here</a></p>
+		</div>
+	</main>
 
 	<footer>
 		<div class="container">
@@ -126,7 +127,7 @@
 								<ul class="list-unstyled text-small">
 									<li><a class="text-muted" href="index.php">Shop</a></li>
 									<li><a class="text-muted" href="membersLogin.php">Account</a></li>
-									<li><a class="text-muted" href="membersLogin.php">Cart</a></li>
+									<li><a class="text-muted" href="cart.php">Cart</a></li>
 								</ul>
 							</div>
 						</div>
@@ -136,8 +137,8 @@
 								<ul class="list-unstyled text-small">
 									<li><a class="text-muted" href="login.php">Login</a></li>
 									<li><a class="text-muted" href="register.php">Register</a></li>
-									<li><a class="text-muted" href="membersLogin.php">My Cart</a></li>
 									<li><a class="text-muted" href="membersLogin.php">Order History</a></li>
+									<li><a class="text-muted" href="membersLogin.php">Change Info</a></li>
 								</ul>
 							</div>
 						</div>
@@ -171,7 +172,7 @@
 
 	</footer>
 
-	</main>
+
 
 
 	<!-- Jquery js file-->

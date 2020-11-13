@@ -52,7 +52,7 @@
 		<?php
 		require('db.php'); //connection to db code
 		include("auth_sessionActiveCheck.php");
-
+		$danger="";
 		// session_start();
 		if (isset($_POST['username'])) {
 			$username = stripslashes($_REQUEST['username']); // removes backslashes
@@ -73,16 +73,14 @@
 			} else {
 
 				//else means user enters the wrong username or password
-				echo "<div class='form'>
-					<h3>Username/password is incorrect.</h3>
+				$danger = "<div class='text-danger mt-3'>
+					<p>Username/password is incorrect.</p>
 				</div>";
-
 
 				// echo "<p>Not registered yet? <a href='register.php'>Register Here</a></p>";
 			}
 		}
 		?>
-
 
 		<div class="form register container mx-auto my-5">
 			<h1>Log In</h1>
@@ -91,6 +89,7 @@
 				<input type="password" name="password" placeholder="Password" required />
 				<input name="submit" type="submit" value="Login" />
 			</form>
+			<?php echo $danger; ?>
 			<p>Not registered yet? <a href='register.php'>Register Here</a></p>
 		</div>
 
@@ -108,7 +107,7 @@
 								<ul class="list-unstyled text-small">
 									<li><a class="text-muted" href="index.php">Shop</a></li>
 									<li><a class="text-muted" href="membersLogin.php">Account</a></li>
-									<li><a class="text-muted" href="membersLogin.php">Cart</a></li>
+									<li><a class="text-muted" href="cart.php">Cart</a></li>
 								</ul>
 							</div>
 						</div>
@@ -118,8 +117,8 @@
 								<ul class="list-unstyled text-small">
 									<li><a class="text-muted" href="login.php">Login</a></li>
 									<li><a class="text-muted" href="register.php">Register</a></li>
-									<li><a class="text-muted" href="membersLogin.php">My Cart</a></li>
 									<li><a class="text-muted" href="membersLogin.php">Order History</a></li>
+									<li><a class="text-muted" href="membersLogin.php">Change Info</a></li>
 								</ul>
 							</div>
 						</div>
@@ -152,8 +151,6 @@
 		</div>
 
 	</footer>
-
-
 
 	<!-- Jquery js file-->
 	<script src="js/jquery.3.5.1.js"></script>
