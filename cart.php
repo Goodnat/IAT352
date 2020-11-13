@@ -1,6 +1,12 @@
+<!--
+    This cart.php implemet the order function and bind delivery and payment information
+-->
 <?php
+//check log in 
 include("auth_sessionNotActiveCheck.php");
 require('db.php');
+
+//if click delete the item will be delete and alert Item Removed
 if (isset($_GET["action"])) {
     $item_id = intval($_GET['id']);
     if ($_GET["action"] == "delete") {
@@ -14,65 +20,76 @@ if (isset($_GET["action"])) {
     }
 }
 
+//initial variable to null
 $sucessful = "";
 
+//sign post value to variable in payment information
 $cardName = (!empty($_POST['card_name']) ? $_POST['card_name'] : "");
 $cardNumber = (!empty($_POST['card_number']) ? $_POST['card_number'] : "");
 $expiryDate = (!empty($_POST['expiry_date']) ? $_POST['expiry_date'] : "");
 $cardcvc = (!empty($_POST['card_cvc']) ? $_POST['card_cvc'] : "");
 
+//sign post value to variable in delivery information
 $name = (!empty($_POST['recipient_name']) ? $_POST['recipient_name'] : "");
 $phone = (!empty($_POST['recipient_phone']) ? $_POST['recipient_phone'] : "");
-$street = (!empty($_POST['city']) ? $_POST['city'] : "");
-$city = (!empty($_POST['card_cvc']) ? $_POST['card_cvc'] : "");
+$street = (!empty($_POST['street_address']) ? $_POST['street_address'] : "");
+$city = (!empty($_POST['city']) ? $_POST['city'] : "");
 $province = (!empty($_POST['province']) ? $_POST['province'] : "");
 $country = (!empty($_POST['country']) ? $_POST['country'] : "");
 $code = (!empty($_POST['postal_code']) ? $_POST['postal_code'] : "");
 
+//check user name in session and select
 $username = $_SESSION['username'];
-
-$idsql = "select users.user_id from `users` where users.username = '$username';";
-
+$idsql = "SELECT users.user_id from `users` where users.username = '$username';";
 $idresult = mysqli_query($conn, $idsql);
-
+//crawl user id sign to variable
 while ($row1 = mysqli_fetch_array($idresult)) {
     $id = $row1['user_id'];
 }
 
+//if click input name equal palce_an_order
 if (isset($_POST["palce_an_order"])) {
+    //insert value to orders
     $sql_orders = "INSERT INTO `orders` (order_date)
     VALUES ('" . date('Y-m-d H:i:s') . "'); ";
     $result = mysqli_query($conn, $sql_orders);
 
+    //select order id from orders
     $sql = "SELECT order_id FROM orders order by order_id DESC limit 1";
     $result = mysqli_query($conn, $sql);
     $order_id = mysqli_fetch_assoc($result)["order_id"];
 
+    //insert payment value to table payment_required
     $sql_payment_required = "INSERT INTO `payment_required` (order_id,card_name, card_number, expiry_date, card_cvc)
                      VALUES ('$order_id','$cardName','$cardNumber','$expiryDate','$cardcvc'); ";
     $result_payment_required = mysqli_query($conn, $sql_payment_required);
 
+    //insert delivery value to table delivery_required
     $sql_delivery_required = "INSERT INTO `delivery_required` (order_id,create_time,recipient_name,recipient_phone, street_address, city,province,country,postal_code)
                      VALUES ('$order_id','" . date('Y-m-d H:i:s') . "','$name','$phone','$street','$city','$province','$country','$code'); ";
     $result_delivery_required = mysqli_query($conn, $sql_delivery_required);
 
-
+    //for loop shopping_cart value
     foreach ($_SESSION["shopping_cart"] as $keys => $values) {
         $product_id = $values["item_id"];
         $product_quantity = $values["item_quantity"];
         $product_unit_price = $values["item_price"];
 
+        //insert the value in the session to order detail
         $sql_order_detail = "INSERT INTO `order_detail` (order_id, product_id, quantity, unit_price)
                 VALUES ('$order_id', '$product_id','$product_quantity', '$product_unit_price'); ";
         $result_order_detail = mysqli_query($conn, $sql_order_detail);
 
+        //insert the order id in the session to mange order
         $sql_manage_order = "INSERT INTO `manage_order`(order_id,user_id)
                 VALUES('$order_id','$id')";
         $result_manage_order  = mysqli_query($conn,  $sql_manage_order);
     }
 
+    //after placed the order set value in $_SESSION["shopping_cart"] equal to 0
     $_SESSION["shopping_cart"] = array();
 
+    //if placed the order show order number
     if ($result_order_detail) {
         $sucessful = '
         <div class="container text-center" style="margin:5em auto;">
@@ -145,6 +162,7 @@ if (isset($_POST["palce_an_order"])) {
     <div class="container">
 
         <h3>
+            <!-- if cart is empty show "Your Cart is Empty!" -->
             <?php
             if (!empty($_SESSION["shopping_cart"])) {
                 echo "Your Cart";
@@ -153,6 +171,8 @@ if (isset($_POST["palce_an_order"])) {
             }
             ?>
         </h3>
+
+        <!-- table shows the cart items information  -->
         <div class="table-responsive">
             <table class="table table-bordered">
                 <tr>
@@ -163,11 +183,13 @@ if (isset($_POST["palce_an_order"])) {
                     <th width="5%">Delete</th>
                 </tr>
                 <?php
+                //if nothing in the cart show total is $0
                 if (!empty($_SESSION["shopping_cart"])) {
                     $total = 0;
                     foreach ($_SESSION["shopping_cart"] as $keys => $values) {
                 ?>
                         <tr>
+                            <!-- get the value in the $_SESSION["shopping_cart"] -->
                             <td><?php echo $values["item_name"]; ?></td>
                             <td><?php echo $values["item_quantity"]; ?></td>
                             <td>$ <?php echo $values["item_price"]; ?></td>
@@ -175,6 +197,7 @@ if (isset($_POST["palce_an_order"])) {
                             <td><a href="cart.php?action=delete&id=<?php echo $values["item_id"]; ?>"><span class="text-danger">Remove</span></a></td>
                         </tr>
                     <?php
+                        //calculate the total value of each item
                         $total = $total + ($values["item_quantity"] * $values["item_price"]);
                     }
                     ?>
@@ -182,6 +205,8 @@ if (isset($_POST["palce_an_order"])) {
                 }
                 ?>
             </table>
+
+            <!-- calculate the total value of the cart -->
             <ul class="list-group mb-3">
                 <li class="list-group-item d-flex justify-content-between">
                     <span>Total (CAD)</span>
@@ -197,11 +222,14 @@ if (isset($_POST["palce_an_order"])) {
                 </li>
             </ul>
         </div>
+        <!-- show the order number -->
         <?php echo "$sucessful"; ?>
+
+        <!-- show the Shipping input -->
         <form method="post" action="cart.php?action=add&id=<?php echo $values["item_id"]; ?>">
             <div class="row">
                 <div class="col-7 mt-5 cart">
-                    <!--Shipping address-->
+
                     <h4 class="mb-3">Shipping address</h4>
                     <div class="mb-3">
                         <label for="name">Recipient Name</label>
@@ -219,29 +247,33 @@ if (isset($_POST["palce_an_order"])) {
                     </div>
 
                     <div class="row">
-                        <div class="col-md-3 mb-3">
+                        <div class="col-md-6 mb-3">
                             <label for="address">City</label>
                             <input type="text" class="form-control" name="city" placeholder="Surrey" required>
                         </div>
 
-                        <div class="col-md-3 mb-3">
+                        <div class="col-md-6 mb-3">
                             <label for="address">Province</label>
                             <input type="text" class="form-control" name="province" placeholder="BC" required>
                         </div>
+                    </div>
 
-                        <div class="col-md-3 mb-3">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
                             <label for="country">Country</label>
                             <input type="text" class="form-control" name="country" placeholder="Canada" required>
                         </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="zip">Zip</label>
+                            <input type="text" class="form-control" name="postal_code" placeholder="xxxxxx" required>
+                        </div>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="zip">Zip</label>
-                        <input type="text" class="form-control" name="postal_code" placeholder="xxxxxx" required>
-                    </div>
 
                 </div>
 
+                <!-- show the payment input -->
                 <div class="col-md-5 mt-5">
                     <h4 class="mb-3">Payment</h4>
 
@@ -277,7 +309,7 @@ if (isset($_POST["palce_an_order"])) {
 
                     <hr class="mb-3">
 
-                    <input type="hidden" name="hidden_quantity" value="<?php echo $values["item_quantity"]; ?>">
+                    <!-- input for place the order -->
                     <input type="submit" name="palce_an_order" class="btn btn-secondary mt-3 float-right mt-3" value="Place An Order">
                 </div>
 
@@ -285,9 +317,9 @@ if (isset($_POST["palce_an_order"])) {
             </div>
         </form>
     </div>
-
-
-
+    
+    <?php mysqli_close($conn); ?>
+    <!-- footer -->
     <footer>
         <div class="container">
             <div class="row">

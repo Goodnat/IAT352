@@ -191,7 +191,7 @@
                             $condition = $condition . "product.category_id IN (" . $items . ")";
                         }
                     }
-                    //if orderDate not null
+                    //if price not null
                     if (isset($_POST['price1']) && isset($_POST['price2'])) {
                         if (!empty($_POST['price1']) && !empty($_POST['price2'])) {
                             if ($condition == "") {
@@ -222,6 +222,7 @@
                     echo '
                     <div class="container mt-5">
                         <div class = "row">';
+                    //show all the product in the product table
                     while ($row = mysqli_fetch_array($result)) {
 
                         echo '                                               
