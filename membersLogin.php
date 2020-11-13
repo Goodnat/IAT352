@@ -89,7 +89,7 @@
 						<div class="card-body">
 							<h2>Order Payment</h2>
 							<p class="card-text">Manage your payment details for the order.</p>
-							<p><a class="btn btn-secondary" href="./orderPayment.php" role="button">Change Payment Info &raquo;</a></p>
+							<p><a class="btn btn-secondary" href="./addCard.php" role="button">Change Payment Info &raquo;</a></p>
 						</div>
 					</div>
 				</div>

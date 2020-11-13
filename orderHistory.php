@@ -66,7 +66,7 @@
 				<p><a class="btn btn-secondary" href="new_pass.php" role="button">Reset Password&raquo;</a></p>
 			</div>
 		</div>
-		<div class="container p-2" style="border:solid red 1px">
+		<div class="container p-2" >
 			<?php
 			$name=$_SESSION['username'];
 			
@@ -79,17 +79,20 @@
 
 
 
-			$sql = "select orders.order_id,product.name,product.price,orders.quantity,orders.order_date from orders inner join product on product.product_id = orders.product_id inner join manage_order on orders.order_id = manage_order.order_id where manage_order.user_id= '$id' ";
+			$sql = "select order_detail.order_id,product.name,product.price,order_detail.quantity,orders.order_date from order_detail inner join product on product.product_id = order_detail.product_id inner join manage_order on order_detail.order_id = manage_order.order_id inner join orders on order_detail.order_id = orders.order_id where manage_order.user_id= '$id' ";
             $result = $conn->query($sql);
             echo"$sql";
             
-            echo "<table class='table-striped table-hover table-bordered display-5 '>";
-            echo "<tr ><td class='p-2'>Order ID</td>
-            <td class='p-2'>Product Name</td>
-            <td class='p-2'>Price</td>
-            <td class='p-2'>Quantity</td>
-            <td class='p-2'>Date</td>
-            <td class='p-2'>Total Price</td></tr>";?>
+            echo"<div class='table-responsive'>
+            <table class='table table-bordered'>
+                <tr>
+                    <th width='15%'>Order Number</th>
+                    <th width='35%'>Product Name</th>
+                    <th width='5%'>Price</th>
+                    <th width='5%'>Quantity</th>
+                    <th width='15%'>Order Date</th>
+                    <th width='10%'>Total</th>
+                </tr></div>";?>
 <?php
            
             while($row = $result->fetch_assoc()){

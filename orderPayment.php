@@ -76,13 +76,16 @@
 			$idsql = "select users.user_id from `users` where users.username = '$name';";
 			
 			$idresult = $conn->query($idsql);
+
 			
 			while ($row1 = $idresult->fetch_assoc()) {
             $id= $row1['user_id'];}
+            echo"$id";
 
-			$sql = "select orders.order_id,product.name,product.price,orders.quantity,orders.order_date from orders inner join product on product.product_id = orders.product_id inner join manage_order on orders.order_id = manage_order.order_id where manage_order.user_id = '$id'";
+			$sql = "select order_detail.order_id,product.name,product.price,order_detail.quantity from order_detail inner join product on product.product_id = order_detail.product_id inner join manage_order on order_detail.order_id = manage_order.order_id where manage_order.user_id = '$id'";
+			echo"$sql";
             $result = $conn->query($sql);
-            echo"$sql";
+            
             echo "<table class='table-striped table-hover table-bordered display-5 '>";
             echo "<tr ><td class='p-2'>Order ID</td>
             <td class='p-2'>Product Name</td>

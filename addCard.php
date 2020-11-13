@@ -47,12 +47,12 @@
 	<?php
 	require('db.php'); //connection to db code
 	include("auth_sessionNotActiveCheck.php");
-	   $order_id 
-        = 
-        $_SESSION
-        [
-        'order_id'
-        ];
+	   // $order_id 
+    //     = 
+    //     $_SESSION
+    //     [
+    //     'order_id'
+    //     ];
 	?>
 		<!DOCTYPE html>
 	<html>
@@ -81,17 +81,27 @@ if(!isset($_POST['submit'])){
 <div>
 	<!-- <h2>your order Number is : <?php echo"$order_id";?></h2> -->
 	<?php
+	$name=$_SESSION['username'];
+			
+			$idsql = "select users.user_id from `users` where users.username = '$name';";
+			
+			$idresult = $conn->query($idsql);
+			
+			while ($row1 = $idresult->fetch_assoc()) {
+            $id= $row1['user_id'];}
 	
-	$cursql = "select orders.order_id,orders.order_date,payment_required.card_number from orders inner join payment_required on orders.order_id = payment_required.order_id where orders.order_id='$order_id'";
+	$cursql = "select orders.order_id,orders.order_date,payment_required.card_number from orders inner join payment_required on orders.order_id = payment_required.order_id inner join manage_order on orders.order_id = manage_order.order_id where manage_order.user_id='$id'";
             $curresult = $conn->query($cursql);
             
-  echo "<table class='table-striped table-hover table-bordered display-5 '>";
-            echo "<tr ><td class='p-2'>Order ID</td>
-            
-            <td class='p-2'>date</td>
-            <td class='p-2'>Card Number</td>
-            <td class='p-2'>Edit</td>
-            </tr>";
+  echo"<div class='table-responsive'>
+            <table class='table table-bordered'>
+                <tr>
+                    <th width='30%'>Order Number</th>
+                    <th width='20%'>OrderDate</th>
+                    <th width='20%'>Card Number</th>
+                    <th width='15%'>Name on Card</th>
+                    <th width='5%'>Edit</th>
+                </tr></div>";
             ?>
             <?php
            
@@ -115,13 +125,53 @@ echo "</table>";
 
 
 </div>
-<form  style="display:none"id ="form"action="" method="post"> 
-Card Number：<input type="text" name="num" /> <br>
-Name On Card：<input type="text" name="name" /> <br>
-Expirty Date：<input type="text" name="expiry" /> <br>
-Code：<input type="text" name="code" /> <br>
-<input type="submit" name="submit" value="Add" /> 
-</form> 
+<form  style ="display:none;"method="post" action="cart.php?action=add&id=<?php echo $values["item_id"]; ?>">
+            <div class="row">
+              
+
+                <div class="col-md-5 mt-5">
+                    <h4 class="mb-3">Payment</h4>
+
+                    <div class="mb-3">
+                        <label for="cc-name">Name on card</label>
+                        <input type="text" class="form-control" name="card_name" required>
+                        <small class="text-muted">Full name as displayed on card</small>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="cc-number">Credit card number</label>
+                        <input type="text" class="form-control" name="card_number" required>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="cc-expiration">Expiration</label>
+                            <input type="date" class="form-control" name="expiry_date" required>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="cc-cvv">CVV</label>
+                            <input class="form-control" type="number" maxlength="3" pattern="([0-9]|[0-9]|[0-9])" name="card_cvc" required>
+                        </div>
+                    </div>
+
+                    <hr class="mb-3">
+
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="same-address">
+                        <label class="custom-control-label" for="same-address">Shipping address is the same as my billing address</label>
+                    </div>
+
+                    <hr class="mb-3">
+
+                    <input type="hidden" name="hidden_quantity" value="<?php echo $values["item_quantity"]; ?>">
+                    <input type="submit" name="palce_an_order" class="btn btn-secondary mt-3  mt-3" value="Change">
+                </div>
+
+                <hr class="mb-4">
+            </div>
+        </form>
+    </div>
 <?php 
 } 
 else
@@ -129,18 +179,20 @@ else
 
 // 何问起 hovertree.com
 //取得表单中的值，检查表单中的值是否符合标准，并做适当转义，防止SQL注入 
-$num = empty($_POST['num'])? die("plase enter card number"): 
-($_POST['num']); 
-$name = empty($_POST['name'])? die("plase enter name"): 
-($_POST['name']); 
-$expiry = empty($_POST['expiry'])? die("plase enter expiry date"): 
-($_POST['expiry']); 
-$code = empty($_POST['code'])? die("plase enter code"): 
-($_POST['code']); 
+$num = empty($_POST['card_number'])? die("plase enter card number"): 
+($_POST['card_number']); 
+$name = empty($_POST['card_name'])? die("plase enter name"): 
+($_POST['card_name']); 
+$expiry = empty($_POST['expiry_date'])? die("plase enter expiry date"): 
+($_POST['expiry_date']); 
+$code = empty($_POST['card_cvc'])? die("plase enter code"): 
+($_POST['card_cvc']); 
+
+
 //打开数据库连接 
 
 //构造一个SQL查询 
-$query = "UPDATE payment_required SET card_number ='$num', card_name= '$name', expiry_Date= '$expiry',card_cvc= '$code' where order_id = $order_id;";
+$query = "UPDATE payment_required SET card_number ='$num', card_name= '$name', expiry_Date= '$expiry',card_cvc= '$code' where order_id = '$order_id';";
 //执行该查询 
 // mysql_query($query);
 $result=$conn->query($query);
@@ -227,7 +279,7 @@ echo "add Successful";
 		if(div.style.display="none"){
 			div.style.display="block";
 		}
-		else{
+		else if(div.style.display="block"){
 			div.style.display="none";
 		}
 
