@@ -1,3 +1,15 @@
+<?php
+include("auth_sessionNotActiveCheck.php");
+require('db.php');
+
+// $product_id = (!empty($_POST['hidden_id']) ? $_POST['hidden_id'] : "");
+// $product_quantity = (!empty($_POST['hidden_quantity']) ? $_POST['hidden_quantity'] : "");
+// $product_date = (!empty($_POST['hidden_date']) ? $_POST['hidden_date'] : "");
+
+// $sql = "SELECT * FROM `orders` WHERE ";
+// $result = mysqli_query($conn, $sql);
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -50,13 +62,13 @@
 
             <h1>Thank you for shopping with us!</h1>
 
-            <p>Your order number is <em>#339339</em>. We have received your order and will process it immediately.</p>
+            <p>Your order number is <em>#<?php?></em>. We have received your order and hope you can enter your payement method and delivery information immediately.</p>
             <p>You will see the order detail in your account.</p>
 
             <h3>Please feel free to continue shoppping at any time.</h3>
 
-            <p><a class="btn btn-secondary w-25 mt-3" href="membersLogin.php" role="button">Personal Account&raquo;</a></p>
-            <p><a class="btn btn-secondary w-25" href="index.php" role="button">Continue shopping&raquo;</a></p>
+            <p><a class="btn btn-secondary w-25 mt-3" href="payment.php" role="button">Payment &raquo;</a></p>
+            <p><a class="btn btn-secondary w-25" href="delivery.php" role="button">Delivery &raquo;</a></p>
 
         </div>
     </main>

@@ -1,3 +1,63 @@
+<?php
+include("auth_sessionNotActiveCheck.php");
+require('db.php');
+if (isset($_GET["action"])) {
+    $item_id = intval($_GET['id']);
+    if ($_GET["action"] == "delete") {
+        foreach ($_SESSION["shopping_cart"] as $keys => $values) {
+            if ($values["item_id"] == $item_id) {
+                unset($_SESSION["shopping_cart"][$keys]);
+                echo '<script>alert("Item Removed")</script>';
+                echo '<script>window.location="cart.php?id=' . $item_id . '"</script>';
+            }
+        }
+    }
+}
+$sucessful = "";
+if (isset($_POST["palce_an_order"])) {
+    $sql = "INSERT INTO `orders` (order_date)
+    VALUES ('" . date('Y-m-d H:i:s') . "'); ";
+    $result = mysqli_query($conn, $sql);
+
+    $sql = "SELECT order_id FROM orders order by order_id DESC limit 1";
+    $result = mysqli_query($conn, $sql);
+    $order_id = mysqli_fetch_assoc($result)["order_id"];
+
+    foreach ($_SESSION["shopping_cart"] as $keys => $values) {
+        $product_id = $values["item_id"];
+        $product_quantity = $values["item_quantity"];
+        $product_unit_price = $values["item_price"];
+
+        $sql = "INSERT INTO `order_detail` (order_id, product_id, quantity, unit_price)
+                VALUES ($order_id, '$product_id','$product_quantity', '$product_unit_price'); ";
+        $result = mysqli_query($conn, $sql);
+    }
+
+    $_SESSION["shopping_cart"] = array();
+
+    if ($result) {
+        $sucessful = '
+        <div class="container text-center" style="margin:5em auto;">
+
+            <h1>Thank you for shopping with us!</h1>
+
+            <p>Your order number is <em>#' . $order_id . '</em>. We have received your order and hope you can enter your payement method and delivery information immediately.</p>
+            <p>You will see the order detail in your account.</p>
+
+            <h3>Please feel free to continue shoppping at any time.</h3>
+
+            <p><a class="btn btn-secondary w-25 mt-3" href="payment.php" role="button">Payment &raquo;</a></p>
+            <p><a class="btn btn-secondary w-25" href="delivery.php" role="button">Delivery &raquo;</a></p>
+
+        </div>
+        ';
+    } else {
+        echo "<p>Error: " . $sql . "</p>" . mysqli_error($conn);
+    }
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -36,8 +96,8 @@
                         <li class="nav-item">
                             <a class="nav-link" href="membersLogin.php">Account</a>
                         </li>
-                        <li class="nav-item  active">
-                            <a class="nav-link" href="membersLogin.php">Cart<span class="sr-only">(current)</span></a>
+                        <li class="nav-item">
+                            <a class="nav-link" href="cart.php">Cart</a>
                         </li>
                     </ul>
                 </div>
@@ -46,29 +106,149 @@
     </header>
 
     <div class="container">
-        <div class="row">
 
-            <div class="col-md-5 order-md-2 mb-4">
-                <h4 class="d-flex justify-content-between align-items-center mb-3">
-                    <span class="text-muted">Your cart</span>
-                    <span class="badge badge-secondary badge-pill">3</span>
-                </h4>
-                <ul class="list-group mb-3">
-                    <li class="list-group-item d-flex justify-content-between">
-                        <span>Total (USD)</span>
-                        <strong>$20</strong>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="col-md-7">
-
-
-
-            </div>
-
+        <h3>
+            <?php
+            if (!empty($_SESSION["shopping_cart"])) {
+                echo "Your Cart";
+            } else {
+                echo "Your Cart is Empty!";
+            }
+            ?>
+        </h3>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <tr>
+                    <th width="40%">Item Name</th>
+                    <th width="10%">Quantity</th>
+                    <th width="20%">Price</th>
+                    <th width="15%">Total</th>
+                    <th width="5%">Delete</th>
+                </tr>
+                <?php
+                if (!empty($_SESSION["shopping_cart"])) {
+                    $total = 0;
+                    foreach ($_SESSION["shopping_cart"] as $keys => $values) {
+                ?>
+                        <tr>
+                            <td><?php echo $values["item_name"]; ?></td>
+                            <td><?php echo $values["item_quantity"]; ?></td>
+                            <td>$ <?php echo $values["item_price"]; ?></td>
+                            <td>$ <?php echo number_format($values["item_quantity"] * $values["item_price"], 2); ?></td>
+                            <td><a href="cart.php?action=delete&id=<?php echo $values["item_id"]; ?>"><span class="text-danger">Remove</span></a></td>
+                        </tr>
+                    <?php
+                        $total = $total + ($values["item_quantity"] * $values["item_price"]);
+                    }
+                    ?>
+                <?php
+                }
+                ?>
+            </table>
+            <ul class="list-group mb-3">
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Total (CAD)</span>
+                    <strong>$
+                        <?php
+                        if (!empty($_SESSION["shopping_cart"])) {
+                            echo number_format($total, 2);
+                        } else {
+                            echo "0";
+                        }
+                        ?>
+                    </strong>
+                </li>
+            </ul>
         </div>
+        <?php echo "$sucessful"; ?>
+        <form method="post" action="cart.php?action=add&id=<?php echo $values["item_id"]; ?>">
+            <div class="row">
+                <div class="col-7 mt-5 cart">
+                    <!--Shipping address-->
+                    <h4 class="mb-3">Shipping address</h4>
+                    <div class="mb-3">
+                        <label for="name">Recipient Name</label>
+                        <input type="text" class="form-control" name="recipient_name" placeholder="Nick_Peter" value="" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="phone">Phone</label>
+                        <input type="text" class="form-control" name="recipient_phone" placeholder="xxxxxxxxxx" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="address">Address</label>
+                        <input type="text" class="form-control" name="street_address" placeholder="1234 Main St" required>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3 mb-3">
+                            <label for="address">City</label>
+                            <input type="text" class="form-control" name="city" placeholder="Surrey" required>
+                        </div>
+
+                        <div class="col-md-3 mb-3">
+                            <label for="address">Province</label>
+                            <input type="text" class="form-control" name="province" placeholder="BC" required>
+                        </div>
+
+                        <div class="col-md-3 mb-3">
+                            <label for="country">Country</label>
+                            <input type="text" class="form-control" name="country" placeholder="Canada" required>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="zip">Zip</label>
+                        <input type="text" class="form-control" name="postal_code" placeholder="xxxxxx" required>
+                    </div>
+
+                </div>
+
+                <div class="col-md-5 mt-5">
+                    <h4 class="mb-3">Payment</h4>
+
+                    <div class="mb-3">
+                        <label for="cc-name">Name on card</label>
+                        <input type="text" class="form-control" name="card_name" required>
+                        <small class="text-muted">Full name as displayed on card</small>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="cc-number">Credit card number</label>
+                        <input type="text" class="form-control" name="card_number" required>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="cc-expiration">Expiration</label>
+                            <input type="date" class="form-control" name="expiry_date" required>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="cc-cvv">CVV</label>
+                            <input class="form-control" type="number" maxlength="3" pattern="([0-9]|[0-9]|[0-9])" name="card_cvc" required>
+                        </div>
+                    </div>
+
+                    <hr class="mb-3">
+
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="same-address">
+                        <label class="custom-control-label" for="same-address">Shipping address is the same as my billing address</label>
+                    </div>
+
+                    <hr class="mb-3">
+
+                    <input type="hidden" name="hidden_quantity" value="<?php echo $values["item_quantity"]; ?>">
+                    <input type="submit" name="palce_an_order" class="btn btn-secondary mt-3 float-right mt-3" value="Place An Order">
+                </div>
+
+                <hr class="mb-4">
+            </div>
+        </form>
     </div>
+
     <footer>
         <div class="container">
             <div class="row">

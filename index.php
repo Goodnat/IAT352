@@ -37,7 +37,7 @@
                             <a class="nav-link" href="membersLogin.php">Account</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="membersLogin.php">Cart</a>
+                            <a class="nav-link" href="cart.php">Cart</a>
                         </li>
                     </ul>
                 </div>
@@ -225,7 +225,7 @@
                     while ($row = mysqli_fetch_array($result)) {
 
                         echo '                                               
-                                <div class="col-lg-4 col-md-6 col-sm-12 our-product">
+                                <div class="col-lg-4 col-md-6 col-sm-12 our-product ">
                                     <div class="img">
                                         <a class="test-popup-link" href="detail.php?id=' . $row['product_id'] . '">
                                             <img src="imgs/' . $row['product_id'] . '.PNG" class="img-fluid">
@@ -242,6 +242,7 @@
                         </div>
                     </div>
                     ';
+                    mysqli_close($conn);
                     ?>
                 </div>
 
