@@ -1,13 +1,9 @@
-<!--This page is designed as members' log in page-->
-<!--After user sucessfully register, the website wil turn to this page-->
-<!--If the user enter the right user name and password, show successfully log in-->
-<!--If the user enter the wrong information, show fail to log in-->
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
 	<meta charset="UTF-8">
-	<title>Login</title>
+	<title>Order History</title>
 	<!-- Boostrap css file-->
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 
@@ -52,8 +48,7 @@
 	require('db.php'); //connection to db code
 	include("auth_sessionNotActiveCheck.php");
 	?>
-
-	<!DOCTYPE html>
+		<!DOCTYPE html>
 	<html>
 
 	<head>
@@ -63,7 +58,7 @@
 
 	<body>
 		<div class="jumbotron">
-			<div class="container">
+			<div class="container ">
 				<h1 class="display-3">Welcome, <?php echo $_SESSION['username']; ?>!</h1>
 				<p>You're successfully be our members!</p>
 				<p>You can check you last order, change the order payment, change the order delivery</p>
@@ -71,56 +66,54 @@
 				<p><a class="btn btn-secondary" href="new_pass.php" role="button">Reset Password&raquo;</a></p>
 			</div>
 		</div>
-
-		<div class="container">
-			<!-- Example row of columns -->
-			<div class="row mt-5">
-				<div class="col-md-4">
-					<div class="card" style="width: 20rem;">
-						<div class="card-body">
-							<h2>Order History</h2>
-							<p class="card-text">Track your recent purchases and view past orders with ease.</p>
-							<p><a class="btn btn-secondary" href="./orderHistory.php" role="button">View details &raquo;</a></p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="card" style="width: 20rem;">
-						<div class="card-body">
-							<h2>Order Payment</h2>
-							<p class="card-text">Manage your payment details for the order.</p>
-							<p><a class="btn btn-secondary" href="./orderPayment.php" role="button">Change Payment Info &raquo;</a></p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-4 ">
-					<div class="card" style="width: 20rem;">
-						<div class="card-body">
-							<h2>Order Delivery</h2>
-							<p class="card-text">Manage your delivery details for the order.</p>
-							<p><a class="btn btn-secondary" href="./changeAddress.php" role="button">Change Delivery Info &raquo;</a></p>
-						</div>
-					</div>
-				</div>
-			</div>
+		<div class="container p-2" style="border:solid red 1px">
+			<?php
+			$name=$_SESSION['username'];
+			
+			$idsql = "select users.user_id from `users` where users.username = '$name';";
+			
+			$idresult = $conn->query($idsql);
+			
+			while ($row1 = $idresult->fetch_assoc()) {
+            $id= $row1['user_id'];}
 
 
+
+			$sql = "select orders.order_id,product.name,product.price,orders.quantity,orders.order_date from orders inner join product on product.product_id = orders.product_id inner join manage_order on orders.order_id = manage_order.order_id where manage_order.user_id= '$id' ";
+            $result = $conn->query($sql);
+            echo"$sql";
+            
+            echo "<table class='table-striped table-hover table-bordered display-5 '>";
+            echo "<tr ><td class='p-2'>Order ID</td>
+            <td class='p-2'>Product Name</td>
+            <td class='p-2'>Price</td>
+            <td class='p-2'>Quantity</td>
+            <td class='p-2'>Date</td>
+            <td class='p-2'>Total Price</td></tr>";?>
+<?php
+           
+            while($row = $result->fetch_assoc()){
+        
+
+echo "<tr>";
+echo "<td>".$row["order_id"]."</td>"; //display ID
+echo "<td>".$row["name"]." </td>"; //display name
+echo "<td>".$row["price"]." </td>";//display price
+echo "<td>".$row["quantity"]." </td>"; //display number
+echo "<td>".$row["order_date"]." </td>"; //display date
+$singleprice=$row["price"];
+$quantityeach=$row["quantity"];
+$total=$singleprice * $quantityeach;
+echo"<td>".$total."</td>";
+
+echo "</tr>";
+}
+
+
+echo "</table>";
+            ?>
+		</div>
 	</body>
-
-	</html>
-
-
-	<!-- <div class="form register container mx-auto my-5">
-		<h1>Log In</h1>
-		<form action="" method="post" name="login">
-			<input type="text" name="username" placeholder="Username" required />
-			<input type="password" name="password" placeholder="Password" required />
-			<input name="submit" type="submit" value="Login" />
-		</form>
-		<p>Not registered yet? <a href='register.php'>Register Here</a></p>
-	</div> -->
-
-
 	<footer>
 		<div class="container">
 			<div class="row">
