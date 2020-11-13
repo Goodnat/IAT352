@@ -90,7 +90,7 @@ if(!isset($_POST['submit'])){
 			while ($row1 = $idresult->fetch_assoc()) {
             $id= $row1['user_id'];}
 	
-	$cursql = "select orders.order_id,orders.order_date,payment_required.card_number from orders inner join payment_required on orders.order_id = payment_required.order_id inner join manage_order on orders.order_id = manage_order.order_id where manage_order.user_id='$id'";
+	$cursql = "select orders.order_id,orders.order_date,payment_required.card_number,payment_required.card_name from orders inner join payment_required on orders.order_id = payment_required.order_id inner join manage_order on orders.order_id = manage_order.order_id where manage_order.user_id='$id'";
             $curresult = $conn->query($cursql);
             
   echo"<div class='table-responsive'>
@@ -113,6 +113,7 @@ echo "<tr>";
 echo "<td>".$row["order_id"]."</td>"; //display ID
 echo "<td>".$row["order_date"]." </td>"; //display name
 echo "<td>".$row["card_number"]." </td>";//display price
+echo "<td>".$row["card_name"]." </td>";
 echo"<td><button id='button' onclick='Click()'> Edit</button></td>";
 
 
@@ -125,7 +126,7 @@ echo "</table>";
 
 
 </div>
-<form  style ="display:none;"method="post" action="cart.php?action=add&id=<?php echo $values["item_id"]; ?>">
+<form  id="form"style ="display:none;"method="post" action="cart.php?action=add&id=<?php echo $values["item_id"]; ?>">
             <div class="row">
               
 

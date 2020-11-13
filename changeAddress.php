@@ -47,12 +47,7 @@
 	<?php
 	require('db.php'); //connection to db code
 	include("auth_sessionNotActiveCheck.php");
-	   $order_id 
-        = 
-        $_SESSION
-        [
-        'order_id'
-        ];
+	  
 	?>
 		<!DOCTYPE html>
 	<html>
@@ -115,7 +110,8 @@ echo "<td>".$row["order_id"]."</td>";
 $order_id = $row["order_id"];
 echo "<td>".$row["recipient_name"]." </td>"; //display name
 echo "<td>".$row["recipient_phone"]." </td>";
-echo "<td>".$row["street_address"].",".$row["city"].",".$row["province"]."</td>";//display price
+echo "<td>".$row["street_address"].",".$row["city"].",".$row["province"]."</td>";
+echo "<td>".$row["postal_code"]." </td>";//display price
 echo"<td><button id='button' onclick='Click()'> Edit</button></td>";
 
 
@@ -128,7 +124,7 @@ echo "</table>";
 
 
 </div>
- <form method="post" action="">
+ <form id="form" style="display:none"method="post" action="">
             <div class="row">
                 <div class="col-7 mt-5 cart">
                     <!--Shipping address-->

@@ -14,6 +14,33 @@ if (isset($_GET["action"])) {
     }
 }
 $sucessful = "";
+ 
+
+
+                    $cardName = (!empty($_POST['card_name']) ? $_POST['card_name'] : "");
+                    $cardNumber = (!empty($_POST['card_number']) ? $_POST['card_number'] : "");
+                    $expiryDate = (!empty($_POST['expiry_date']) ? $_POST['expiry_date'] : "");
+                    $cardcvc = (!empty($_POST['card_cvc']) ? $_POST['card_cvc'] : "");
+
+                    $name = (!empty($_POST['recipient_name']) ? $_POST['recipient_name'] : "");
+                    $phone = (!empty($_POST['recipient_phone']) ? $_POST['recipient_phone'] : "");
+                    $street = (!empty($_POST['city']) ? $_POST['city'] : "");
+                    $city = (!empty($_POST['card_cvc']) ? $_POST['card_cvc'] : "");
+                     $province = (!empty($_POST['province']) ? $_POST['province'] : "");
+                      $country = (!empty($_POST['country']) ? $_POST['country'] : "");
+                    $code = (!empty($_POST['postal_code']) ? $_POST['postal_code'] : "");
+
+   
+  $username=$_SESSION['username'];
+            
+            $idsql = "select users.user_id from `users` where users.username = '$username';";
+            
+            $idresult = $conn->query($idsql);
+            
+            while ($row1 = $idresult->fetch_assoc()) {
+            $id= $row1['user_id'];}
+
+
 if (isset($_POST["palce_an_order"])) {
     $sql = "INSERT INTO `orders` (order_date)
     VALUES ('" . date('Y-m-d H:i:s') . "'); ";
@@ -23,15 +50,32 @@ if (isset($_POST["palce_an_order"])) {
     $result = mysqli_query($conn, $sql);
     $order_id = mysqli_fetch_assoc($result)["order_id"];
 
+    $sql = "INSERT INTO `payment_required` (order_id,card_name, card_number, expiry_date, card_cvc)
+                     VALUES ('$order_id','$cardName','$cardNumber','$expiryDate','$cardcvc'); ";
+                    $result = mysqli_query($conn, $sql);
+    $sql = "INSERT INTO `delivery_required` (order_id,create_time,recipient_name,recipient_phone, street_address, city,province,country,postal_code)
+                     VALUES ('$order_id','" . date('Y-m-d H:i:s') . "','$name','$phone','$street','$city','$province','$country','$code'); ";
+                    $result = mysqli_query($conn, $sql);
+
+
     foreach ($_SESSION["shopping_cart"] as $keys => $values) {
         $product_id = $values["item_id"];
         $product_quantity = $values["item_quantity"];
         $product_unit_price = $values["item_price"];
 
         $sql = "INSERT INTO `order_detail` (order_id, product_id, quantity, unit_price)
-                VALUES ($order_id, '$product_id','$product_quantity', '$product_unit_price'); ";
+                VALUES ('$order_id', '$product_id','$product_quantity', '$product_unit_price'); ";
         $result = mysqli_query($conn, $sql);
+
+         $sql="INSERT INTO `manage_order`(order_id,user_id,product_id,quantity,order_date)
+                VALUES('$order_id','$id','$product_id','$product_quantity','" . date('Y-m-d H:i:s') . "')";
+                $result = mysqli_query($conn, $sql);
+
+       
+
     }
+   
+     
 
     $_SESSION["shopping_cart"] = array();
 
@@ -248,6 +292,8 @@ if (isset($_POST["palce_an_order"])) {
             </div>
         </form>
     </div>
+
+  
 
     <footer>
         <div class="container">
