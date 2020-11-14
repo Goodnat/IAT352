@@ -45,7 +45,7 @@ if (isset($_POST["change_payment"])) {
 	<link rel="stylesheet" type="text/css" href="css/all.min.css">
 
 	<!-- main css -->
-	<link rel="stylesheet" type="text/css" href="css/mainstyle.css">
+	<link rel="stylesheet" type="text/css" href="css/mainStyle.css">
 </head>
 
 <body>

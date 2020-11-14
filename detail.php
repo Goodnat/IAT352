@@ -63,7 +63,7 @@ if (isset($_GET["action"])) {
     <link rel="stylesheet" type="text/css" href="css/all.min.css">
 
     <!-- main css -->
-    <link rel="stylesheet" type="text/css" href="css/mainstyle.css">
+    <link rel="stylesheet" type="text/css" href="css/mainStyle.css">
 
 
 </head>
@@ -123,7 +123,7 @@ if (isset($_GET["action"])) {
                                         <input type="number" name="quantity" class="form-control" value="1" />  
                                         <input type="hidden" name="hidden_name" value="' . $row['name'] . '" >
                                         <input type="hidden" name="hidden_price" value="' . $row['price'] . '" >
-                                        <input type="submit" name="submit" class="btn btn-secondary mt-5" value="ADD TO CART">                                      
+                                        <input type="submit" class="btn btn-secondary mt-5" name="submit"  value="ADD TO CART">                                      
                                         <input type="button" class="btn btn-secondary mt-5" value="GO TO CART" onclick="location.href=\'cart.php\';" />
                                     </div>
                                     <div class="mt-5">

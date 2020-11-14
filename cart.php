@@ -126,7 +126,7 @@ if (isset($_POST["palce_an_order"])) {
     <link rel="stylesheet" type="text/css" href="css/all.min.css">
 
     <!-- main css -->
-    <link rel="stylesheet" type="text/css" href="css/mainstyle.css">
+    <link rel="stylesheet" type="text/css" href="css/mainStyle.css">
 
 
 </head>

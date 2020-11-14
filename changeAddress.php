@@ -46,7 +46,7 @@ if (isset($_POST["change_delivery"])) {
 	<link rel="stylesheet" type="text/css" href="css/all.min.css">
 
 	<!-- main css -->
-	<link rel="stylesheet" type="text/css" href="css/mainstyle.css">
+	<link rel="stylesheet" type="text/css" href="css/mainStyle.css">
 </head>
 
 <body>

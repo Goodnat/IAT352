@@ -62,9 +62,9 @@ a:hover {
     margin: 0 auto;
 }
 
-input[type='text'],
-input[type='email'],
-input[type='password'] {
+input[type=text],
+input[type=email],
+input[type=password] {
     width: 200px;
     border-radius: 2px;
     border: 1px solid #CCC;
@@ -74,8 +74,8 @@ input[type='password'] {
     margin-top: 10px;
 }
 
-input[type='submit'],
-input[type='button'] {
+input[type=submit],
+input[type=button] {
     padding: 10px 25px 8px;
     color: #fff;
     background-color: #000000;
@@ -88,8 +88,8 @@ input[type='button'] {
     cursor: pointer;
 }
 
-input[type='submit'],
-input[type='button'] :hover {
+input[type=submit],
+input[type=button] :hover {
     background-color: #545454;
 }
 
