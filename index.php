@@ -224,7 +224,7 @@ require('db.php');
                         WHERE $condition;    
                     ";
                     }
-                    //echo "$sql";
+                   
                     $result = mysqli_query($conn, $sql);
                     echo '
                     <div class="container mt-5">
