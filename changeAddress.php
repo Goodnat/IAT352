@@ -1,6 +1,37 @@
 <?php
 require('db.php'); //connection to db code
 include("auth_sessionNotActiveCheck.php");
+
+$name = $_SESSION['username'];
+$idsql = "select users.user_id from `users` where users.username = '$name';";
+$idresult = mysqli_query($conn, $idsql);
+while ($row1 = mysqli_fetch_array($idresult)) {
+	$id = $row1['user_id'];
+}
+
+//sign post value to variable in delivery information
+$name = (!empty($_POST['recipient_name']) ? $_POST['recipient_name'] : "");
+$phone = (!empty($_POST['recipient_phone']) ? $_POST['recipient_phone'] : "");
+$street = (!empty($_POST['street_address']) ? $_POST['street_address'] : "");
+$city = (!empty($_POST['city']) ? $_POST['city'] : "");
+$province = (!empty($_POST['province']) ? $_POST['province'] : "");
+$country = (!empty($_POST['country']) ? $_POST['country'] : "");
+$code = (!empty($_POST['postal_code']) ? $_POST['postal_code'] : "");
+$hidden_order_id = (!empty($_POST['change_order_id']) ? $_POST['change_order_id'] : "");
+
+if (!empty($_POST["change_order_id"])) {
+	$hint = "";
+} else {
+	$hint = "<P class='text-danger float-right'>choose an order before to change</P>";
+}
+
+$query = "UPDATE delivery_required SET recipient_name ='$name', recipient_phone= '$phone', street_address= '$street',city= '$city',country ='$country', postal_code = '$code' where order_id = '$hidden_order_id';";
+
+if (isset($_POST["change_delivery"])) {
+	$result = mysqli_query($conn, $query);
+	echo '<script>alert("Order #' . $hidden_order_id . ' Payment Changed")</script>';
+	echo '<script>window.location="changeAddress.php"</script>';
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -45,14 +76,19 @@ include("auth_sessionNotActiveCheck.php");
 			</nav>
 		</div>
 	</header>
+	
 	<main>
+
 		<div class="jumbotron">
 			<div class="container">
 				<h1 class="display-3">Welcome, <?php echo $_SESSION['username']; ?>!</h1>
 				<p>You're successfully be our members!</p>
 				<p>You can check you last order, change the order payment, change the order delivery</p>
-				<p><a class="btn btn-secondary" href="logout.php" role="button">Log out&raquo;</a></p>
-				<p><a class="btn btn-secondary" href="new_pass.php" role="button">Reset Password&raquo;</a></p>
+				<p>
+					<a class="btn btn-secondary" href="logout.php" role="button">Log out &raquo;</a>
+					<a class="btn btn-secondary" href="new_pass.php" role="button">Reset Password &raquo;</a>
+				</p>
+				<p><a class="btn btn-secondary" href="index.php" role="button">Go Shopping &raquo;</a></p>
 			</div>
 		</div>
 
@@ -73,7 +109,7 @@ include("auth_sessionNotActiveCheck.php");
 						<div class="card-body">
 							<h2>Order Payment</h2>
 							<p class="card-text">Manage your payment details for the order.</p>
-							<p><a class="btn btn-secondary" href="./addCard.php" role="button">Change Payment Info &raquo;</a></p>
+							<p><a class="btn btn-secondary" href="./changePayment.php" role="button">Change Payment Info &raquo;</a></p>
 						</div>
 					</div>
 				</div>
@@ -90,123 +126,99 @@ include("auth_sessionNotActiveCheck.php");
 		</div>
 
 		<div class="container">
+
+
+			<!-- <h2>your order Number is : <?php echo "$order_id"; ?></h2> -->
 			<?php
-			if (!isset($_POST['submit'])) {
-				//如果没有表单提交，显示一个表单 
+			echo $hint;
+			echo "<div class='table-responsive'>
+            		<table class='table table-bordered'>
+                	<tr>
+						<th width='15%'>Order Number</th>
+						<th width='10%'>Name</th>
+						<th width='10%'>phone</th>
+						<th width='40%'>Address</th>
+						<th width='5%'>Postcode</th>
+						<th width='5%'>Choose</th>
+					</tr>";
 			?>
 
-				<div>
-					<!-- <h2>your order Number is : <?php echo "$order_id"; ?></h2> -->
-					<?php
-					$name = $_SESSION['username'];
-
-					$idsql = "select users.user_id from `users` where users.username = '$name';";
-
-					$idresult = mysqli_query($conn, $idsql);
-
-					while ($row1 = mysqli_fetch_array($idresult)) {
-						$id = $row1['user_id'];
-					}
-
-					$cursql = "SELECT manage_order.order_id,delivery_required.recipient_name,delivery_required.recipient_phone,delivery_required.street_address,delivery_required.city,delivery_required.province,delivery_required.country,delivery_required.postal_code 
-					from delivery_required inner join manage_order 
-					on delivery_required.order_id=manage_order.order_id 
-					where manage_order.user_id = '$id'";
-					$curresult = mysqli_query($conn, $cursql);
-
-					echo "<div class='table-responsive'>
-            <table class='table table-bordered'>
-                <tr>
-                    <th width='15%'>Order Number</th>
-                    <th width='10%'>Name</th>
-                    <th width='10%'>phone</th>
-                    <th width='40%'>Address</th>
-                    <th width='5%'>Postcode</th>
-                    <th width='5%'>Edit</th>
-                </tr></div>";
-					?>
-					<?php
-
-					while ($row = $curresult->fetch_assoc()) {
-						if ($row > 0) {
-							echo "<tr>";
-							echo "<td>" . $row["order_id"] . "</td>";
-							$order_id = $row["order_id"];
-							echo "<td>" . $row["recipient_name"] . " </td>"; //display name
-							echo "<td>" . $row["recipient_phone"] . " </td>";
-							echo "<td>" . $row["street_address"] . "," . $row["city"] . "," . $row["province"] . "</td>";
-							echo "<td>" . $row["postal_code"] . " </td>"; //display price
-							echo "<td><button id='button' onclick='Click()'> Edit</button></td>";
-							echo "</tr>";
-						}
-					}
-					echo "</table>";
-					?>
-
-
-				</div>
-				<form id="form" style="display:none" method="post" action="">
-					<div class="row">
-						<div class="col-7 mt-5 cart">
-							<!--Shipping address-->
-							<h4 class="mb-3">Shipping address</h4>
-							<div class="mb-3">
-								<label for="name">Recipient Name</label>
-								<input type="text" class="form-control" name="recipient_name" placeholder="Nick_Peter" value="" required>
-							</div>
-
-							<div class="mb-3">
-								<label for="phone">Phone</label>
-								<input type="text" class="form-control" name="recipient_phone" placeholder="xxxxxxxxxx" required>
-							</div>
-
-							<div class="mb-3">
-								<label for="address">Address</label>
-								<input type="text" class="form-control" name="street_address" placeholder="1234 Main St" required>
-							</div>
-
-							<div class="row">
-								<div class="col-md-3 mb-3">
-									<label for="address">City</label>
-									<input type="text" class="form-control" name="city" placeholder="Surrey" required>
-								</div>
-
-								<div class="col-md-3 mb-3">
-									<label for="address">Province</label>
-									<input type="text" class="form-control" name="province" placeholder="BC" required>
-								</div>
-
-								<div class="col-md-3 mb-3">
-									<label for="country">Country</label>
-									<input type="text" class="form-control" name="country" placeholder="Canada" required>
-								</div>
-							</div>
-
-							<div class="mb-3">
-								<label for="zip">Zip</label>
-								<input type="text" class="form-control" name="postal_code" placeholder="xxxxxx" required>
-							</div>
-							<input type="submit" name="palce_an_order" class="btn btn-secondary mt-3  mt-3" value="Change">
-
-						</div>
-					</div>
+			<form id="form" method="post" action="">
 				<?php
-			} else {
 
-				$name = empty($_POST['recipient_name']) ? die("plase enter your number") : ($_POST['recipient_name']);
-				$phone = empty($_POST['recipient_phone']) ? die("plase enter name") : ($_POST['recipient_phone']);
-				$street = empty($_POST['street_address']) ? die("plase enter Street") : ($_POST['street_address']);
-				$city = empty($_POST['city']) ? die("plase enter City") : ($_POST['city']);
-				$province = empty($_POST['province']) ? die("plase enter code") : ($_POST['province']);
-				$country = empty($_POST['country']) ? die("plase enter country") : ($_POST['country']);
-				$code = empty($_POST['postal_code']) ? die("plase enter Zip code") : ($_POST['postal_code']);
+				$cursql = "SELECT manage_order.order_id,delivery_required.recipient_name,delivery_required.recipient_phone,delivery_required.street_address,delivery_required.city,delivery_required.province,delivery_required.country,delivery_required.postal_code 
+				from delivery_required inner join manage_order 
+				on delivery_required.order_id=manage_order.order_id 
+				where manage_order.user_id = '$id'";
 
-				$query = "UPDATE delivery_required SET recipient_name ='$name', recipient_phone= '$phone', street_address= '$street',city= '$city',country ='$country', postal_code = '$code' where order_id = '$order_id';";
+				$curresult = mysqli_query($conn, $cursql);
 
-				$result = mysqli_query($conn, $query);
-				echo "add Successful";
-			}
+				while ($row = $curresult->fetch_assoc()) {
+					if ($row > 0) {
+						$order_id = $row["order_id"];
+						echo "<tr>";
+						echo "<td>" . $row["order_id"] . "</td>";
+						echo "<td>" . $row["recipient_name"] . " </td>"; //display name
+						echo "<td>" . $row["recipient_phone"] . " </td>";
+						echo "<td>" . $row["street_address"] . "," . $row["city"] . "," . $row["province"] . "</td>";
+						echo "<td>" . $row["postal_code"] . " </td>"; //display price
+						echo "<td><input type='radio' value='" . $order_id . "' name = 'change_delivery' onclick='document.getElementById(\"change\").value=this.value' required></td>";
+						echo "</tr>";
+					}
+				}
+				echo "
+				</table>
+				</div>";
 				?>
+				<input type="hidden" id="change" name="change_order_id">
+				<div class="row">
+					<div class="col-12 mt-5 cart">
+						<!--Shipping address-->
+						<h4 class="mb-3">Shipping address</h4>
+						<div class="mb-3">
+							<label for="name">Recipient Name</label>
+							<input type="text" class="form-control" name="recipient_name" placeholder="Nick_Peter" value="" required>
+						</div>
+
+						<div class="mb-3">
+							<label for="phone">Phone</label>
+							<input type="text" class="form-control" name="recipient_phone" placeholder="xxxxxxxxxx" required>
+						</div>
+
+						<div class="mb-3">
+							<label for="address">Address</label>
+							<input type="text" class="form-control" name="street_address" placeholder="1234 Main St" required>
+						</div>
+
+						<div class="row">
+							<div class="col-md-3 mb-3">
+								<label for="address">City</label>
+								<input type="text" class="form-control" name="city" placeholder="Surrey" required>
+							</div>
+
+							<div class="col-md-3 mb-3">
+								<label for="address">Province</label>
+								<input type="text" class="form-control" name="province" placeholder="BC" required>
+							</div>
+
+							<div class="col-md-3 mb-3">
+								<label for="country">Country</label>
+								<input type="text" class="form-control" name="country" placeholder="Canada" required>
+							</div>
+						</div>
+
+						<div class="mb-3">
+							<label for="zip">Zip</label>
+							<input type="text" class="form-control" name="postal_code" placeholder="xxxxxx" required>
+						</div>
+
+						<input class='btn btn-secondary' type='submit' value='Change'>
+
+					</div>
+				</div>
+
+			</form>
+
 		</div>
 
 	</main>

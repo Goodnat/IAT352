@@ -53,13 +53,17 @@ include("auth_sessionNotActiveCheck.php");
 	</header>
 
 	<main>
+		
 		<div class="jumbotron">
 			<div class="container">
 				<h1 class="display-3">Welcome, <?php echo $_SESSION['username']; ?>!</h1>
 				<p>You're successfully be our members!</p>
 				<p>You can check you last order, change the order payment, change the order delivery</p>
-				<p><a class="btn btn-secondary" href="logout.php" role="button">Log out&raquo;</a></p>
-				<p><a class="btn btn-secondary" href="new_pass.php" role="button">Reset Password&raquo;</a></p>
+				<p>
+					<a class="btn btn-secondary" href="logout.php" role="button">Log out &raquo;</a>
+					<a class="btn btn-secondary" href="new_pass.php" role="button">Reset Password &raquo;</a>
+				</p>
+				<p><a class="btn btn-secondary" href="index.php" role="button">Go Shopping &raquo;</a></p>
 			</div>
 		</div>
 
@@ -80,7 +84,7 @@ include("auth_sessionNotActiveCheck.php");
 						<div class="card-body">
 							<h2>Order Payment</h2>
 							<p class="card-text">Manage your payment details for the order.</p>
-							<p><a class="btn btn-secondary" href="./addCard.php" role="button">Change Payment Info &raquo;</a></p>
+							<p><a class="btn btn-secondary" href="./changePayment.php" role="button">Change Payment Info &raquo;</a></p>
 						</div>
 					</div>
 				</div>
