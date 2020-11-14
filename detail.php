@@ -4,8 +4,8 @@ require('db.php');
 
 if (isset($_POST["submit"])) {
     $item_id = intval($_GET['id']);
-    $name =  $_POST["hidden_name"];
-    $price = $_POST["hidden_price"];
+    $name =  test_input($_POST["hidden_name"]);
+    $price = test_input($_POST["hidden_price"]);
     $quantity =  $_POST["quantity"];
 
     if (isset($_SESSION["shopping_cart"])) {
@@ -47,6 +47,13 @@ if (isset($_GET["action"])) {
     }
 }
 
+function test_input($data)
+{
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+}
 ?>
 
 <!DOCTYPE html>

@@ -2,6 +2,7 @@
 require('db.php'); //connection to db code
 include("auth_sessionNotActiveCheck.php");
 
+//find the current user id
 $name = $_SESSION['username'];
 $idsql = "select users.user_id from `users` where users.username = '$name';";
 $idresult = mysqli_query($conn, $idsql);
@@ -10,14 +11,14 @@ while ($row1 = mysqli_fetch_array($idresult)) {
 }
 
 //sign post value to variable in delivery information
-$name = (!empty($_POST['recipient_name']) ? $_POST['recipient_name'] : "");
-$phone = (!empty($_POST['recipient_phone']) ? $_POST['recipient_phone'] : "");
-$street = (!empty($_POST['street_address']) ? $_POST['street_address'] : "");
-$city = (!empty($_POST['city']) ? $_POST['city'] : "");
-$province = (!empty($_POST['province']) ? $_POST['province'] : "");
-$country = (!empty($_POST['country']) ? $_POST['country'] : "");
-$code = (!empty($_POST['postal_code']) ? $_POST['postal_code'] : "");
-$hidden_order_id = (!empty($_POST['change_order_id']) ? $_POST['change_order_id'] : "");
+$name = test_input(!empty($_POST['recipient_name']) ? $_POST['recipient_name'] : "");
+$phone = test_input(!empty($_POST['recipient_phone']) ? $_POST['recipient_phone'] : "");
+$street = test_input(!empty($_POST['street_address']) ? $_POST['street_address'] : "");
+$city = test_input(!empty($_POST['city']) ? $_POST['city'] : "");
+$province = test_input(!empty($_POST['province']) ? $_POST['province'] : "");
+$country = test_input(!empty($_POST['country']) ? $_POST['country'] : "");
+$code = test_input(!empty($_POST['postal_code']) ? $_POST['postal_code'] : "");
+$hidden_order_id = test_input(!empty($_POST['change_order_id']) ? $_POST['change_order_id'] : "");//get the value from hidden input
 
 if (!empty($_POST["change_order_id"])) {
 	$hint = "";
@@ -25,12 +26,21 @@ if (!empty($_POST["change_order_id"])) {
 	$hint = "<P class='text-danger float-right'>choose an order before to change</P>";
 }
 
+//update the delivery information 
 $query = "UPDATE delivery_required SET recipient_name ='$name', recipient_phone= '$phone', street_address= '$street',city= '$city',country ='$country', postal_code = '$code' where order_id = '$hidden_order_id';";
 
 if (isset($_POST["change_delivery"])) {
 	$result = mysqli_query($conn, $query);
 	echo '<script>alert("Order #' . $hidden_order_id . ' Payment Changed")</script>';
 	echo '<script>window.location="changeAddress.php"</script>';
+}
+
+function test_input($data)
+{
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
 }
 ?>
 <!DOCTYPE html>
@@ -127,8 +137,6 @@ if (isset($_POST["change_delivery"])) {
 
 		<div class="container">
 
-
-			<!-- <h2>your order Number is : <?php echo "$order_id"; ?></h2> -->
 			<?php
 			echo $hint;
 			echo "<div class='table-responsive'>
@@ -153,6 +161,7 @@ if (isset($_POST["change_delivery"])) {
 
 				$curresult = mysqli_query($conn, $cursql);
 
+				//create input radio to send value of order id
 				while ($row = $curresult->fetch_assoc()) {
 					if ($row > 0) {
 						$order_id = $row["order_id"];

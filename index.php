@@ -1,3 +1,6 @@
+<?php
+require('db.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -168,15 +171,6 @@
                     </form>
                     <?php
 
-                    $servername = "localhost";
-                    $username = "root";
-                    $password = "";
-                    $dbname = "pengyu_li";
-
-                    $conn = new mysqli($servername, $username, $password, $dbname);
-                    if ($conn->connect_error) {
-                        die("Connection failed: " . $conn->connect_error);
-                    }
 
                     //initialize condition is ""
                     $condition = "";
@@ -191,13 +185,26 @@
                             $condition = $condition . "product.category_id IN (" . $items . ")";
                         }
                     }
+
+                    //test data
+                    function test_input($data)
+                    {
+                        $data = trim($data);
+                        $data = stripslashes($data);
+                        $data = htmlspecialchars($data);
+                        return $data;
+                    }
+
+                    $price1 =  test_input(!empty($_POST['price1']) ? $_POST['price1'] : "");
+                    $price2 =  test_input(!empty($_POST['price2']) ? $_POST['price2'] : "");
+
                     //if price not null
-                    if (isset($_POST['price1']) && isset($_POST['price2'])) {
-                        if (!empty($_POST['price1']) && !empty($_POST['price2'])) {
+                    if (isset($price1) && isset($price2)) {
+                        if (!empty($price1) && !empty($price2)) {
                             if ($condition == "") {
-                                $condition = $condition . " product.price BETWEEN '" . $_POST['price1'] . "'AND'" . $_POST['price2'] . "'";
+                                $condition = $condition . " product.price BETWEEN '" . $price1 . "'AND'" . $price2 . "'";
                             } else {
-                                $condition = $condition . " AND product.price BETWEEN '" . $_POST['price1'] . "'AND'" . $_POST['price2'] . "'";
+                                $condition = $condition . " AND product.price BETWEEN '" . $price1 . "'AND'" . $price2 . "'";
                             }
                         }
                     }

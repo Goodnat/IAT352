@@ -10,11 +10,11 @@ while ($row1 = mysqli_fetch_array($idresult)) {
 }
 
 //post the value from form
-$cardName = (!empty($_POST['card_name']) ? $_POST['card_name'] : "");
-$cardNumber = (!empty($_POST['card_number']) ? $_POST['card_number'] : "");
-$expiryDate = (!empty($_POST['expiry_date']) ? $_POST['expiry_date'] : "");
-$cardcvc = (!empty($_POST['card_cvc']) ? $_POST['card_cvc'] : "");
-$hidden_order_id = (!empty($_POST['change_order_id']) ? $_POST['change_order_id'] : "");
+$cardName = test_input(!empty($_POST['card_name']) ? $_POST['card_name'] : "");
+$cardNumber = test_input(!empty($_POST['card_number']) ? $_POST['card_number'] : "");
+$expiryDate = test_input(!empty($_POST['expiry_date']) ? $_POST['expiry_date'] : "");
+$cardcvc = test_input(!empty($_POST['card_cvc']) ? $_POST['card_cvc'] : "");
+$hidden_order_id = test_input(!empty($_POST['change_order_id']) ? $_POST['change_order_id'] : "");
 
 if (!empty($_POST["change_order_id"])) {
 	$hint = "";
@@ -31,6 +31,13 @@ if (isset($_POST["change_payment"])) {
 	echo '<script>window.location="changePayment.php"</script>';
 }
 
+function test_input($data)
+{
+	$data = trim($data);
+	$data = stripslashes($data);
+	$data = htmlspecialchars($data);
+	return $data;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">

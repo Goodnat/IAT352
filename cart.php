@@ -24,19 +24,19 @@ if (isset($_GET["action"])) {
 $sucessful = "";
 
 //sign post value to variable in payment information
-$cardName = (!empty($_POST['card_name']) ? $_POST['card_name'] : "");
-$cardNumber = (!empty($_POST['card_number']) ? $_POST['card_number'] : "");
-$expiryDate = (!empty($_POST['expiry_date']) ? $_POST['expiry_date'] : "");
-$cardcvc = (!empty($_POST['card_cvc']) ? $_POST['card_cvc'] : "");
+$cardName = test_input(!empty($_POST['card_name']) ? $_POST['card_name'] : "");
+$cardNumber = test_input(!empty($_POST['card_number']) ? $_POST['card_number'] : "");
+$expiryDate = test_input(!empty($_POST['expiry_date']) ? $_POST['expiry_date'] : "");
+$cardcvc = test_input(!empty($_POST['card_cvc']) ? $_POST['card_cvc'] : "");
 
 //sign post value to variable in delivery information
-$name = (!empty($_POST['recipient_name']) ? $_POST['recipient_name'] : "");
-$phone = (!empty($_POST['recipient_phone']) ? $_POST['recipient_phone'] : "");
-$street = (!empty($_POST['street_address']) ? $_POST['street_address'] : "");
-$city = (!empty($_POST['city']) ? $_POST['city'] : "");
-$province = (!empty($_POST['province']) ? $_POST['province'] : "");
-$country = (!empty($_POST['country']) ? $_POST['country'] : "");
-$code = (!empty($_POST['postal_code']) ? $_POST['postal_code'] : "");
+$name = test_input(!empty($_POST['recipient_name']) ? $_POST['recipient_name'] : "");
+$phone = test_input(!empty($_POST['recipient_phone']) ? $_POST['recipient_phone'] : "");
+$street = test_input(!empty($_POST['street_address']) ? $_POST['street_address'] : "");
+$city = test_input(!empty($_POST['city']) ? $_POST['city'] : "");
+$province = test_input(!empty($_POST['province']) ? $_POST['province'] : "");
+$country = test_input(!empty($_POST['country']) ? $_POST['country'] : "");
+$code = test_input(!empty($_POST['postal_code']) ? $_POST['postal_code'] : "");
 
 //check user name in session and select
 $username = $_SESSION['username'];
@@ -101,7 +101,7 @@ if (isset($_POST["palce_an_order"])) {
 
             <h3>Please feel free to continue shoppping at any time.</h3>
 
-            <p><a class="btn btn-secondary w-25 mt-3" href="payment.php" role="button">CONTINUE SHOPPING &raquo;</a></p>
+            <p><a class="btn btn-secondary w-25 mt-3" href="index.php" role="button">CONTINUE SHOPPING &raquo;</a></p>
 
         </div>
         ';
@@ -110,6 +110,13 @@ if (isset($_POST["palce_an_order"])) {
     }
 }
 
+function test_input($data)
+{
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+}
 ?>
 
 <!DOCTYPE html>
@@ -317,7 +324,7 @@ if (isset($_POST["palce_an_order"])) {
             </div>
         </form>
     </div>
-    
+
     <?php mysqli_close($conn); ?>
     <!-- footer -->
     <footer>
