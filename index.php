@@ -1,6 +1,3 @@
-<?php
-require('db.php');
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,6 +14,11 @@ require('db.php');
     <!-- main css -->
     <link rel="stylesheet" type="text/css" href="css/mainStyle.css">
 
+    <!-- Jquery js file-->
+    <script src="js/jquery.3.5.1.js"></script>
+
+    <!-- Boostrap js file-->
+    <script src="js/bootstrap.min.js"></script>
 
 </head>
 
@@ -143,115 +145,115 @@ require('db.php');
                     <h1 class="text-uppercase title-h1">Best Sales</h1>
                 </div>
                 <div>
-                    <form action="index.php" method="post">
+                    <form method="post" action="index.php">
 
                         <!-- the filter to show the product -->
                         <!-- all the form checked as when the query has been submitted. -->
-                        <label>
-                            <input type="checkbox" name="category[]" value="1" /> AUDIO
-                        </label>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" class="category" value="1" /> AUDIO
+                            </label>
 
-                        <label>
-                            <input type="checkbox" name="category[]" value="2" /> CAMERA
-                        </label>
+                            <label>
+                                <input type="checkbox" class="category" value="2" /> CAMERA
+                            </label>
 
-                        <label>
-                            <input type="checkbox" name="category[]" value="3" /> COMPUTER
-                        </label>
+                            <label>
+                                <input type="checkbox" class="category" value="3" /> COMPUTER
+                            </label>
 
-                        <label>
-                            <input type="checkbox" name="category[]" value="4" /> TV
-                        </label>
+                            <label>
+                                <input type="checkbox" class="category" value="4" /> TV
+                            </label>
+                        </div>
                         <div>
-                            PRICE FROM: <input type="number" name="price1" value="<?php echo (isset($_POST['price1']) ? $_POST['price1'] : ''); ?>" />
-                            TO: <input type="number" name="price2" value="<?php echo (isset($_POST['price2']) ? $_POST['price2'] : ''); ?>" />
+                            PRICE FROM: <input type="number" name="price1" id="price1" value="<?php echo (isset($_POST['price1']) ? $_POST['price1'] : ''); ?>" />
+                            TO: <input type="number" name="price2" id="price2" value="<?php echo (isset($_POST['price2']) ? $_POST['price2'] : ''); ?>" />
                         </div>
 
-                        <input type="submit" value="  Search  " /><!-- do the search -->
+                        <input type="button" value="Search" class="searchButton" /><!-- do the search -->
                     </form>
-                    <?php
 
 
-                    //initialize condition is ""
-                    $condition = "";
-
-                    // to detect whether the variable has been set and is not NULL.
-                    if (isset($_POST['category'])) {
-                        if (!empty($_POST['category'])) {
-                            foreach ($_POST['category'] as $selected) {
-                                $checked_items = $selected;
-                            }
-                            $items = implode(',', $_POST['category']);
-                            $condition = $condition . "product.category_id IN (" . $items . ")";
-                        }
-                    }
-
-                    //test data
-                    function test_input($data)
-                    {
-                        $data = trim($data);
-                        $data = stripslashes($data);
-                        $data = htmlspecialchars($data);
-                        return $data;
-                    }
-
-                    $price1 =  test_input(!empty($_POST['price1']) ? $_POST['price1'] : "");
-                    $price2 =  test_input(!empty($_POST['price2']) ? $_POST['price2'] : "");
-
-                    //if price not null
-                    if (isset($price1) && isset($price2)) {
-                        if (!empty($price1) && !empty($price2)) {
-                            if ($condition == "") {
-                                $condition = $condition . " product.price BETWEEN '" . $price1 . "'AND'" . $price2 . "'";
-                            } else {
-                                $condition = $condition . " AND product.price BETWEEN '" . $price1 . "'AND'" . $price2 . "'";
-                            }
-                        }
-                    }
-
-                    if ($condition == "") {
-                        $sql = "SELECT product.product_id, product.name, product.price, product.description, category.category_name 
-                        FROM `product` 
-                        INNER JOIN `category` 
-                        ON product.category_id = category.category_id 
-                        WHERE product.price BETWEEN 0 AND 4000
-                    ";
-                    } else {
-                        $sql = "SELECT product.product_id, product.name, product.price, product.description, category.category_name 
-                        FROM `product`
-                        INNER JOIN `category`
-                        ON product.category_id = category.category_id
-                        WHERE $condition;    
-                    ";
-                    }
-                   
-                    $result = mysqli_query($conn, $sql);
-                    echo '
-                    <div class="container mt-5">
-                        <div class = "row">';
-                    //show all the product in the product table
-                    while ($row = mysqli_fetch_array($result)) {
-
-                        echo '                                               
-                                <div class="col-lg-4 col-md-6 col-sm-12 our-product ">
-                                    <div class="img">
-                                        <a class="test-popup-link" href="detail.php?id=' . $row['product_id'] . '">
-                                            <img src="imgs/' . $row['product_id'] . '.PNG" class="img-fluid">
-                                        </a>
-                                    </div>
-                                    <div class="title py-4"> 
-                                        <h3 class="text-uppercase">' . $row['category_name'] . ' $' . $row['price'] . ' </h3>
-                                            <span class="text-secondary">' . $row['name'] . '</span>
-                                            <div class="text-secondary"><a href="detail.php?id=' . $row['product_id'] . '">Detail info</a></div>
-                                    </div>
-                                </div>';
-                    }
-                    echo '                            
-                        </div>
+                    <div class='container mt-5'>
+                        
+                            <div id="result"> </div>
+                        
                     </div>
-                    ';
-                    mysqli_close($conn);
-                    ?>
+                    <div id="page" class="float-right"></div>
+
+                    <script>
+                        var result;
+                        var offset = 6;
+
+                        function displayResult(p) {
+                            console.log(p);
+                            var content = "";
+                            var start = p * offset;
+                            var stop = p * offset + offset > result.length ? result.length : p * offset + offset;
+                            console.log(start + "  " + stop);
+
+                            for (i = start; i < stop; i += 3) {
+
+                                content += "<div class='row'><div class='col-lg-4 col-md-6 col-sm-12 our-product'><div class='img'><a class='test-popup-link' href='detail.php?id=" + result[i].product_id + "'><img src='imgs/" + result[i].product_id + ".PNG' class='img-fluid'></a></div><div class='title py-4'><h3 class='text-uppercase'>" + result[i].category_name + " " + result[i].price + "</h3> <span class='text-secondary'> " + result[i].name + "</span> <div class='text-secondary'><a href='detail.php?id=" + result[i].product_id + "'>Detail info</a></div></div></div>";
+                                content += "<div class='col-lg-4 col-md-6 col-sm-12 our-product'><div class='img'><a class='test-popup-link' href='detail.php?id=" + result[i + 1].product_id + "'><img src='imgs/" + result[i + 1].product_id + ".PNG' class='img-fluid'></a></div><div class='title py-4'><h3 class='text-uppercase'>" + result[i + 1].category_name + " " + result[i + 1].price + "</h3> <span class='text-secondary'> " + result[i + 1].name + "</span> <div class='text-secondary'><a href='detail.php?id=" + result[i + 1].product_id + "'>Detail info</a></div></div></div>";
+                                content +=" <div class='col-lg-4 col-md-6 col-sm-12 our-product'><div class='img'><a class='test-popup-link' href='detail.php?id=" + result[i + 2].product_id + "'><img src='imgs/" + result[i + 2].product_id + ".PNG' class='img-fluid'></a></div><div class='title py-4'><h3 class='text-uppercase'>" + result[i + 2].category_name + " " + result[i + 2].price + "</h3> <span class='text-secondary'> " + result[i + 2].name + "</span> <div class='text-secondary'><a href='detail.php?id=" + result[i + 2].product_id + "'>Detail info</a></div></div></div></div>";
+
+                            }
+                            console.log(content);
+                            $("#result").html(content);
+
+                            var pages = "";
+                            for (i = 0; i < Math.ceil(result.length / offset); i++) {
+                                if (p == i) {
+                                    pages += " <a href='javascript:void(0)' class='currentPage display-4' onclick='displayResult(" + i + ");'> " + (i + 1) + " </a>";
+                                } else {
+                                    pages += " <a href='javascript:void(0)'class='display-4' onclick='displayResult(" + i + ");'> " + (i + 1) + " </a>";
+                                }
+                            }
+                            $("#page").html(pages);
+                        }
+
+                        $(".searchButton").on("click", function() {
+
+                            var categories = [];
+                            $('.category').each(function() {
+                                if ($(this).is(":checked")) {
+                                    categories.push($(this).val());
+                                }
+                            });
+                            categories = categories.toString();
+
+                            var test = {
+                                categories: categories,
+                                price1: $("#price1").val(),
+                                price2: $("#price2").val()
+                            };
+                            console.log(test);
+
+                            $.ajax({
+                                method: "POST",
+                                url: "getIndexData.php",
+                                data: {
+                                    categories: categories,
+                                    price1: $("#price1").val(),
+                                    price2: $("#price2").val()
+                                },
+
+                            }).done(function(data) {
+                                console.log(data);
+                                result = $.parseJSON(data);
+                                console.log(result);
+                                if (result.length > 0) {
+                                    displayResult(0);
+                                } else {
+                                    $("#result").html("<h5>No Products Found</h5>");
+                                }
+                            });
+
+                        });
+                    </script>
+
                 </div>
 
             </div>
@@ -314,14 +316,6 @@ require('db.php');
 
     </footer>
 
-
-
-
-    <!-- Jquery js file-->
-    <script src="js/jquery.3.5.1.js"></script>
-
-    <!-- Boostrap js file-->
-    <script src="js/bootstrap.min.js"></script>
 
 </body>
 

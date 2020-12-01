@@ -1,4 +1,3 @@
-<!--This file is used to connect to the database-->
 <?php
 
 $servername="localhost";
