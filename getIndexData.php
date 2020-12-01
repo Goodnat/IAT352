@@ -28,15 +28,13 @@ if (!empty($price1) && !empty($price2)) {
     array_push($condition_arr, " product.price BETWEEN '" . $price1 . "'AND'" . $price2 . "'");
 }
 
-if (empty($_POST['categories']) && empty($price1) && empty($price2)) {
-    $sql = "SELECT product.product_id, product.name, product.price, product.description, category.category_name 
+
+$sql = "SELECT product.product_id, product.name, product.price, product.description, category.category_name 
     FROM `product` 
     INNER JOIN `category` 
     ON product.category_id = category.category_id 
     WHERE product.price BETWEEN 0 AND 4000;
     ";
-    $result = mysqli_query($conn, $sql);
-}
 
 if (count($condition_arr) > 0) {
     $condition_str = implode(" and ", $condition_arr);
