@@ -4,119 +4,6 @@
 <?php
 //check log in 
 include("auth_sessionNotActiveCheck.php");
-require('db.php');
-
-//if click delete the item will be delete and alert Item Removed
-if (isset($_GET["action"])) {
-    $item_id = intval($_GET['id']);
-    if ($_GET["action"] == "delete") {
-        foreach ($_SESSION["shopping_cart"] as $keys => $values) {
-            if ($values["item_id"] == $item_id) {
-                unset($_SESSION["shopping_cart"][$keys]);
-                echo '<script>alert("Item Removed")</script>';
-                echo '<script>window.location="cart.php?id=' . $item_id . '"</script>';
-            }
-        }
-    }
-}
-
-//initial variable to null
-$sucessful = "";
-
-//sign post value to variable in payment information
-$cardName = test_input(!empty($_POST['card_name']) ? $_POST['card_name'] : "");
-$cardNumber = test_input(!empty($_POST['card_number']) ? $_POST['card_number'] : "");
-$expiryDate = test_input(!empty($_POST['expiry_date']) ? $_POST['expiry_date'] : "");
-$cardcvc = test_input(!empty($_POST['card_cvc']) ? $_POST['card_cvc'] : "");
-
-//sign post value to variable in delivery information
-$name = test_input(!empty($_POST['recipient_name']) ? $_POST['recipient_name'] : "");
-$phone = test_input(!empty($_POST['recipient_phone']) ? $_POST['recipient_phone'] : "");
-$street = test_input(!empty($_POST['street_address']) ? $_POST['street_address'] : "");
-$city = test_input(!empty($_POST['city']) ? $_POST['city'] : "");
-$province = test_input(!empty($_POST['province']) ? $_POST['province'] : "");
-$country = test_input(!empty($_POST['country']) ? $_POST['country'] : "");
-$code = test_input(!empty($_POST['postal_code']) ? $_POST['postal_code'] : "");
-
-//check user name in session and select
-$username = $_SESSION['username'];
-$idsql = "SELECT users.user_id from `users` where users.username = '$username';";
-$idresult = mysqli_query($conn, $idsql);
-//crawl user id sign to variable
-while ($row1 = mysqli_fetch_array($idresult)) {
-    $id = $row1['user_id'];
-}
-
-//if click input name equal palce_an_order
-if (isset($_POST["palce_an_order"])) {
-    //insert value to orders
-    $sql_orders = "INSERT INTO `orders` (order_date)
-    VALUES ('" . date('Y-m-d H:i:s') . "'); ";
-    $result = mysqli_query($conn, $sql_orders);
-
-    //select order id from orders
-    $sql = "SELECT order_id FROM orders order by order_id DESC limit 1";
-    $result = mysqli_query($conn, $sql);
-    $order_id = mysqli_fetch_assoc($result)["order_id"];
-
-    //insert payment value to table payment_required
-    $sql_payment_required = "INSERT INTO `payment_required` (order_id,card_name, card_number, expiry_date, card_cvc)
-                     VALUES ('$order_id','$cardName','$cardNumber','$expiryDate','$cardcvc'); ";
-    $result_payment_required = mysqli_query($conn, $sql_payment_required);
-
-    //insert delivery value to table delivery_required
-    $sql_delivery_required = "INSERT INTO `delivery_required` (order_id,create_time,recipient_name,recipient_phone, street_address, city,province,country,postal_code)
-                     VALUES ('$order_id','" . date('Y-m-d H:i:s') . "','$name','$phone','$street','$city','$province','$country','$code'); ";
-    $result_delivery_required = mysqli_query($conn, $sql_delivery_required);
-
-    //for loop shopping_cart value
-    foreach ($_SESSION["shopping_cart"] as $keys => $values) {
-        $product_id = $values["item_id"];
-        $product_quantity = $values["item_quantity"];
-        $product_unit_price = $values["item_price"];
-
-        //insert the value in the session to order detail
-        $sql_order_detail = "INSERT INTO `order_detail` (order_id, product_id, quantity, unit_price)
-                VALUES ('$order_id', '$product_id','$product_quantity', '$product_unit_price'); ";
-        $result_order_detail = mysqli_query($conn, $sql_order_detail);
-
-        //insert the order id in the session to mange order
-        $sql_manage_order = "INSERT INTO `manage_order`(order_id,user_id)
-                VALUES('$order_id','$id')";
-        $result_manage_order  = mysqli_query($conn,  $sql_manage_order);
-    }
-
-    //after placed the order set value in $_SESSION["shopping_cart"] equal to 0
-    $_SESSION["shopping_cart"] = array();
-
-    //if placed the order show order number
-    if ($result_order_detail) {
-        $sucessful = '
-        <div class="container text-center" style="margin:5em auto;">
-
-            <h1>Thank you for shopping with us!</h1>
-
-            <p>Your order number is <em>#' . $order_id . '</em>. We have received your order and will process it immediately.</p>
-            <p>You will see the order detail in your account.</p>
-
-            <h3>Please feel free to continue shoppping at any time.</h3>
-
-            <p><a class="btn btn-secondary w-25 mt-3" href="index.php" role="button">CONTINUE SHOPPING &raquo;</a></p>
-
-        </div>
-        ';
-    } else {
-        echo "<p>Error: " . $sql . "</p>" . mysqli_error($conn);
-    }
-}
-
-function test_input($data)
-{
-    $data = trim($data);
-    $data = stripslashes($data);
-    $data = htmlspecialchars($data);
-    return $data;
-}
 ?>
 
 <!DOCTYPE html>
@@ -135,7 +22,11 @@ function test_input($data)
     <!-- main css -->
     <link rel="stylesheet" type="text/css" href="css/mainStyle.css">
 
+    <!-- Jquery js file-->
+    <script src="js/jquery.3.5.1.js"></script>
 
+    <!-- Boostrap js file-->
+    <script src="js/bootstrap.min.js"></script>
 </head>
 
 <body>
@@ -179,58 +70,9 @@ function test_input($data)
             ?>
         </h3>
 
-        <!-- table shows the cart items information  -->
-        <div class="table-responsive">
-            <table class="table table-bordered">
-                <tr>
-                    <th width="40%">Item Name</th>
-                    <th width="10%">Quantity</th>
-                    <th width="20%">Price</th>
-                    <th width="15%">Total</th>
-                    <th width="5%">Delete</th>
-                </tr>
-                <?php
-                //if nothing in the cart show total is $0
-                if (!empty($_SESSION["shopping_cart"])) {
-                    $total = 0;
-                    foreach ($_SESSION["shopping_cart"] as $keys => $values) {
-                ?>
-                        <tr>
-                            <!-- get the value in the $_SESSION["shopping_cart"] -->
-                            <td><?php echo $values["item_name"]; ?></td>
-                            <td><?php echo $values["item_quantity"]; ?></td>
-                            <td>$ <?php echo $values["item_price"]; ?></td>
-                            <td>$ <?php echo number_format($values["item_quantity"] * $values["item_price"], 2); ?></td>
-                            <td><a href="cart.php?action=delete&id=<?php echo $values["item_id"]; ?>"><span class="text-danger">Remove</span></a></td>
-                        </tr>
-                    <?php
-                        //calculate the total value of each item
-                        $total = $total + ($values["item_quantity"] * $values["item_price"]);
-                    }
-                    ?>
-                <?php
-                }
-                ?>
-            </table>
+        <div class="panel-body" id="shopping_cart">
 
-            <!-- calculate the total value of the cart -->
-            <ul class="list-group mb-3">
-                <li class="list-group-item d-flex justify-content-between">
-                    <span>Total (CAD)</span>
-                    <strong>$
-                        <?php
-                        if (!empty($_SESSION["shopping_cart"])) {
-                            echo number_format($total, 2);
-                        } else {
-                            echo "0";
-                        }
-                        ?>
-                    </strong>
-                </li>
-            </ul>
         </div>
-        <!-- show the order number -->
-        <?php echo "$sucessful"; ?>
 
         <!-- show the Shipping input -->
         <form method="post" action="cart.php?action=add&id=<?php echo $values["item_id"]; ?>">
@@ -240,40 +82,40 @@ function test_input($data)
                     <h4 class="mb-3">Shipping address</h4>
                     <div class="mb-3">
                         <label for="name">Recipient Name</label>
-                        <input type="text" class="form-control" name="recipient_name" placeholder="Nick_Peter" value="" required>
+                        <input type="text" class="form-control" name="recipient_name" id="recipient_name" placeholder="Nick_Peter" value="" required>
                     </div>
 
                     <div class="mb-3">
                         <label for="phone">Phone</label>
-                        <input type="text" class="form-control" name="recipient_phone" placeholder="xxxxxxxxxx" required>
+                        <input type="text" class="form-control" name="recipient_phone" id="recipient_phone" placeholder="xxxxxxxxxx" required>
                     </div>
 
                     <div class="mb-3">
                         <label for="address">Address</label>
-                        <input type="text" class="form-control" name="street_address" placeholder="1234 Main St" required>
+                        <input type="text" class="form-control" name="street_address" id="street_address" placeholder="1234 Main St" required>
                     </div>
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="address">City</label>
-                            <input type="text" class="form-control" name="city" placeholder="Surrey" required>
+                            <input type="text" class="form-control" name="city" id="city" placeholder="Surrey" required>
                         </div>
 
                         <div class="col-md-6 mb-3">
                             <label for="address">Province</label>
-                            <input type="text" class="form-control" name="province" placeholder="BC" required>
+                            <input type="text" class="form-control" name="province" id="province" placeholder="BC" required>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="country">Country</label>
-                            <input type="text" class="form-control" name="country" placeholder="Canada" required>
+                            <input type="text" class="form-control" name="country" id="country" placeholder="Canada" required>
                         </div>
 
                         <div class="col-md-6 mb-3">
                             <label for="zip">Zip</label>
-                            <input type="text" class="form-control" name="postal_code" placeholder="xxxxxx" required>
+                            <input type="text" class="form-control" name="postal_code" id="postal_code" placeholder="xxxxxx" required>
                         </div>
                     </div>
 
@@ -286,38 +128,32 @@ function test_input($data)
 
                     <div class="mb-3">
                         <label for="cc-name">Name on card</label>
-                        <input type="text" class="form-control" name="card_name" required>
+                        <input type="text" class="form-control" name="card_name" id="card_name" required>
                         <small class="text-muted">Full name as displayed on card</small>
                     </div>
 
                     <div class="mb-3">
                         <label for="cc-number">Credit card number</label>
-                        <input type="text" class="form-control" name="card_number" required>
+                        <input type="text" class="form-control" name="card_number" id="card_number" required>
                     </div>
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="cc-expiration">Expiration</label>
-                            <input type="date" class="form-control" name="expiry_date" required>
+                            <input type="date" class="form-control" name="expiry_date" id="expiry_date" required>
                         </div>
 
                         <div class="col-md-6 mb-3">
                             <label for="cc-cvv">CVV</label>
-                            <input class="form-control" type="number" maxlength="3" pattern="([0-9]|[0-9]|[0-9])" name="card_cvc" required>
+                            <input class="form-control" type="number" maxlength="3" pattern="([0-9]|[0-9]|[0-9])" name="card_cvc" id="card_cvc" required>
                         </div>
                     </div>
 
-                    <hr class="mb-3">
 
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="same-address">
-                        <label class="custom-control-label" for="same-address">Shipping address is the same as my billing address</label>
-                    </div>
-
-                    <hr class="mb-3">
+                    <hr class="mt-5 mb-5">
 
                     <!-- input for place the order -->
-                    <input type="submit" name="palce_an_order" class="btn btn-secondary mt-3 float-right mt-3" value="Place An Order">
+                    <input type="button" class="btn btn-secondary mt-3 float-right mt-3" name="palce_an_order" id="palce_an_order" value="Place An Order">
                 </div>
 
                 <hr class="mb-4">
@@ -325,8 +161,78 @@ function test_input($data)
         </form>
     </div>
 
-    <?php mysqli_close($conn); ?>
-    <!-- footer -->
+
+    <script>
+        $(document).ready(function() {
+            load_cart_data();
+
+            function load_cart_data() {
+                $.ajax({
+                    url: "fetch_cart.php",
+                    method: "POST",
+                    success: function(data) {
+                        $('#shopping_cart').html(data);
+                    }
+                });
+            }
+
+            $(document).on('click', '.delete', function() {
+                var item_id = $(this).attr("id");
+                var action = 'remove';
+                var test = {
+                    item_id: item_id,
+                    action: action,
+                };
+                console.log(test);
+
+                if (confirm("Are you sure you want to remove this product?")) {
+                    $.ajax({
+                        url: "detail_action.php",
+                        method: "POST",
+                        data: {
+                            item_id: item_id,
+                            action: action
+                        },
+                        success: function(data) {
+                            load_cart_data();
+                            alert("Item has been removed from Cart");
+                        }
+                    })
+                } else {
+                    return false;
+                }
+            });
+
+            $('#palce_an_order').on("click", function() {
+
+                var action = "insert";
+
+                $.ajax({
+                    url: "cart_action.php",
+                    method: "POST",
+                    data: {
+                        recipient_name: $("#recipient_name").val(),
+                        recipient_phone: $("#recipient_phone").val(),
+                        street_address: $("#street_address").val(),
+                        province: $("#province").val(),
+                        country: $("#country").val(),
+                        postal_code: $("#postal_code").val(),
+                        card_name: $("#card_name").val(),
+                        card_number: $("#card_number").val(),
+                        expiry_date: $("#expiry_date").val(),
+                        card_cvc: $("#card_cvc").val(),
+                        action: action,
+                    },
+                    success: function(data) {
+                        load_cart_data();
+                        alert("Order has been placed!");
+                    }
+                });
+
+            });
+        });
+    </script>
+
     <footer>
         <div class="container">
             <div class="row">
@@ -386,12 +292,6 @@ function test_input($data)
 
     </main>
 
-
-    <!-- Jquery js file-->
-    <script src="js/jquery.3.5.1.js"></script>
-
-    <!-- Boostrap js file-->
-    <script src="js/bootstrap.min.js"></script>
 </body>
 
 </html>

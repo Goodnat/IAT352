@@ -1,59 +1,5 @@
 <?php
-include("auth_sessionNotActiveCheck.php");
 require('db.php');
-
-if (isset($_POST["submit"])) {
-    $item_id = intval($_GET['id']);
-    $name =  test_input($_POST["hidden_name"]);
-    $price = test_input($_POST["hidden_price"]);
-    $quantity =  $_POST["quantity"];
-
-    if (isset($_SESSION["shopping_cart"])) {
-        $item_array_id = array_column($_SESSION["shopping_cart"], "item_id");
-        if (!in_array($item_id, $item_array_id)) {
-            $count = count($_SESSION["shopping_cart"]);
-            $item_array = array(
-                'item_id'           => $item_id,
-                'item_name'         => $name,
-                'item_price'        => $price,
-                'item_quantity'     => $quantity
-            );
-            $_SESSION["shopping_cart"][$count] = $item_array;
-        } else {
-            echo '<script>alert("Item Already Added")</script>';
-        }
-    } else {
-        $item_array = array(
-            'item_id'           => $item_id,
-            'item_name'         => $name,
-            'item_price'        => $price,
-            'item_quantity'     => $quantity
-        );
-        $_SESSION["shopping_cart"][0] = $item_array;
-    }
-}
-
-
-if (isset($_GET["action"])) {
-    $item_id = intval($_GET['id']);
-    if ($_GET["action"] == "delete") {
-        foreach ($_SESSION["shopping_cart"] as $keys => $values) {
-            if ($values["item_id"] == $item_id) {
-                unset($_SESSION["shopping_cart"][$keys]);
-                echo '<script>alert("Item Removed")</script>';
-                echo '<script>window.location="detail.php?id=' . $item_id . '"</script>';
-            }
-        }
-    }
-}
-
-function test_input($data)
-{
-    $data = trim($data);
-    $data = stripslashes($data);
-    $data = htmlspecialchars($data);
-    return $data;
-}
 ?>
 
 <!DOCTYPE html>
@@ -72,6 +18,11 @@ function test_input($data)
     <!-- main css -->
     <link rel="stylesheet" type="text/css" href="css/mainStyle.css">
 
+    <!-- Jquery js file-->
+    <script src="js/jquery.3.5.1.js"></script>
+
+    <!-- Boostrap js file-->
+    <script src="js/bootstrap.min.js"></script>
 
 </head>
 
@@ -127,10 +78,11 @@ function test_input($data)
                                     <h5>' . $row['name'] . '</h5>   
                                     <h1 class="text-uppercase">' . $row['category_name'] . ' $' . $row['price'] . '</h1>                      
                                     <div class="mt-5">
-                                        <input type="number" name="quantity" class="form-control" value="1" />  
-                                        <input type="hidden" name="hidden_name" value="' . $row['name'] . '" >
-                                        <input type="hidden" name="hidden_price" value="' . $row['price'] . '" >
-                                        <input type="submit" class="btn btn-secondary mt-5" name="submit"  value="ADD TO CART">                                      
+                                        <input type="number" name="item_quantity" id="item_quantity" class="form-control" value="1" />  
+                                        <input type="hidden" name="item_id" id="item_id" value="'  . $row['product_id'] . '" > 
+                                        <input type="hidden" name="item_name" id="item_name" value="' . $row['name'] . '" >
+                                        <input type="hidden" name="item_price" id="item_price" value="' . $row['price'] . '" >
+                                        <input type="button" class="btn btn-secondary mt-5" name="add_to_cart" id="add_to_cart" value="ADD TO CART">                            
                                         <input type="button" class="btn btn-secondary mt-5" value="GO TO CART" onclick="location.href=\'cart.php\';" />
                                     </div>
                                     <div class="mt-5">
@@ -149,47 +101,52 @@ function test_input($data)
     mysqli_close($conn);
     ?>
 
-    <div class="container">
-        <h3>
-            <?php
-            if (!empty($_SESSION["shopping_cart"])) {
-                echo "Your Cart";
-            } else {
-                echo "Your Cart is Empty!";
-            }
-            ?>
-        </h3>
-        <div class="table-responsive">
-            <table class="table table-bordered">
-                <tr>
-                    <th width="40%">Item Name</th>
-                    <th width="10%">Quantity</th>
-                    <th width="20%">Price</th>
-                    <th width="15%">Total</th>
-                    <th width="5%">Action</th>
-                </tr>
-                <?php
-                if (!empty($_SESSION["shopping_cart"])) {
-                    $total = 0;
-                    foreach ($_SESSION["shopping_cart"] as $keys => $values) {
-                ?>
-                        <tr>
-                            <td><?php echo $values["item_name"]; ?></td>
-                            <td><?php echo $values["item_quantity"]; ?></td>
-                            <td>$ <?php echo $values["item_price"]; ?></td>
-                            <td>$ <?php echo number_format($values["item_quantity"] * $values["item_price"], 2); ?></td>
-                            <td><a href="detail.php?action=delete&id=<?php echo $values["item_id"]; ?>"><span class="text-danger">Remove</span></a></td>
-                        </tr>
-                    <?php
-                        $total = $total + ($values["item_quantity"] * $values["item_price"]);
+
+    <script>
+        $(document).ready(function() {
+
+            load_cart_data();
+
+            function load_cart_data() {
+                $.ajax({
+                    url: "fetch_cart.php",
+                    method: "POST",
+                    success: function(data) {
+                        $('#shopping_cart').html(data);
                     }
-                    ?>
-                <?php
-                }
-                ?>
-            </table>
-        </div>
-    </div>
+                });
+            }
+
+            $('#add_to_cart').on("click", function() {
+                var action = "add";
+
+                var test = {
+                    item_id: $("#item_id").val(),
+                    item_name: $("#item_name").val(),
+                    item_quantity: $("#item_quantity").val(),
+                    item_price: $("#item_price").val(),
+                    action: action,
+                };
+                console.log(test);
+                
+                $.ajax({
+                    url: "detail_action.php",
+                    method: "POST",
+                    data: {
+                        item_id: $("#item_id").val(),
+                        item_name: $("#item_name").val(),
+                        item_quantity: $("#item_quantity").val(),
+                        item_price: $("#item_price").val(),
+                        action: action,
+                    },
+                    success: function(data) {
+                        alert("Item has been added!");
+                    }
+                });
+
+            });
+        });
+    </script>
 
     </main>
 
@@ -250,13 +207,6 @@ function test_input($data)
 
     </footer>
 
-
-
-    <!-- Jquery js file-->
-    <script src="js/jquery.3.5.1.js"></script>
-
-    <!-- Boostrap js file-->
-    <script src="js/bootstrap.min.js"></script>
 </body>
 
 </html>
