@@ -299,35 +299,30 @@ require('db.php'); //connection to db code
             </div>
         </section>
     </main>
-    
+
     <!--promotion img-->
     <?php
     if (isset($_SESSION["username"])) {
-        $sql="SELECT promotion FROM users WHERE username='".$_SESSION["username"]."'";
+        $sql = "SELECT promotion FROM users WHERE username='" . $_SESSION["username"] . "'";
         $result = mysqli_query($conn, $sql);
-                $results_rows = mysqli_num_rows($result);
-                if ($results_rows > 0) {
-                    $row = mysqli_fetch_assoc($result);
-                    $promotion_value=$row["promotion"];
-        if($promotion_value == "1"){
-            echo"
-            <div class=\"promotion_img1\">
-            <img src=\"imgs/promotion1.jpg\" >
-
-            </div>
-
-            <div class=\"promotion_img2\">
-            <img src=\"imgs/promotion2.jpg\" >
-
-            </div>
+        $results_rows = mysqli_num_rows($result);
+        if ($results_rows > 0) {
+            $row = mysqli_fetch_assoc($result);
+            $promotion_value = $row["promotion"];
+            if ($promotion_value == "1") {
+                echo "
+                <div class='container-fluid'>
+                    <img src=\"imgs/promotion1.jpg\" width='100%'>                   
+                    <img src=\"imgs/promotion2.jpg\" width='100%'>               
+                </div>
             ";
+            }
         }
     }
-}
     ?>
     <!--promotion img end-->
 
-    
+
     <footer>
         <div class="container">
             <div class="row">
