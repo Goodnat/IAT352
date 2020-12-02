@@ -63,6 +63,46 @@ include("auth_sessionNotActiveCheck.php");
 					<a class="btn btn-secondary" href="logout.php" role="button">Log out &raquo;</a>
 					<a class="btn btn-secondary" href="new_pass.php" role="button">Reset Password &raquo;</a>
 				</p>
+				
+				
+				
+				<!--promotion selection-->
+				<p>Set your preferences to show the promotion or not:</p>
+				<label for="name">Promotion:</label>
+			<div>
+				<?php
+				
+				$sql="SELECT promotion FROM users WHERE username='".$_SESSION["username"]."'";
+				
+				$result = mysqli_query($conn, $sql);
+				$results_rows = mysqli_num_rows($result);
+				if ($results_rows > 0) {
+					$row = mysqli_fetch_assoc($result);
+					$promotion_value=$row["promotion"];
+					if ($promotion_value == "0"){
+						echo "<label class=\"radio-inline\">
+							<input type=\"radio\" name=\"optionsRadiosinline\" id=\"optionsRadios1\" value=\"1\"> show
+						</label>
+						<label class=\"radio-inline\">
+							<input type=\"radio\" name=\"optionsRadiosinline\" id=\"optionsRadios2\"  value=\"0\" checked> hide
+						</label>";
+					}else{
+						echo "<label class=\"radio-inline\">
+							<input type=\"radio\" name=\"optionsRadiosinline\" id=\"optionsRadios1\" value=\"1\" checked> show
+						</label>
+						<label class=\"radio-inline\">
+							<input type=\"radio\" name=\"optionsRadiosinline\" id=\"optionsRadios2\"  value=\"0\"> hide
+						</label>";
+					}
+
+
+				}
+				?>
+			</div>
+			<script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
+			<!--promotion selection end-->
+				
+				
 				<p><a class="btn btn-secondary" href="index.php" role="button">Go Shopping &raquo;</a></p>
 			</div>
 		</div>
@@ -173,6 +213,22 @@ include("auth_sessionNotActiveCheck.php");
 </body>
 <!-- Jquery js file-->
 <script src="js/jquery.3.5.1.js"></script>
+
+<!--promotion ajax-->
+<script type="text/javascript"> 
+    	$(function(){
+    		$("input[name='optionsRadiosinline']").on('change',function(){
+    			$.ajax({
+    				method:"GET",
+    				url:"getpromotion_selection.php",
+    				data:{promotion:$("input[name='optionsRadiosinline']:checked").val()}
+    			}).done(function(data){}); 
+    		});
+     	});
+
+
+</script>
+<!--promotion ajax end-->
 
 <!-- Boostrap js file-->
 <script src="js/bootstrap.min.js"></script>
