@@ -146,6 +146,7 @@ input[type=button] :hover {
     padding: 4rem 0;
 }
 
+#page a,
 .carousel-item a,
 .product-area a {
     color: seagreen;

@@ -1,7 +1,6 @@
 <?php 
-    session_start();
+    include("auth_sessionNotActiveCheck.php");
     require('db.php'); //connection to db code
-
 
     /* SQL query to get results from database */
     $promotion_val=$_GET["promotion"];
@@ -11,3 +10,4 @@
     
     $result = $conn->query($sql);
     $conn->close();
+?>
