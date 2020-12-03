@@ -1,5 +1,6 @@
 <?php
 require('db.php');
+include("auth_sessionNotActiveCheck.php");
 ?>
 
 <!DOCTYPE html>
