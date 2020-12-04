@@ -1,8 +1,45 @@
-<!--This page is designed as change password page-->
-<!--User can enter the new password and then confirm the new password in this page-->
-<!--If the user enter the matched new password, then password changed successfully-->
-<!--At this time, user will turn into a page showing password successfully reset-->
-<!--If the user enter the unmatched password, show fail to change password-->
+<?php
+// This page is designed as change password page-->
+// User can enter the new password and then confirm the new password in this page
+// If the user enter the matched new password, then password changed successfully
+// At this time, user will turn into a page showing password successfully reset
+// If the user enter the unmatched password, show fail to change password
+
+require 'db.php'; //connection to db code
+include "auth_sessionNotActiveCheck.php";
+
+$errors = [];
+
+//when user press the submit button
+if (isset($_POST['new_password'])) {
+	$new_pass = mysqli_real_escape_string($conn, $_POST['new_pass']);
+	$new_pass_c = mysqli_real_escape_string($conn, $_POST['new_pass_c']);
+
+	//when user enter an empty psw, show warnings
+	if (empty($new_pass) || empty($new_pass_c)) {
+		array_push($errors, "Password is required");
+	}
+
+	//when the new psw doesn't match each other, show warnings
+	if ($new_pass !== $new_pass_c) {
+		array_push($errors, "Password do not match");
+	}
+
+	//if there is no error
+	if (count($errors) == 0) {
+
+		$new_pass = md5($new_pass);
+		//update the password
+		$sql = "UPDATE users SET `password`='$new_pass' where username='" . $_SESSION['username'] . "'";
+		echo $sql;
+		$results = mysqli_query($conn, $sql);
+		//when psw successfully changed, turn inton resetpswsuccessful page
+		header('location: resetpswsuccessful.php');
+	}
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -50,42 +87,6 @@
 
 
 	<main>
-		<?php
-		require 'db.php'; //connection to db code
-		include "auth_sessionNotActiveCheck.php";
-
-		$errors = [];
-
-		//when user press the submit button
-		if (isset($_POST['new_password'])) {
-			$new_pass = mysqli_real_escape_string($conn, $_POST['new_pass']);
-			$new_pass_c = mysqli_real_escape_string($conn, $_POST['new_pass_c']);
-
-			//when user enter an empty psw, show warnings
-			if (empty($new_pass) || empty($new_pass_c)) {
-				array_push($errors, "Password is required");
-			}
-
-			//when the new psw doesn't match each other, show warnings
-			if ($new_pass !== $new_pass_c) {
-				array_push($errors, "Password do not match");
-			}
-
-			//if there is no error
-			if (count($errors) == 0) {
-
-				$new_pass = md5($new_pass);
-				//update the password
-				$sql = "UPDATE users SET `password`='$new_pass' where username='" . $_SESSION['username'] . "'";
-				echo $sql;
-				$results = mysqli_query($conn, $sql);
-				//when psw successfully changed, turn inton resetpswsuccessful page
-				header('location: resetpswsuccessful.php');
-			}
-		}
-		?>
-
-
 		<div class="form register container mx-auto my-5">
 			<h2>Change password</h2>
 			<?php

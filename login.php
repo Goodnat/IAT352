@@ -1,9 +1,45 @@
-<!--This page is designed as log in page-->
-<!--After user sucessfully register, the website wil turn to this page-->
-<!--If the user enter the right user name and password, show successfully log in-->
-<!--If the user enter the wrong information, show fail to log in-->
+<?php
+
+// This page is designed as log in page
+// After user sucessfully register, the website wil turn to this page
+// If the user enter the right user name and password, show successfully log in
+// If the user enter the wrong information, show fail to log in
+
+require('db.php'); //connection to db code
+include("auth_sessionActiveCheck.php");
+$danger = "";
+// session_start();
+if (isset($_POST['username'])) {
+	$username = stripslashes($_REQUEST['username']); // removes backslashes
+	$username = mysqli_real_escape_string($conn, $username);
+	$password = stripslashes($_REQUEST['password']);
+	$password = mysqli_real_escape_string($conn, $password);
+
+	//check if the username in the database
+	//check if the user enters the right password
+	$sql = "SELECT * FROM `users` WHERE username='$username' and password='" . md5($password) . "'";
+	$result = $conn->query($sql) or die($conn->connect_error);
+	$rows = mysqli_num_rows($result);
+
+	//if row equal 1 means user does exist
+	if ($rows == 1) {
+		$_SESSION['username'] = $username;
+		header("Location: membersLogin.php");
+	} else {
+
+		//else means user enters the wrong username or password
+		$danger = "<div class='text-danger mt-3'>
+					<p>Username/password is incorrect.</p>
+				</div>";
+
+		// echo "<p>Not registered yet? <a href='register.php'>Register Here</a></p>";
+	}
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
+
 
 <head>
 	<meta charset="UTF-8">
@@ -48,39 +84,6 @@
 	</header>
 
 	<main>
-
-		<?php
-		require('db.php'); //connection to db code
-		include("auth_sessionActiveCheck.php");
-		$danger="";
-		// session_start();
-		if (isset($_POST['username'])) {
-			$username = stripslashes($_REQUEST['username']); // removes backslashes
-			$username = mysqli_real_escape_string($conn, $username);
-			$password = stripslashes($_REQUEST['password']);
-			$password = mysqli_real_escape_string($conn, $password);
-
-			//check if the username in the database
-			//check if the user enters the right password
-			$sql = "SELECT * FROM `users` WHERE username='$username' and password='" . md5($password) . "'";
-			$result = $conn->query($sql) or die($conn->connect_error);
-			$rows = mysqli_num_rows($result);
-
-			//if row equal 1 means user does exist
-			if ($rows == 1) {
-				$_SESSION['username'] = $username;
-				header("Location: membersLogin.php");
-			} else {
-
-				//else means user enters the wrong username or password
-				$danger = "<div class='text-danger mt-3'>
-					<p>Username/password is incorrect.</p>
-				</div>";
-
-				// echo "<p>Not registered yet? <a href='register.php'>Register Here</a></p>";
-			}
-		}
-		?>
 
 		<div class="form register container mx-auto my-5">
 			<h1>Log In</h1>

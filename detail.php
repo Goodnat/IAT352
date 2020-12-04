@@ -56,7 +56,7 @@ include("auth_sessionNotActiveCheck.php");
         </div>
     </header>
 
-
+    <!--Display product detail, product id from index-->
     <?php
     $id = intval($_GET['id']);
     $sql = "SELECT * FROM `product` INNER JOIN `category` ON product.category_id = category.category_id WHERE product.product_id=$id";
@@ -101,7 +101,6 @@ include("auth_sessionNotActiveCheck.php");
     }
     mysqli_close($conn);
     ?>
-
 
     <script>
         $(document).ready(function() {

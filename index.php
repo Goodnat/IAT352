@@ -23,7 +23,6 @@ require('db.php'); //connection to db code
 
     <!-- Boostrap js file-->
     <script src="js/bootstrap.min.js"></script>
-
 </head>
 
 <body>
@@ -227,14 +226,14 @@ require('db.php'); //connection to db code
                         });
 
                         function displayResult(p) {
+                            //the results array length
                             console.log(p);
                             var content = "";
                             var start = p * offset;
                             var stop = p * offset + offset > result.length ? result.length : p * offset + offset;
                             console.log(start + "  " + stop);
-
+                            //show the product
                             for (i = start; i < stop; i += 3) {
-
 
                                 if (i + 2 < stop) {
                                     content += "<div class='row'><div class='col-lg-4 col-md-6 col-sm-12 our-product'><div class='img'><a class='test-popup-link' href='detail.php?id=" + result[i].product_id + "'><img src='imgs/" + result[i].product_id + ".PNG' class='img-fluid'></a></div><div class='title py-4'><h3 class='text-uppercase'>" + result[i].category_name + " " + result[i].price + "</h3> <span class='text-secondary'> " + result[i].name + "</span> <div class='text-secondary'><a href='detail.php?id=" + result[i].product_id + "'>Detail info</a></div></div></div>";
@@ -256,6 +255,7 @@ require('db.php'); //connection to db code
                             console.log(content);
                             $("#result").html(content);
 
+                            //display page number
                             var pages = "";
                             for (i = 0; i < Math.ceil(result.length / offset); i++) {
                                 if (p == i) {
@@ -267,6 +267,7 @@ require('db.php'); //connection to db code
                             $("#page").html(pages);
                         }
 
+                        //send data to php in json method
                         $(".searchButton").on("click", function() {
 
                             var categories = [];
@@ -311,30 +312,30 @@ require('db.php'); //connection to db code
 
             </div>
         </section>
-    </main>
 
-    <!--promotion img-->
-    <?php
-    if (isset($_SESSION["username"])) {
-        $sql = "SELECT promotion FROM users WHERE username='" . $_SESSION["username"] . "'";
-        $result = mysqli_query($conn, $sql);
-        $results_rows = mysqli_num_rows($result);
-        if ($results_rows > 0) {
-            $row = mysqli_fetch_assoc($result);
-            $promotion_value = $row["promotion"];
-            if ($promotion_value == "1") {
-                echo "
+        <!--promotion img-->
+        <?php
+        if (isset($_SESSION["username"])) {
+            $sql = "SELECT promotion FROM users WHERE username='" . $_SESSION["username"] . "'";
+            $result = mysqli_query($conn, $sql);
+            $results_rows = mysqli_num_rows($result);
+            if ($results_rows > 0) {
+                $row = mysqli_fetch_assoc($result);
+                $promotion_value = $row["promotion"];
+                if ($promotion_value == "1") {
+                    echo "
                 <div class='container-fluid mt-5'>
                     <img src=\"imgs/promotion1.jpg\" width='100%'>                   
                     <img src=\"imgs/promotion2.jpg\" width='100%'>               
                 </div>
             ";
+                }
             }
         }
-    }
-    ?>
-    <!--promotion img end-->
+        ?>
+        <!--promotion img end-->
 
+    </main>
 
     <footer>
         <div class="container">

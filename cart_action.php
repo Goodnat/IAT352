@@ -1,8 +1,6 @@
-<!--
-    This cart.php implemet the order function and bind delivery and payment information
--->
 <?php
 //check log in 
+//This php implemet the order function and bind delivery and payment information
 include("auth_sessionNotActiveCheck.php");
 require('db.php');
 
@@ -84,8 +82,6 @@ if (isset($_POST["action"])) {
 
         //after placed the order set value in $_SESSION["shopping_cart"] equal to 0
         $_SESSION["shopping_cart"] = array();
-
-      
     }
 }
 

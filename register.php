@@ -1,9 +1,10 @@
+<!DOCTYPE html>
+<html lang="en">
+
 <!--This page is designed for user registeration-->
 <!--First, we need to determine whether user enter empty text, if so, remember-->
 <!--Then, we need to see whether user enter an already exist user name, if so, let them change to a new one-->
 <!--After successfully register, the page turns to log in page-->
-<!DOCTYPE html>
-<html lang="en">
 
 <head>
 	<meta charset="UTF-8">
@@ -92,7 +93,6 @@
 				 </div>
 				 
 				 ";
-				 
 				}
 			} else {
 

@@ -118,7 +118,7 @@ include("auth_sessionNotActiveCheck.php");
 					<div class="card" style="width: 20rem;">
 						<div class="card-body">
 							<h2>Order Payment</h2>
-							<p class="card-text">Manage your payment details for the order.</p>
+							<p class="card-text">Check your payment details for the order.</p>
 							<p><button id="showPayment" class="btn btn-secondary" role="button">View payments details &raquo;</button></p>
 						</div>
 					</div>
@@ -127,7 +127,7 @@ include("auth_sessionNotActiveCheck.php");
 					<div class="card" style="width: 20rem;">
 						<div class="card-body">
 							<h2>Order Delivery</h2>
-							<p class="card-text">Manage your delivery details for the order.</p>
+							<p class="card-text">Check your delivery details for the order.</p>
 							<p><button id="showAddress" class="btn btn-secondary" role="button">View deliveries details &raquo;</button></p>
 						</div>
 					</div>
@@ -141,7 +141,6 @@ include("auth_sessionNotActiveCheck.php");
 			<div id="address" class="text-center"></div>
 			<div id="page" class="float-right"></div>
 		</div>
-
 
 		</div>
 
@@ -158,6 +157,7 @@ include("auth_sessionNotActiveCheck.php");
 		$id = $row1['user_id'];
 	}
 	?>
+
 	<script>
 		//history
 		var offset = 6;
@@ -207,10 +207,9 @@ include("auth_sessionNotActiveCheck.php");
 				if (result.length > 0) {
 					displayHistory(0);
 				} else {
-					$("#history").html("No math records");
+					$("#history").html("<p class='text-center mt-5'>No order records</p>");
 				}
 			});
-
 
 		});
 
@@ -239,8 +238,8 @@ include("auth_sessionNotActiveCheck.php");
 			}
 			$("#page").html(pages);
 		}
-		$("#showPayment").on("click", function() {
 
+		$("#showPayment").on("click", function() {
 			var id = <?php echo $id ?>;
 
 			$.ajax({
@@ -258,14 +257,12 @@ include("auth_sessionNotActiveCheck.php");
 				if (result.length > 0) {
 					displayPayment(0);
 				} else {
-					$("#payment").html("No math records");
+					$("#payment").html("<p class='text-center mt-5'>No payment records</p>");
 				}
 			});
-
-
 		});
 
-		function displayAddress(p) {
+		function displayAddress(p) {		
 			console.log(p);
 			var string = '<div class="mt-3 table-responsive"><table class="table table-bordered"><tr><th width="20%">Order Number</th><th width="15%">Name</th><th width="15%">Phone</th><th width="40%">Address</th><th width="10%">Postcode</th></tr></div>'
 			var start = p * offset;
@@ -292,29 +289,24 @@ include("auth_sessionNotActiveCheck.php");
 			$("#page").html(pages);
 		}
 
-
 		$("#showAddress").on("click", function() {
 			var id = <?php echo $id ?>;
-
 			$.ajax({
 				method: "GET",
 				url: "getAddress.php",
 				data: {
 					user_id: id
 				}
-
 			}).done(function(data) {
-
 				console.log(data);
 				result = $.parseJSON(data);
 				console.log(result);
 				if (result.length > 0) {
 					displayAddress(0);
 				} else {
-					$("#address").html("No math records");
+					$("#address").html("<p class='text-center mt-5'>No delivery records</p>");
 				}
 			});
-
 		});
 
 		$(function() {
@@ -328,6 +320,7 @@ include("auth_sessionNotActiveCheck.php");
 				}).done(function(data) {});
 			});
 		});
+
 	</script>
 
 	<footer>

@@ -1,7 +1,6 @@
-<!--This page is designed as password successfully page-->
-<!--After user sucessfully change password, the website wil turn to this page-->
-
 <?php
+// This page is designed as password successfully page
+// After user sucessfully change password, the website wil turn to this page
 require 'db.php'; //connection to db code
 include "auth_sessionNotActiveCheck.php";
 ?>
