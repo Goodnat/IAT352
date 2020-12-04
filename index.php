@@ -234,17 +234,22 @@ require('db.php'); //connection to db code
                             console.log(start + "  " + stop);
 
                             for (i = start; i < stop; i += 3) {
-                                if (stop >= 3) {
+
+
+                                if (i + 2 < stop) {
                                     content += "<div class='row'><div class='col-lg-4 col-md-6 col-sm-12 our-product'><div class='img'><a class='test-popup-link' href='detail.php?id=" + result[i].product_id + "'><img src='imgs/" + result[i].product_id + ".PNG' class='img-fluid'></a></div><div class='title py-4'><h3 class='text-uppercase'>" + result[i].category_name + " " + result[i].price + "</h3> <span class='text-secondary'> " + result[i].name + "</span> <div class='text-secondary'><a href='detail.php?id=" + result[i].product_id + "'>Detail info</a></div></div></div>";
                                     content += "<div class='col-lg-4 col-md-6 col-sm-12 our-product'><div class='img'><a class='test-popup-link' href='detail.php?id=" + result[i + 1].product_id + "'><img src='imgs/" + result[i + 1].product_id + ".PNG' class='img-fluid'></a></div><div class='title py-4'><h3 class='text-uppercase'>" + result[i + 1].category_name + " " + result[i + 1].price + "</h3> <span class='text-secondary'> " + result[i + 1].name + "</span> <div class='text-secondary'><a href='detail.php?id=" + result[i + 1].product_id + "'>Detail info</a></div></div></div>";
                                     content += " <div class='col-lg-4 col-md-6 col-sm-12 our-product'><div class='img'><a class='test-popup-link' href='detail.php?id=" + result[i + 2].product_id + "'><img src='imgs/" + result[i + 2].product_id + ".PNG' class='img-fluid'></a></div><div class='title py-4'><h3 class='text-uppercase'>" + result[i + 2].category_name + " " + result[i + 2].price + "</h3> <span class='text-secondary'> " + result[i + 2].name + "</span> <div class='text-secondary'><a href='detail.php?id=" + result[i + 2].product_id + "'>Detail info</a></div></div></div></div>";
-                                } else if (stop < 3) {
-                                    if (stop >= 2) {
+                                } else {
+                                    if (i + 1 < stop) {
                                         content += "<div class='row'><div class='col-lg-4 col-md-6 col-sm-12 our-product'><div class='img'><a class='test-popup-link' href='detail.php?id=" + result[i].product_id + "'><img src='imgs/" + result[i].product_id + ".PNG' class='img-fluid'></a></div><div class='title py-4'><h3 class='text-uppercase'>" + result[i].category_name + " " + result[i].price + "</h3> <span class='text-secondary'> " + result[i].name + "</span> <div class='text-secondary'><a href='detail.php?id=" + result[i].product_id + "'>Detail info</a></div></div></div>";
                                         content += "<div class='col-lg-4 col-md-6 col-sm-12 our-product'><div class='img'><a class='test-popup-link' href='detail.php?id=" + result[i + 1].product_id + "'><img src='imgs/" + result[i + 1].product_id + ".PNG' class='img-fluid'></a></div><div class='title py-4'><h3 class='text-uppercase'>" + result[i + 1].category_name + " " + result[i + 1].price + "</h3> <span class='text-secondary'> " + result[i + 1].name + "</span> <div class='text-secondary'><a href='detail.php?id=" + result[i + 1].product_id + "'>Detail info</a></div></div></div></div>";
-                                    } else if (stop < 2) {
-                                        content += "<div class='row'><div class='col-lg-4 col-md-6 col-sm-12 our-product'><div class='img'><a class='test-popup-link' href='detail.php?id=" + result[i].product_id + "'><img src='imgs/" + result[i].product_id + ".PNG' class='img-fluid'></a></div><div class='title py-4'><h3 class='text-uppercase'>" + result[i].category_name + " " + result[i].price + "</h3> <span class='text-secondary'> " + result[i].name + "</span> <div class='text-secondary'><a href='detail.php?id=" + result[i].product_id + "'>Detail info</a></div></div></div></div>";
+                                    } else {
+                                        if (i < stop) {
+                                            content += "<div class='row'><div class='col-lg-4 col-md-6 col-sm-12 our-product'><div class='img'><a class='test-popup-link' href='detail.php?id=" + result[i].product_id + "'><img src='imgs/" + result[i].product_id + ".PNG' class='img-fluid'></a></div><div class='title py-4'><h3 class='text-uppercase'>" + result[i].category_name + " " + result[i].price + "</h3> <span class='text-secondary'> " + result[i].name + "</span> <div class='text-secondary'><a href='detail.php?id=" + result[i].product_id + "'>Detail info</a></div></div></div></div>";
+                                        }
                                     }
+
                                 }
                             }
 
