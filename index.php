@@ -171,8 +171,8 @@ require('db.php'); //connection to db code
                             </label>
                         </div>
                         <div>
-                            PRICE FROM: <input type="number" name="price1" id="price1" value="<?php echo (isset($_POST['price1']) ? $_POST['price1'] : ''); ?>" />
-                            TO: <input type="number" name="price2" id="price2" value="<?php echo (isset($_POST['price2']) ? $_POST['price2'] : ''); ?>" />
+                            PRICE FROM: <input type="number" name="price1" id="price1" />
+                            TO: <input type="number" name="price2" id="price2" />
                         </div>
 
                         <input type="button" value="Search" class="searchButton" /><!-- do the search -->
@@ -234,12 +234,20 @@ require('db.php'); //connection to db code
                             console.log(start + "  " + stop);
 
                             for (i = start; i < stop; i += 3) {
-
-                                content += "<div class='row'><div class='col-lg-4 col-md-6 col-sm-12 our-product'><div class='img'><a class='test-popup-link' href='detail.php?id=" + result[i].product_id + "'><img src='imgs/" + result[i].product_id + ".PNG' class='img-fluid'></a></div><div class='title py-4'><h3 class='text-uppercase'>" + result[i].category_name + " " + result[i].price + "</h3> <span class='text-secondary'> " + result[i].name + "</span> <div class='text-secondary'><a href='detail.php?id=" + result[i].product_id + "'>Detail info</a></div></div></div>";
-                                content += "<div class='col-lg-4 col-md-6 col-sm-12 our-product'><div class='img'><a class='test-popup-link' href='detail.php?id=" + result[i + 1].product_id + "'><img src='imgs/" + result[i + 1].product_id + ".PNG' class='img-fluid'></a></div><div class='title py-4'><h3 class='text-uppercase'>" + result[i + 1].category_name + " " + result[i + 1].price + "</h3> <span class='text-secondary'> " + result[i + 1].name + "</span> <div class='text-secondary'><a href='detail.php?id=" + result[i + 1].product_id + "'>Detail info</a></div></div></div>";
-                                content += " <div class='col-lg-4 col-md-6 col-sm-12 our-product'><div class='img'><a class='test-popup-link' href='detail.php?id=" + result[i + 2].product_id + "'><img src='imgs/" + result[i + 2].product_id + ".PNG' class='img-fluid'></a></div><div class='title py-4'><h3 class='text-uppercase'>" + result[i + 2].category_name + " " + result[i + 2].price + "</h3> <span class='text-secondary'> " + result[i + 2].name + "</span> <div class='text-secondary'><a href='detail.php?id=" + result[i + 2].product_id + "'>Detail info</a></div></div></div></div>";
-
+                                if (stop >= 3) {
+                                    content += "<div class='row'><div class='col-lg-4 col-md-6 col-sm-12 our-product'><div class='img'><a class='test-popup-link' href='detail.php?id=" + result[i].product_id + "'><img src='imgs/" + result[i].product_id + ".PNG' class='img-fluid'></a></div><div class='title py-4'><h3 class='text-uppercase'>" + result[i].category_name + " " + result[i].price + "</h3> <span class='text-secondary'> " + result[i].name + "</span> <div class='text-secondary'><a href='detail.php?id=" + result[i].product_id + "'>Detail info</a></div></div></div>";
+                                    content += "<div class='col-lg-4 col-md-6 col-sm-12 our-product'><div class='img'><a class='test-popup-link' href='detail.php?id=" + result[i + 1].product_id + "'><img src='imgs/" + result[i + 1].product_id + ".PNG' class='img-fluid'></a></div><div class='title py-4'><h3 class='text-uppercase'>" + result[i + 1].category_name + " " + result[i + 1].price + "</h3> <span class='text-secondary'> " + result[i + 1].name + "</span> <div class='text-secondary'><a href='detail.php?id=" + result[i + 1].product_id + "'>Detail info</a></div></div></div>";
+                                    content += " <div class='col-lg-4 col-md-6 col-sm-12 our-product'><div class='img'><a class='test-popup-link' href='detail.php?id=" + result[i + 2].product_id + "'><img src='imgs/" + result[i + 2].product_id + ".PNG' class='img-fluid'></a></div><div class='title py-4'><h3 class='text-uppercase'>" + result[i + 2].category_name + " " + result[i + 2].price + "</h3> <span class='text-secondary'> " + result[i + 2].name + "</span> <div class='text-secondary'><a href='detail.php?id=" + result[i + 2].product_id + "'>Detail info</a></div></div></div></div>";
+                                } else if (stop < 3) {
+                                    if (stop >= 2) {
+                                        content += "<div class='row'><div class='col-lg-4 col-md-6 col-sm-12 our-product'><div class='img'><a class='test-popup-link' href='detail.php?id=" + result[i].product_id + "'><img src='imgs/" + result[i].product_id + ".PNG' class='img-fluid'></a></div><div class='title py-4'><h3 class='text-uppercase'>" + result[i].category_name + " " + result[i].price + "</h3> <span class='text-secondary'> " + result[i].name + "</span> <div class='text-secondary'><a href='detail.php?id=" + result[i].product_id + "'>Detail info</a></div></div></div>";
+                                        content += "<div class='col-lg-4 col-md-6 col-sm-12 our-product'><div class='img'><a class='test-popup-link' href='detail.php?id=" + result[i + 1].product_id + "'><img src='imgs/" + result[i + 1].product_id + ".PNG' class='img-fluid'></a></div><div class='title py-4'><h3 class='text-uppercase'>" + result[i + 1].category_name + " " + result[i + 1].price + "</h3> <span class='text-secondary'> " + result[i + 1].name + "</span> <div class='text-secondary'><a href='detail.php?id=" + result[i + 1].product_id + "'>Detail info</a></div></div></div></div>";
+                                    } else if (stop < 2) {
+                                        content += "<div class='row'><div class='col-lg-4 col-md-6 col-sm-12 our-product'><div class='img'><a class='test-popup-link' href='detail.php?id=" + result[i].product_id + "'><img src='imgs/" + result[i].product_id + ".PNG' class='img-fluid'></a></div><div class='title py-4'><h3 class='text-uppercase'>" + result[i].category_name + " " + result[i].price + "</h3> <span class='text-secondary'> " + result[i].name + "</span> <div class='text-secondary'><a href='detail.php?id=" + result[i].product_id + "'>Detail info</a></div></div></div></div>";
+                                    }
+                                }
                             }
+
                             console.log(content);
                             $("#result").html(content);
 
@@ -311,7 +319,7 @@ require('db.php'); //connection to db code
             $promotion_value = $row["promotion"];
             if ($promotion_value == "1") {
                 echo "
-                <div class='container-fluid'>
+                <div class='container-fluid mt-5'>
                     <img src=\"imgs/promotion1.jpg\" width='100%'>                   
                     <img src=\"imgs/promotion2.jpg\" width='100%'>               
                 </div>
